@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Modal, Input } from "antd";
+import { Modal, Input, Alert } from "antd";
 import { CloudFilled, ConsoleSqlOutlined } from "@ant-design/icons";
-import { capitalizeFirstLetter } from "../util/Utilities";
+import { capitalizeFirstLetter, isEmptyString } from "../util/Utilities";
 import axios from "axios";
 
 export default class CreateWorkshopModal extends Component {
@@ -13,6 +13,7 @@ export default class CreateWorkshopModal extends Component {
       confirmLoading: false,
       ModalText: "Create New Workshop",
       workshopName: "",
+      emptyModalName: false,
     };
 
     // this.showModal = this.showModal.bind(this);
@@ -24,34 +25,40 @@ export default class CreateWorkshopModal extends Component {
   }
 
   handleOk = (data) => {
-    this.setState({
-      ModalText: "This Modal will be closed after two seconds",
-      confirmLoading: true,
-    });
-
     //Server Backend - Handle Data being passed into backend
     //Temporary fix
-    this.props.setWorkshopName(this.state.workshopName);
+    // this.props.setWorkshopName(this.state.workshopName);
 
-    //Save Data to Backend Here
-    const payload = {
-      name: capitalizeFirstLetter(this.state.workshopName),
-      tags: ["Empty"],
-      hazardData: [],
-    };
-
-    console.log("Saving New Workshop to Database");
-    console.log("New Workshop Payload: ", payload);
-
-    axios.post("http://localhost:5000/workshop/add", payload); //Passes the payload to rest API call
-
-    setTimeout(() => {
+    //Must Assert WorkshopName
+    if (!isEmptyString(this.state.workshopName)) {
       this.setState({
-        confirmLoading: false,
-        workshopName: "",
+        ModalText: "This Modal will be closed after two seconds",
+        confirmLoading: true,
       });
-      this.props.closeModal();
-    }, 1000);
+
+      //Save Data to Backend Here
+      const payload = {
+        name: capitalizeFirstLetter(this.state.workshopName),
+        tags: ["Empty"],
+        hazardData: [],
+      };
+
+      console.log("Saving New Workshop to Database");
+      console.log("New Workshop Payload: ", payload);
+
+      axios.post("http://localhost:5000/workshop/add", payload); //Passes the payload to rest API call
+
+      setTimeout(() => {
+        this.setState({
+          confirmLoading: false,
+          workshopName: "",
+        });
+        this.props.closeModal();
+      }, 1000);
+    } else {
+      this.setState({ emptyModalName: true });
+      console.log("Pls input string parameter");
+    }
   };
 
   handleCancel = () => {
@@ -65,7 +72,7 @@ export default class CreateWorkshopModal extends Component {
   };
 
   render() {
-    const { visible, confirmLoading } = this.state;
+    const { visible, confirmLoading, emptyModalName } = this.state;
     return (
       <div className="modal">
         <Modal
@@ -75,6 +82,16 @@ export default class CreateWorkshopModal extends Component {
           confirmLoading={confirmLoading}
           onCancel={this.handleCancel}
         >
+          {emptyModalName ? (
+            <Alert
+              // message="EmptyModal Name"
+              description="Please enter a name "
+              type="error"
+              closable
+              // onClose={onClose}
+            />
+          ) : null}
+
           <div className="workshop-name-box">
             <Input
               placeholder="Type in workshop name"

@@ -64,7 +64,7 @@ export default class WorkshopCreationPage extends Component {
   };
 
   render() {
-    const { workshopName } = this.state;
+    // const { workshopName } = this.state;
     return (
       <Layout>
         <Title level={2}> Create Workshop</Title>
@@ -82,7 +82,7 @@ export default class WorkshopCreationPage extends Component {
             <PlusOutlined />
             Test API Set
           </Button>
-          <h1>Workshop Name: {workshopName}</h1>
+          {/* <h1>Workshop Name: {workshopName}</h1> */}
           <WorkshopTable />
         </body>
       </Layout>
