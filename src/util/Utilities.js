@@ -5,3 +5,11 @@ export function capitalizeFirstLetter(str) {
 export function isEmptyString(str) {
   return str === "" || str === null;
 }
+
+export function deleteItemFromIndex(array, index) {
+  var tempArray = array;
+  if (index > -1) {
+    tempArray.splice(index, 1);
+  }
+  return tempArray;
+}

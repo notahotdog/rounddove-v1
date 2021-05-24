@@ -6,8 +6,13 @@ import {
   RightSquareFilled,
   PlusSquareOutlined,
 } from "@ant-design/icons";
-import { capitalizeFirstLetter, isEmptyString } from "../util/Utilities";
+import {
+  capitalizeFirstLetter,
+  isEmptyString,
+  deleteItemFromIndex,
+} from "../util/Utilities";
 import axios from "axios";
+import ComponentField from "./modalComponents/ComponentField";
 
 export default class CreateWorkshopModal extends Component {
   constructor(props) {
@@ -101,6 +106,21 @@ export default class CreateWorkshopModal extends Component {
     // console.log("Updating workshop Name");
   };
 
+  //For Individual Fields
+  //Component to be deleted
+  componentDeletion = (indexOfComponent) => {
+    console.log(
+      "Component To Be Deleted: ",
+      this.state.components[indexOfComponent]
+    );
+    var updatedComponents = deleteItemFromIndex(
+      this.state.components,
+      indexOfComponent
+    );
+    console.log("Updated Components: ", updatedComponents);
+    this.setState({ components: updatedComponents });
+  };
+
   render() {
     const { visible, confirmLoading, emptyModalName } = this.state;
     return (
@@ -157,9 +177,11 @@ export default class CreateWorkshopModal extends Component {
             Components Listed:{" "}
             {this.state.components.map((component, i) => {
               return (
-                <h4>
-                  Component: {component}, Index: {i}
-                </h4>
+                <ComponentField
+                  component={component}
+                  index={i}
+                  componentDeletion={this.componentDeletion}
+                />
               );
             })}
           </h4>
@@ -168,3 +190,9 @@ export default class CreateWorkshopModal extends Component {
     );
   }
 }
+
+// return (
+//   <h4>
+//     Component: {component}, Index: {i}
+//   </h4>
+// );
