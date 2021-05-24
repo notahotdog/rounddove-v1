@@ -1,6 +1,11 @@
 import React, { Component } from "react";
-import { Modal, Input, Alert } from "antd";
-import { CloudFilled, ConsoleSqlOutlined } from "@ant-design/icons";
+import { Modal, Input, Alert, InputNumber, Button } from "antd";
+import {
+  CloudFilled,
+  ConsoleSqlOutlined,
+  RightSquareFilled,
+  PlusSquareOutlined,
+} from "@ant-design/icons";
 import { capitalizeFirstLetter, isEmptyString } from "../util/Utilities";
 import axios from "axios";
 
@@ -14,6 +19,9 @@ export default class CreateWorkshopModal extends Component {
       ModalText: "Create New Workshop",
       workshopName: "",
       emptyModalName: false,
+      numberComponents: 1,
+      components: [],
+      componentName: "",
     };
 
     // this.showModal = this.showModal.bind(this);
@@ -57,7 +65,7 @@ export default class CreateWorkshopModal extends Component {
       }, 1000);
     } else {
       this.setState({ emptyModalName: true });
-      console.log("Pls input string parameter");
+      // console.log("Pls input string parameter");
     }
   };
 
@@ -68,6 +76,28 @@ export default class CreateWorkshopModal extends Component {
 
   updateWorkshopName = (e) => {
     this.setState({ workshopName: e.target.value });
+    // console.log("Updating workshop Name");
+  };
+
+  updateNoComponents = (value) => {
+    // console.log("changed", e);
+    this.setState({ numberComponents: value });
+  };
+
+  //Conditional Render the Names of the Rows
+  //addComponents
+  addComponents = () => {
+    this.setState({
+      components: [...this.state.components, this.state.componentName],
+    });
+    console.log(this.state.components);
+  };
+
+  updateComponentName = (e) => {
+    this.setState({ componentName: e.target.value });
+
+    //if Enter button is pressed, also save value
+
     // console.log("Updating workshop Name");
   };
 
@@ -92,13 +122,47 @@ export default class CreateWorkshopModal extends Component {
             />
           ) : null}
 
+          <h3 style={{ font: "bold" }}>Workshop Name</h3>
           <div className="workshop-name-box">
             <Input
               placeholder="Type in workshop name"
               onChange={this.updateWorkshopName}
             />
-            {this.state.workshopName}
+            {/* {this.state.workshopName} */}
           </div>
+
+          {/* Create Number of Nodes and SubNodes */}
+          {/* <h3>Number of Components</h3>
+          <InputNumber
+            min={1}
+            max={10}
+            defaultValue={1}
+            onChange={this.updateNoComponents}
+          />
+          {this.state.numberComponents} */}
+
+          <h4>Components</h4>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <Input
+              placeholder="Component Name"
+              onChange={this.updateComponentName}
+              allowClear
+            />
+            <Button type="primary" onClick={this.addComponents}>
+              <PlusSquareOutlined />
+              Add Component
+            </Button>
+          </div>
+          <h4>
+            Components Listed:{" "}
+            {this.state.components.map((component, i) => {
+              return (
+                <h4>
+                  Component: {component}, Index: {i}
+                </h4>
+              );
+            })}
+          </h4>
         </Modal>
       </div>
     );
