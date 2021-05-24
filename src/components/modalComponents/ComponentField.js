@@ -2,7 +2,12 @@
 
 import React, { Component } from "react";
 import { InputNumber, Button, Popconfirm } from "antd";
-import { CloseOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  DeleteOutlined,
+  UpOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 
 export default class ComponentField extends Component {
   constructor(props) {
@@ -77,6 +82,30 @@ export default class ComponentField extends Component {
               }}
             />
           </Popconfirm>
+          <Button
+            type="dashed"
+            icon={<UpOutlined />}
+            size="medium"
+            onClick={() =>
+              this.props.swapComponentsWithPrevious(this.props.index)
+            }
+            style={{
+              justifyContent: "flex-end",
+              alignSelf: "flex-end",
+              marginLeft: "20px",
+            }}
+          />
+          <Button
+            type="dashed"
+            icon={<DownOutlined />}
+            size="medium"
+            onClick={() => this.props.swapComponentsWithNext(this.props.index)}
+            style={{
+              justifyContent: "flex-end",
+              alignSelf: "flex-end",
+              marginLeft: "20px",
+            }}
+          />
         </div>
       </div>
     );

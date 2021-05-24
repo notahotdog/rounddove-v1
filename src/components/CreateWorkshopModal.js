@@ -10,6 +10,8 @@ import {
   capitalizeFirstLetter,
   isEmptyString,
   deleteItemFromIndex,
+  swapWithPrevious,
+  swapWithNext,
 } from "../util/Utilities";
 import axios from "axios";
 import ComponentField from "./modalComponents/ComponentField";
@@ -121,6 +123,16 @@ export default class CreateWorkshopModal extends Component {
     this.setState({ components: updatedComponents });
   };
 
+  swapComponentsWithPrevious = (index) => {
+    var swappedComponets = swapWithPrevious(this.state.components, index);
+    this.setState({ components: swappedComponets });
+  };
+
+  swapComponentsWithNext = (index) => {
+    var swappedComponets = swapWithNext(this.state.components, index);
+    this.setState({ components: swappedComponets });
+  };
+
   render() {
     const { visible, confirmLoading, emptyModalName } = this.state;
     return (
@@ -181,6 +193,8 @@ export default class CreateWorkshopModal extends Component {
                   component={component}
                   index={i}
                   componentDeletion={this.componentDeletion}
+                  swapComponentsWithNext={this.swapComponentsWithNext}
+                  swapComponentsWithPrevious={this.swapComponentsWithPrevious}
                 />
               );
             })}
