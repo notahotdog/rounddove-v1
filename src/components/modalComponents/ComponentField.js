@@ -2,12 +2,7 @@
 
 import React, { Component } from "react";
 import { InputNumber, Button, Popconfirm } from "antd";
-import {
-  CloseOutlined,
-  DeleteOutlined,
-  UpOutlined,
-  DownOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, UpOutlined, DownOutlined } from "@ant-design/icons";
 
 export default class ComponentField extends Component {
   constructor(props) {
@@ -24,7 +19,7 @@ export default class ComponentField extends Component {
 
   //This method needs to be called from the parent component
   confirmComponentDeletion = (index) => {
-    console.log(index);
+    console.log("Component Deletion: ", index);
     this.props.componentDeletion(index);
   };
 
@@ -47,7 +42,7 @@ export default class ComponentField extends Component {
             // border: "1px solid black",
           }}
         >
-          No of Sub Components
+          No of Subcomponents:
           <InputNumber
             min={1}
             max={10}
@@ -64,24 +59,6 @@ export default class ComponentField extends Component {
               justifyContent: "flex-end",
             }}
           /> */}
-          <Popconfirm
-            title="Are you sure to delete this component?"
-            onConfirm={() => this.confirmComponentDeletion(this.props.index)}
-            // onCancel={this.cancelComponent}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button
-              type="dashed"
-              icon={<DeleteOutlined />}
-              size="medium"
-              style={{
-                justifyContent: "flex-end",
-                alignSelf: "flex-end",
-                marginLeft: "20px",
-              }}
-            />
-          </Popconfirm>
           <Button
             type="dashed"
             icon={<UpOutlined />}
@@ -106,6 +83,24 @@ export default class ComponentField extends Component {
               marginLeft: "20px",
             }}
           />
+          <Popconfirm
+            title="Are you sure to delete this component?"
+            onConfirm={() => this.confirmComponentDeletion(this.props.index)}
+            // onCancel={this.cancelComponent}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button
+              type="dashed"
+              icon={<DeleteOutlined />}
+              size="medium"
+              style={{
+                justifyContent: "flex-end",
+                alignSelf: "flex-end",
+                marginLeft: "20px",
+              }}
+            />
+          </Popconfirm>
         </div>
       </div>
     );

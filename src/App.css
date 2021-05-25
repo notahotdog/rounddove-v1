@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.button-choice {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 5px;
+  background-color: white;
+}
+
+.workshop-creation-page {
+  background-color: white;
+}

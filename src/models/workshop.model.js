@@ -19,7 +19,8 @@ const workshopSchema = new Schema({
   },
   hazardData: {
     // type: [String],
-    type: [hazardDataSchema],
+    type: [String],
+    // type: [hazardDataSchema],
   },
   //node: [NodeSchema], //component
 });

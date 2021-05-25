@@ -1,11 +1,6 @@
 import React, { Component } from "react";
-import { Modal, Input, Alert, InputNumber, Button } from "antd";
-import {
-  CloudFilled,
-  ConsoleSqlOutlined,
-  RightSquareFilled,
-  PlusSquareOutlined,
-} from "@ant-design/icons";
+import { Modal, Input, Alert, Button } from "antd";
+import { PlusSquareOutlined } from "@ant-design/icons";
 import {
   capitalizeFirstLetter,
   isEmptyString,
@@ -55,7 +50,7 @@ export default class CreateWorkshopModal extends Component {
       const payload = {
         name: capitalizeFirstLetter(this.state.workshopName),
         tags: ["Empty"],
-        hazardData: [],
+        hazardData: [...this.state.components],
       };
 
       console.log("Saving New Workshop to Database");
@@ -94,10 +89,14 @@ export default class CreateWorkshopModal extends Component {
   //Conditional Render the Names of the Rows
   //addComponents
   addComponents = () => {
+    //Create an Object with a key value pair : name
+    // var component = { name: this.state.componentName };
+
     this.setState({
+      // components: [...this.state.components, component],
       components: [...this.state.components, this.state.componentName],
     });
-    console.log(this.state.components);
+    // console.log(this.state.components);
   };
 
   updateComponentName = (e) => {
@@ -134,7 +133,7 @@ export default class CreateWorkshopModal extends Component {
   };
 
   render() {
-    const { visible, confirmLoading, emptyModalName } = this.state;
+    const { confirmLoading, emptyModalName } = this.state;
     return (
       <div className="modal">
         <Modal
@@ -163,18 +162,8 @@ export default class CreateWorkshopModal extends Component {
             {/* {this.state.workshopName} */}
           </div>
 
-          {/* Create Number of Nodes and SubNodes */}
-          {/* <h3>Number of Components</h3>
-          <InputNumber
-            min={1}
-            max={10}
-            defaultValue={1}
-            onChange={this.updateNoComponents}
-          />
-          {this.state.numberComponents} */}
-
           <h4>Components</h4>
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div style={{ display: "flex" }}>
             <Input
               placeholder="Component Name"
               onChange={this.updateComponentName}
@@ -192,6 +181,7 @@ export default class CreateWorkshopModal extends Component {
                 <ComponentField
                   component={component}
                   index={i}
+                  key={component.id}
                   componentDeletion={this.componentDeletion}
                   swapComponentsWithNext={this.swapComponentsWithNext}
                   swapComponentsWithPrevious={this.swapComponentsWithPrevious}

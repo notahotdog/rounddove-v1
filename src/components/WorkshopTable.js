@@ -1,13 +1,23 @@
 import React, { Component } from "react";
 import { Table, Tag, Space, Popconfirm, message } from "antd";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { CloudFilled } from "@ant-design/icons";
+// import { Link } from "react-router-dom";
+import { PlusCircleTwoTone, MinusCircleTwoTone } from "@ant-design/icons";
 
 export default class WorkshopTable extends Component {
   //Data Needs to Be Passed from the parents
+  // data = [
+  //   { key: "1", name: "Battery Workshop", tags: ["completed"] },
+  //   { key: "2", name: "Hazid Workshop", tags: ["pending"] },
+  // ];
   data = [
-    { key: "1", name: "Battery Workshop", tags: ["completed"] },
-    { key: "2", name: "Hazid Workshop", tags: ["pending"] },
+    {
+      _id: "",
+      name: "",
+      hazardData: [],
+      tags: [],
+    },
   ];
 
   constructor(props) {
@@ -25,7 +35,7 @@ export default class WorkshopTable extends Component {
 
     //Comment out when not needed
     axios.get("http://localhost:5000/workshop/").then((response) => {
-      console.log(response.data);
+      console.log("fetch Data", response.data);
       this.setState({ data: response.data });
     });
 
@@ -71,13 +81,19 @@ export default class WorkshopTable extends Component {
     // return <Link to="/">Page</Link>;
   }
 
+  printComponents(x) {
+    x.map((item) => console.log(item));
+    // console.log("Hazard Data to be printed: ", x);
+    // return <p> {x}</p>;
+  }
+
   render() {
     let columns = [
       {
         title: "Workshop name",
         dataIndex: "name",
         key: "name",
-        render: (text) => <a>{text}</a>,
+        render: (text) => <a href="#/">{text}</a>,
       },
       {
         title: "Tags",
@@ -106,12 +122,9 @@ export default class WorkshopTable extends Component {
         key: "action",
         render: (text, workshop) => (
           <Space size="middle">
-            <a onClick={this.editWorkshop}>
-              {/* <Link to="/WorkshopCreationPage/EditWorkshop" props={workshop}> */}
+            <a href="#/" onClick={this.editWorkshop}>
               Edit {workshop.name}
-              {/* </Link> */}
             </a>
-            {/* <a onClick={() => this.editWorkshop}>Edit {workshop.name}</a> */}
             <Popconfirm
               title="Are you sure to delete this task?"
               onConfirm={() => this.confirmWorkshopDeletion(workshop)}
@@ -119,17 +132,38 @@ export default class WorkshopTable extends Component {
               okText="Yes"
               cancelText="No"
             >
-              <a>Delete</a>
+              <a href="#/">Delete</a>
             </Popconfirm>
           </Space>
         ),
       },
     ];
 
+    console.log("State Data", this.state.data);
     return (
       <div>
-        <Table columns={columns} dataSource={this.state.data} />
+        <Table
+          columns={columns}
+          dataSource={this.state.data}
+          expandable={{
+            expandedRowRender: (record) =>
+              // this.printComponents(record.hazardData),
+              record.hazardData.map((x) => <p>{x}</p>),
+
+            // record.hazardData.map((x) => return <p style={{ margin: 0 }}>{x}</p>),
+            // expandIcon: ({ expanded, onExpand, record }) =>
+            //   expanded ? (
+            //     <MinusCircleTwoTone onClick={(e) => onExpand(record, e)} />
+            //   ) : (
+            //     <PlusCircleTwoTone onClick={(e) => onExpand(record, e)} />
+            //   ),
+          }}
+        />
       </div>
     );
   }
+}
+
+{
+  /* <p style={{ margin: 0 }}>{record._id}</p> */
 }

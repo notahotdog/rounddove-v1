@@ -1,26 +1,34 @@
-import { FormProvider } from 'antd/lib/form/context'
-import React, { Component } from 'react'
-import {Drawer, Form, Button, Col, Row, Input, Select, DatePicker} from "antd";
-import {PlusOutlined} from "@ant-design/icons";
+// import { FormProvider } from 'antd/lib/form/context'
+import React, { Component } from "react";
+import {
+  Drawer,
+  Form,
+  Button,
+  Col,
+  Row,
+  Input,
+  Select,
+  DatePicker,
+} from "antd";
+// import {PlusOutlined} from "@ant-design/icons";
 
 const { Option } = Select;
 
 export default class UserProfileDrawer extends Component {
-    
-    // state ={visible: false};
+  // state ={visible: false};
 
-    // showDrawer = () => {
-    //     this.setState({visible: true});
-    // };
+  // showDrawer = () => {
+  //     this.setState({visible: true});
+  // };
 
-    // onClose = () =>  {
-    //     this.setState({visible: false});
-    // }
+  // onClose = () =>  {
+  //     this.setState({visible: false});
+  // }
 
-    render() {
-        return (
-            <div>
-                <Drawer
+  render() {
+    return (
+      <div>
+        <Drawer
           title="Facilitator Details "
           width={720}
           onClose={this.onClose}
@@ -29,7 +37,7 @@ export default class UserProfileDrawer extends Component {
           footer={
             <div
               style={{
-                textAlign: 'right',
+                textAlign: "right",
               }}
             >
               <Button onClick={this.props.onClose} style={{ marginRight: 8 }}>
@@ -47,7 +55,9 @@ export default class UserProfileDrawer extends Component {
                 <Form.Item
                   name="name"
                   label="Name"
-                  rules={[{ required: true, message: 'Please enter user name' }]}
+                  rules={[
+                    { required: true, message: "Please enter user name" },
+                  ]}
                 >
                   <Input placeholder="Please enter user name" />
                 </Form.Item>
@@ -56,10 +66,10 @@ export default class UserProfileDrawer extends Component {
                 <Form.Item
                   name="url"
                   label="Url"
-                  rules={[{ required: true, message: 'Please enter url' }]}
+                  rules={[{ required: true, message: "Please enter url" }]}
                 >
                   <Input
-                    style={{ width: '100%' }}
+                    style={{ width: "100%" }}
                     addonBefore="http://"
                     addonAfter=".com"
                     placeholder="Please enter url"
@@ -72,7 +82,9 @@ export default class UserProfileDrawer extends Component {
                 <Form.Item
                   name="owner"
                   label="Owner"
-                  rules={[{ required: true, message: 'Please select an owner' }]}
+                  rules={[
+                    { required: true, message: "Please select an owner" },
+                  ]}
                 >
                   <Select placeholder="Please select an owner">
                     <Option value="xiao">Xiaoxiao Fu</Option>
@@ -84,7 +96,9 @@ export default class UserProfileDrawer extends Component {
                 <Form.Item
                   name="type"
                   label="Type"
-                  rules={[{ required: true, message: 'Please choose the type' }]}
+                  rules={[
+                    { required: true, message: "Please choose the type" },
+                  ]}
                 >
                   <Select placeholder="Please choose the type">
                     <Option value="private">Private</Option>
@@ -98,7 +112,9 @@ export default class UserProfileDrawer extends Component {
                 <Form.Item
                   name="approver"
                   label="Approver"
-                  rules={[{ required: true, message: 'Please choose the approver' }]}
+                  rules={[
+                    { required: true, message: "Please choose the approver" },
+                  ]}
                 >
                   <Select placeholder="Please choose the approver">
                     <Option value="jack">Jack Ma</Option>
@@ -110,11 +126,13 @@ export default class UserProfileDrawer extends Component {
                 <Form.Item
                   name="dateTime"
                   label="DateTime"
-                  rules={[{ required: true, message: 'Please choose the dateTime' }]}
+                  rules={[
+                    { required: true, message: "Please choose the dateTime" },
+                  ]}
                 >
                   <DatePicker.RangePicker
-                    style={{ width: '100%' }}
-                    getPopupContainer={trigger => trigger.parentElement}
+                    style={{ width: "100%" }}
+                    getPopupContainer={(trigger) => trigger.parentElement}
                   />
                 </Form.Item>
               </Col>
@@ -127,17 +145,20 @@ export default class UserProfileDrawer extends Component {
                   rules={[
                     {
                       required: true,
-                      message: 'please enter url description',
+                      message: "please enter url description",
                     },
                   ]}
                 >
-                  <Input.TextArea rows={4} placeholder="please enter url description" />
+                  <Input.TextArea
+                    rows={4}
+                    placeholder="please enter url description"
+                  />
                 </Form.Item>
               </Col>
             </Row>
           </Form>
         </Drawer>
-            </div>
-        )
-    }
+      </div>
+    );
+  }
 }

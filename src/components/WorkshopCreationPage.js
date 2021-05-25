@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Layout, Typography, Button, Modal } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Layout, Typography, Button } from "antd";
+import { PlusOutlined, CloudUploadOutlined } from "@ant-design/icons";
 import WorkshopModal from "./CreateWorkshopModal";
 import WorkshopTable from "./WorkshopTable";
 import axios from "axios"; //handles push/get requests
@@ -63,28 +63,44 @@ export default class WorkshopCreationPage extends Component {
     this.setState({ workshopName: name });
   };
 
+  //Load Backend Data
+  uploadBackendData = () => {
+    console.log("Upload backend data");
+  };
+
   render() {
     // const { workshopName } = this.state;
     return (
       <Layout>
-        <Title level={2}> Create Workshop</Title>
-        <body>
+        <div className="workshop-creation-page">
+          <Title level={2}> Create Workshop</Title>
           <WorkshopModal
             visible={this.state.modalVisible}
             closeModal={this.hideModal}
             setWorkshopName={this.setWorkshopName}
           />
-          <Button type="primary" onClick={this.showModal}>
-            <PlusOutlined />
-            New Workshop
-          </Button>
-          <Button type="primary" onClick={this.testApi}>
+          <div className="button-choice">
+            <Button type="primary" onClick={this.showModal}>
+              <PlusOutlined />
+              New Workshop
+            </Button>
+            <Button
+              type="primary"
+              style={{ marginLeft: "20px" }}
+              onClick={this.uploadBackendData}
+            >
+              <CloudUploadOutlined />
+              Load Backend
+            </Button>
+          </div>
+
+          {/* <Button type="primary" onClick={this.testApi}>
             <PlusOutlined />
             Test API Set
-          </Button>
+          </Button> */}
           {/* <h1>Workshop Name: {workshopName}</h1> */}
           <WorkshopTable />
-        </body>
+        </div>
       </Layout>
     );
   }
