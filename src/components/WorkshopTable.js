@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Table, Tag, Space, Popconfirm, message } from "antd";
 import axios from "axios";
 import { CloudFilled } from "@ant-design/icons";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PlusCircleTwoTone, MinusCircleTwoTone } from "@ant-design/icons";
 
 export default class WorkshopTable extends Component {
@@ -77,6 +77,14 @@ export default class WorkshopTable extends Component {
     console.log("EDITING WORKSHOP");
 
     //Bring me to another Page with the relevant props
+    <Link
+      to={{
+        pathname: "/WorkshopCreationPage/EditWorkshop",
+        // state: { name: "testData" },
+      }}
+    >
+      Load Backend{" "}
+    </Link>;
 
     // return <Link to="/">Page</Link>;
   }
@@ -122,9 +130,7 @@ export default class WorkshopTable extends Component {
         key: "action",
         render: (text, workshop) => (
           <Space size="middle">
-            <a href="#/" onClick={this.editWorkshop}>
-              Edit {workshop.name}
-            </a>
+            <a onClick={this.editWorkshop}>Edit {workshop.name}</a>
             <Popconfirm
               title="Are you sure to delete this task?"
               onConfirm={() => this.confirmWorkshopDeletion(workshop)}

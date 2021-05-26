@@ -38,3 +38,25 @@ export function swapWithNext(array, index) {
   }
   return tempArray;
 }
+
+//Returns true if file type excel
+export function checkFileTypeExcel(file) {
+  let errorMessage = "";
+  if (!file || !file[0]) {
+    return;
+  }
+  const isExcel =
+    file[0].type == "application/vnd.ms-excel" ||
+    file[0].type ===
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+  if (!isExcel) {
+    errorMessage = "You can only upload an excel file";
+  }
+  console.log("file", file[0].type);
+  const isLt2m = file[0].size / 1024 / 1024 < 2;
+  if (!isLt2m) {
+    errorMessage = "File must be smaller than 2MB!";
+  }
+  console.log("errorMessage", errorMessage);
+  return errorMessage;
+}

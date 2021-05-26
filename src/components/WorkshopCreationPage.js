@@ -4,6 +4,7 @@ import { PlusOutlined, CloudUploadOutlined } from "@ant-design/icons";
 import WorkshopModal from "./CreateWorkshopModal";
 import WorkshopTable from "./WorkshopTable";
 import axios from "axios"; //handles push/get requests
+import { Link } from "react-router-dom";
 const { Title } = Typography;
 
 export default class WorkshopCreationPage extends Component {
@@ -86,11 +87,19 @@ export default class WorkshopCreationPage extends Component {
             </Button>
             <Button
               type="primary"
-              style={{ marginLeft: "20px" }}
+              style={{ marginLeft: "20px", color: "white" }}
               onClick={this.uploadBackendData}
             >
               <CloudUploadOutlined />
-              Load Backend
+              <Link
+                style={{ color: "white" }}
+                to={{
+                  pathname: "/WorkshopCreationPage/UploadData",
+                  state: { name: "jacob" },
+                }}
+              >
+                Load Backend{" "}
+              </Link>
             </Button>
           </div>
 
