@@ -5,6 +5,8 @@ import { CloudFilled } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { PlusCircleTwoTone, MinusCircleTwoTone } from "@ant-design/icons";
 
+var de = false;
+
 export default class WorkshopTable extends Component {
   //Data Needs to Be Passed from the parents
   // data = [
@@ -31,11 +33,11 @@ export default class WorkshopTable extends Component {
 
   //Todo - Place in a higher level component than drill to this component
   componentDidMount() {
-    console.log("Workshop Table Instance");
+    de && console.log("Workshop Table Instance");
 
     //Comment out when not needed
     axios.get("http://localhost:5000/workshop/").then((response) => {
-      console.log("fetch Data", response.data);
+      de && console.log("fetch Data", response.data);
       this.setState({ data: response.data });
     });
 
@@ -145,7 +147,7 @@ export default class WorkshopTable extends Component {
       },
     ];
 
-    console.log("State Data", this.state.data);
+    de && console.log("State Data", this.state.data);
     return (
       <div>
         <Table

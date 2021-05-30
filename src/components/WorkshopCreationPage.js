@@ -7,6 +7,8 @@ import axios from "axios"; //handles push/get requests
 import { Link } from "react-router-dom";
 const { Title } = Typography;
 
+var de = false;
+
 export default class WorkshopCreationPage extends Component {
   //Main Node
   //Sub Node
@@ -25,7 +27,7 @@ export default class WorkshopCreationPage extends Component {
   }
 
   componentDidMount() {
-    console.log("Workshop Creation Page");
+    de && console.log("Workshop Creation Page");
   }
 
   //Todo - Fetch Backend when it detects an addition, set data as list of items to be collected for processing
@@ -66,7 +68,7 @@ export default class WorkshopCreationPage extends Component {
 
   //Load Backend Data
   uploadBackendData = () => {
-    console.log("Upload backend data");
+    // console.log("Upload backend data");
   };
 
   render() {

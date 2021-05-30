@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import WorkshopCreationPage from "./components/WorkshopCreationPage";
-import UploadDataPage from "./components/UploadDataPage";
+// import UploadDataPage from "./components/UploadDataPage";
+import UploadDataPage from "./components/UploadData";
 import EditWorkshop from "./components/EditWorkshop";
 
 import { Layout } from "antd";

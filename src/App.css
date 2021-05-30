@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  backgroundcolor: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -46,4 +46,82 @@
 
 .workshop-creation-page {
   background-color: white;
+}
+
+.json-display {
+  display: flex;
+  flex-direction: column;
+  /* align: flex-start; */
+  border: 5px solid black;
+}
+
+.json-display-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.json-workshop-name {
+  order: 1;
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  margin-left: 35%;
+  justify-content: center;
+  /* border: 2px solid blue; */
+}
+
+.json-no-components {
+  order: 0;
+  justify-content: flex-start;
+  display: flex;
+  align-content: flex-start;
+  /* border: 2px solid red; */
+  margin-top: 0px;
+}
+
+.json-display-body {
+  display: flex;
+  flex-direction: column;
+  /* margin-left: 50px; */
+  /* border: 2px solid blue; */
+}
+
+.json-display-component {
+  /* border: 2px solid green; */
+}
+
+.json-component-name {
+  align-items: flex-start;
+  display: flex;
+}
+
+.json-subcomponent-name {
+  /* border: 2px solid green; */
+  display: flex;
+  justify-content: flex-start;
+}
+
+.json-display-hazard {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2px;
+  border: 2px solid purple;
+  justify-content: space-evenly;
+}
+
+.json-display-hazards-col {
+  /* border: 2px solid yellowgreen; */
+}
+
+.json-hazard-name {
+  /* border: 2px solid maroon; */
+}
+
+.json-display-causes {
+  display: flex;
+  width: auto;
+  flex-direction: column;
+  /* margin-left: 30px; */
+  /* border: 2px solid cyan; */
+  /* justify-content: center;*/
 }
