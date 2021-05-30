@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { message, Button } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
-
+import { getDefaultSubcomponentTemplate } from "../util/JSONHandler";
 // state = {
 //   name: "jacob",
 //   number: 24,
@@ -39,6 +39,10 @@ export default class HomePage extends Component {
   renderDefaultView = () => {
     return <h1 onDoubleClick={this.changeEditMode}>{this.state.value} </h1>;
   };
+
+  testObject = () => {
+    console.log(getDefaultSubcomponentTemplate);
+  };
   render() {
     return (
       <div>
@@ -52,6 +56,7 @@ export default class HomePage extends Component {
           size="small"
           onClick={this.info}
         />
+        <Button onClick={this.testObject}> Test Template</Button>
       </div>
     );
   }

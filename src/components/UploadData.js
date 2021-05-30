@@ -21,22 +21,34 @@ export default class UploadData extends Component {
 
     this.fileHandler = this.fileHandler.bind(this);
     this.onButtonRemove = this.onButtonRemove.bind(this);
+    this.onClickSaveToBackend = this.onClickSaveToBackend.bind(this);
   }
 
   //Doesnt do anything as of now
   onButtonRemove() {
-    this.setState({ jsonData: [] });
+    this.setState({ jsonData: { workshopName: "---", components: [] } });
   }
 
   onClickSaveToBackend() {
-    //Saves to Backend
-    message.success({
-      content: "Succesfully saved data to backend",
-      className: "custom-class",
-      style: {
-        marginTop: "20vh",
-      },
-    });
+    console.log("current state of jsonData: ", this.state.jsonData);
+    if (this.state.jsonData.components.length !== 0) {
+      //Saves to Backend
+      message.success({
+        content: "Succesfully saved data to backend",
+        className: "custom-class",
+        style: {
+          marginTop: "20vh",
+        },
+      });
+    } else {
+      message.error({
+        content: "Please upload data before saving in the database",
+        className: "custom-class",
+        style: {
+          marginTop: "20vh",
+        },
+      });
+    }
   }
 
   fileHandler(fileList) {

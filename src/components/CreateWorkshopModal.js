@@ -24,6 +24,10 @@ export default class CreateWorkshopModal extends Component {
       numberComponents: 1,
       components: [],
       componentName: "",
+      jsonData: {
+        workshopName: "",
+        components: [],
+      },
     };
 
     // this.showModal = this.showModal.bind(this);
@@ -91,6 +95,13 @@ export default class CreateWorkshopModal extends Component {
   addComponents = () => {
     //Create an Object with a key value pair : name
     // var component = { name: this.state.componentName };
+
+    // Add componentName
+
+    const component = {
+      componentName: "",
+      subcomponents: [],
+    };
 
     this.setState({
       // components: [...this.state.components, component],
@@ -194,9 +205,3 @@ export default class CreateWorkshopModal extends Component {
     );
   }
 }
-
-// return (
-//   <h4>
-//     Component: {component}, Index: {i}
-//   </h4>
-// );
