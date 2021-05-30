@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Upload, message, Button, Typography } from "antd";
+import { Upload, message, Button, Typography, Popconfirm } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { findAllByDisplayValue } from "@testing-library/dom";
 // import { dataTestJSON } from "../util/JSONHandler";
 // import { displayJSON } from "../util/JSONHandler";
 import DisplayJSONData from "../util/DisplayJSONData";
+import Item from "antd/lib/list/Item";
 
 const { Title } = Typography;
 
@@ -19,6 +20,23 @@ export default class UploadData extends Component {
     };
 
     this.fileHandler = this.fileHandler.bind(this);
+    this.onButtonRemove = this.onButtonRemove.bind(this);
+  }
+
+  //Doesnt do anything as of now
+  onButtonRemove() {
+    this.setState({ jsonData: [] });
+  }
+
+  onClickSaveToBackend() {
+    //Saves to Backend
+    message.success({
+      content: "Succesfully saved data to backend",
+      className: "custom-class",
+      style: {
+        marginTop: "20vh",
+      },
+    });
   }
 
   fileHandler(fileList) {
@@ -60,7 +78,7 @@ export default class UploadData extends Component {
     //property for the Upload Tag
     const props = {
       name: "file",
-      action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+      // action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
       headers: {
         authorization: "authorization-text",
       },
@@ -78,24 +96,54 @@ export default class UploadData extends Component {
       },
     };
 
+    let { isDataUploaded } = this.state;
+
     console.log("JSON Data in Render: ", this.state.jsonData);
     return (
       <div>
         <Title level={1}>Upload Data To Database </Title>
         <div
           className="uploadData"
-          style={{ display: "flex", flexDirection: "row" }}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            // border: "1px solid red",
+          }}
         >
           <h3 style={{ marginLeft: "10px" }}>Upload Workshop Data [JSON]: </h3>
-          <Upload {...props}>
+          <Upload {...props} onRemove={this.onButtonRemove}>
             <Button icon={<UploadOutlined />} style={{ marginLeft: "20px" }}>
               Click to Upload
             </Button>
           </Upload>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              // alignSelf: "flex-end",
+              // border: "2px solid red",
+              marginLeft: "20px",
+            }}
+          >
+            <Button
+              style={{
+                backgroundColor: "#a0d911",
+                color: "white",
+                fontWeight: "10px",
+              }}
+              onClick={this.onClickSaveToBackend}
+            >
+              Save To Database
+            </Button>
+          </div>
         </div>
-
         <br />
-        <DisplayJSONData data={this.state.jsonData} />
+        {this.state.jsonData.length !== 0 ? (
+          <DisplayJSONData data={this.state.jsonData} />
+        ) : (
+          <div>Please Upload Data</div>
+        )}
       </div>
     );
   }

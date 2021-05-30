@@ -8,6 +8,11 @@ import { DownloadOutlined } from "@ant-design/icons";
 // };
 
 export default class HomePage extends Component {
+  state = {
+    value: "Some Text Here",
+    isInEditMode: false,
+  };
+
   printMessage() {
     alert("Test Button");
   }
@@ -16,6 +21,24 @@ export default class HomePage extends Component {
     message.info("This is a normal message");
   };
 
+  changeEditMode = () => {
+    this.setState({
+      isInEditMode: !this.state.isInEditMode,
+    });
+    console.log("this should go to edit mode");
+  };
+
+  renderEditView = () => {
+    return (
+      <div>
+        <input type="text" defaultValue={this.state.value} />
+      </div>
+    );
+  };
+
+  renderDefaultView = () => {
+    return <h1 onDoubleClick={this.changeEditMode}>{this.state.value} </h1>;
+  };
   render() {
     return (
       <div>
