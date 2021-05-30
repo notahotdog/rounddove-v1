@@ -11,7 +11,7 @@
               "hazardName": "Leakage from water cooling system",
               "causes": ["FC functional Failure", "External Damage"],
               "consequences": [" Short circuits", "Partial loss of power"],
-              "preventitiveSafeguards": [
+              "preventativeSafeguards": [
                 "Proper cooling water pressure",
                 "proper piping and fitting"
               ],
@@ -26,8 +26,8 @@
                 "Fatigue Built up on electric cables and components"
               ],
               "consequences": ["Fire", "Smoke", "Toxic Air"],
-              "preventitiveSafeguards": [
-                "Proper commisioning and testing of electrical system",
+              "preventativeSafeguards": [
+                "Proper commissioning and testing of electrical system",
                 "Fire resistant cabling used"
               ],
               "mitigatingSafeguards": [
@@ -53,7 +53,7 @@
                 "rapid release of hydrogen",
                 "explosion due to tank rupture"
               ],
-              "preventitiveSafeguards": [
+              "preventativeSafeguards": [
                 "pressure testing of tanks and piping system",
                 " tanks are located at one meter inboard"
               ],

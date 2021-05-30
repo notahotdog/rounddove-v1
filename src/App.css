@@ -52,7 +52,7 @@
   display: flex;
   flex-direction: column;
   /* align: flex-start; */
-  border: 5px solid black;
+  border: 2px solid black;
 }
 
 .json-display-header {
@@ -87,16 +87,20 @@
 }
 
 .json-display-component {
+  margin-top: 5px;
   /* border: 2px solid green; */
 }
 
 .json-component-name {
   align-items: flex-start;
   display: flex;
+  font-size: 22px;
 }
 
 .json-subcomponent-name {
   /* border: 2px solid green; */
+  font-size: larger;
+  font-weight: 500;
   display: flex;
   justify-content: flex-start;
 }
@@ -104,17 +108,31 @@
 .json-display-hazard {
   display: flex;
   flex-direction: row;
-  margin-top: 2px;
-  border: 2px solid purple;
+  margin-top: 9px;
+  /* border: 2px solid purple; */
   justify-content: space-evenly;
+}
+
+.json-display-hazards-col-heading {
+  display: flex;
+  flex-direction: row;
+}
+
+.json-hazard-col-heading {
+  font-size: medium;
+  font-weight: bold;
+  width: 20%;
 }
 
 .json-display-hazards-col {
   /* border: 2px solid yellowgreen; */
+  width: 20%;
+  border-right: 1px solid lightblue;
 }
 
 .json-hazard-name {
   /* border: 2px solid maroon; */
+  display: flex;
 }
 
 .json-display-causes {
@@ -124,4 +142,14 @@
   /* margin-left: 30px; */
   /* border: 2px solid cyan; */
   /* justify-content: center;*/
+}
+
+.hazard-col-heading {
+  font-size: medium;
+  font-weight: bold;
+}
+
+.json-display-points {
+  margin-left: 2px;
+  margin-right: 2px;
 }

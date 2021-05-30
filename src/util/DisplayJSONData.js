@@ -31,17 +31,31 @@ export default class DisplayJSONData extends Component {
           {data.components.map((component, index) => {
             return (
               <div className="json-display-component" key={index}>
-                <Title className="json-component-name" level={4}>
+                <div className="json-component-name">
                   Component: {component.componentName}
-                </Title>
+                </div>
                 <div className="json-display-subcomponents">
                   {component.subcomponents.map((subcomponent, subIndex) => {
                     return (
                       <div key={subIndex}>
-                        <Title className="json-subcomponent-name" level={4}>
+                        <div className="json-subcomponent-name">
                           Subcomponent: {subcomponent.subcomponentName}
-                        </Title>
-                        {/* <Title level={5}>Hazards</Title> */}
+                        </div>
+
+                        <div className="json-display-hazards-col-heading">
+                          <div className="json-hazard-col-heading">Hazard</div>
+                          <div className="json-hazard-col-heading">Causes</div>
+                          <div className="json-hazard-col-heading">
+                            Consequences
+                          </div>
+                          <div className="json-hazard-col-heading">
+                            Preventative Safeguards
+                          </div>
+                          <div className="json-hazard-col-heading">
+                            Mitigating Safeguards
+                          </div>
+                        </div>
+
                         {subcomponent.hazards.map((hazard, hazardIndex) => {
                           return (
                             <div
@@ -50,18 +64,16 @@ export default class DisplayJSONData extends Component {
                             >
                               <div className="json-display-hazards-col">
                                 <div className="json-hazard-name">
-                                  <div className="hazard-heading">Hazard:</div>
-                                  {hazard.hazardName}
+                                  • {hazard.hazardName}
                                 </div>
                               </div>
 
                               <div className="json-display-hazards-col">
                                 <div className="json-display-causes">
-                                  <div className="causes-heading">Causes: </div>
-                                  <div className="causes-points">
+                                  <div className="json-display-points">
                                     {hazard.causes.map((cause, causeIndex) => {
                                       return (
-                                        <div key={causeIndex}>{cause}</div>
+                                        <div key={causeIndex}> • {cause}</div>
                                       );
                                     })}
                                   </div>
@@ -70,15 +82,12 @@ export default class DisplayJSONData extends Component {
 
                               <div className="json-display-hazards-col">
                                 <div className="json-display-consequences">
-                                  <div className="consequences-heading">
-                                    Consequences:{" "}
-                                  </div>
-                                  <div className="consequences-points">
+                                  <div className="json-display-points">
                                     {hazard.consequences.map(
                                       (consequence, consequenceIndex) => {
                                         return (
                                           <div key={consequenceIndex}>
-                                            {consequence}
+                                            • {consequence}
                                           </div>
                                         );
                                       }
@@ -89,18 +98,15 @@ export default class DisplayJSONData extends Component {
 
                               <div className="json-display-hazards-col">
                                 <div className="json-display-preventitiveSafeguards">
-                                  <div className="preventitiveSafeguards-heading">
-                                    Preventitive Safeguards:{" "}
-                                  </div>
-                                  <div className="preventitiveSafeguards-points">
-                                    {hazard.preventitiveSafeguards.map(
+                                  <div className="json-display-points">
+                                    {hazard.preventativeSafeguards.map(
                                       (
-                                        preventitiveSafeguard,
-                                        preventitiveSafeguardIndex
+                                        preventativeSafeguard,
+                                        preventativeSafeguardIndex
                                       ) => {
                                         return (
-                                          <div key={preventitiveSafeguardIndex}>
-                                            {preventitiveSafeguard}
+                                          <div key={preventativeSafeguardIndex}>
+                                            • {preventativeSafeguard}
                                           </div>
                                         );
                                       }
@@ -111,10 +117,7 @@ export default class DisplayJSONData extends Component {
 
                               <div className="json-display-hazards-col">
                                 <div className="json-display-mitigatingSafeguards">
-                                  <div className="mitigatingSafeguards-heading">
-                                    Mitigating Safeguards:{" "}
-                                  </div>
-                                  <div className="mitigatingSafeguards-points">
+                                  <div className="json-display-points">
                                     {hazard.mitigatingSafeguards.map(
                                       (
                                         mitigatingSafeguard,
@@ -122,7 +125,7 @@ export default class DisplayJSONData extends Component {
                                       ) => {
                                         return (
                                           <div key={mitigatingSafeguardIndex}>
-                                            {mitigatingSafeguard}
+                                            • {mitigatingSafeguard}
                                           </div>
                                         );
                                       }

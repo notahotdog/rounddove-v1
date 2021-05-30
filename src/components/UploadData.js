@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { Upload, message, Button } from "antd";
+import { Upload, message, Button, Typography } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { findAllByDisplayValue } from "@testing-library/dom";
 // import { dataTestJSON } from "../util/JSONHandler";
 // import { displayJSON } from "../util/JSONHandler";
 import DisplayJSONData from "../util/DisplayJSONData";
+
+const { Title } = Typography;
 
 var de = false;
 
@@ -13,7 +15,7 @@ export default class UploadData extends Component {
     super(props);
 
     this.state = {
-      jsonData: { workshopName: "undefined", components: [] },
+      jsonData: { workshopName: "---", components: [] },
     };
 
     this.fileHandler = this.fileHandler.bind(this);
@@ -79,7 +81,7 @@ export default class UploadData extends Component {
     console.log("JSON Data in Render: ", this.state.jsonData);
     return (
       <div>
-        <h1>Upload Data To Backend</h1>
+        <Title level={1}>Upload Data To Database </Title>
         <div
           className="uploadData"
           style={{ display: "flex", flexDirection: "row" }}
