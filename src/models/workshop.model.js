@@ -4,12 +4,38 @@ const Schema = mongoose.Schema;
 // const NodeSchema = new Schema({ name: String }); //subcomponents should be present inside here
 // const hazardDataSchema = new Schema({ name: { type: String } }); //subcomponents should be present inside here
 
-var hazardDataSchema = new Schema({
-  name: { type: String },
+// var hazardDataSchema = new Schema({
+//   name: { type: String },
+// });
+
+// const workshopSchema = new Schema({
+//   name: {
+//     type: String,
+//     required: true,
+//   },
+//   tags: {
+//     type: [String],
+//     default: ["pending"],
+//   },
+//   hazardData: {
+//     // type: [String],
+//     type: [String],
+//     // type: [hazardDataSchema],
+//   },
+//   //node: [NodeSchema], //component
+// });
+
+const componentSchema = new Schema({
+  componentName: {
+    type: String,
+  },
+  subcomponents: {
+    type: [String],
+  },
 });
 
 const workshopSchema = new Schema({
-  name: {
+  workshopName: {
     type: String,
     required: true,
   },
@@ -17,12 +43,9 @@ const workshopSchema = new Schema({
     type: [String],
     default: ["pending"],
   },
-  hazardData: {
-    // type: [String],
-    type: [String],
-    // type: [hazardDataSchema],
+  components: {
+    type: [componentSchema],
   },
-  //node: [NodeSchema], //component
 });
 
 const workshop = mongoose.model("workshop", workshopSchema);

@@ -8,16 +8,13 @@ import { PlusCircleTwoTone, MinusCircleTwoTone } from "@ant-design/icons";
 var de = false;
 
 export default class WorkshopTable extends Component {
-  //Data Needs to Be Passed from the parents
-  // data = [
-  //   { key: "1", name: "Battery Workshop", tags: ["completed"] },
-  //   { key: "2", name: "Hazid Workshop", tags: ["pending"] },
-  // ];
+  //Data needs to be passed down from parents
+
   data = [
     {
       _id: "",
-      name: "",
-      hazardData: [],
+      workshopName: "",
+      components: [],
       tags: [],
     },
   ];
@@ -35,7 +32,7 @@ export default class WorkshopTable extends Component {
   componentDidMount() {
     de && console.log("Workshop Table Instance");
 
-    //Comment out when not needed
+    // Comment out when not needed
     axios.get("http://localhost:5000/workshop/").then((response) => {
       de && console.log("fetch Data", response.data);
       this.setState({ data: response.data });
@@ -44,7 +41,9 @@ export default class WorkshopTable extends Component {
     // this.timer = setInterval(() => this.loadData(), 500);
   }
 
-  //Periodically fetches from backend
+  /**
+   * Fetch Data from Backend
+   */
   loadData() {
     axios.get("http://localhost:5000/workshop/").then((response) => {
       console.log(response.data);
@@ -52,7 +51,10 @@ export default class WorkshopTable extends Component {
     });
   }
 
-  //Delete Functionality
+  /**
+   * Deletes workshop from database
+   * @param {string} workshopID
+   */
   deleteWorkshop(workshopID) {
     axios
       .delete("http://localhost:5000/workshop/" + workshopID)
@@ -63,7 +65,7 @@ export default class WorkshopTable extends Component {
 
   confirmWorkshopDeletion = (workshop) => {
     console.log("Deletion Confirmed");
-    const workshopName = workshop.name;
+    const workshopName = workshop.workshopName;
     message.success(workshopName + " Workshop Deleted");
     // console.log("Workshop Name", workshop._id);
     this.deleteWorkshop(workshop._id);
@@ -101,8 +103,8 @@ export default class WorkshopTable extends Component {
     let columns = [
       {
         title: "Workshop name",
-        dataIndex: "name",
-        key: "name",
+        dataIndex: "workshopName",
+        key: "workshopName",
         render: (text) => <a href="#/">{text}</a>,
       },
       {
@@ -132,7 +134,7 @@ export default class WorkshopTable extends Component {
         key: "action",
         render: (text, workshop) => (
           <Space size="middle">
-            <a onClick={this.editWorkshop}>Edit {workshop.name}</a>
+            <a onClick={this.editWorkshop}>Edit {workshop.workshopName}</a>
             <Popconfirm
               title="Are you sure to delete this task?"
               onConfirm={() => this.confirmWorkshopDeletion(workshop)}
@@ -155,23 +157,10 @@ export default class WorkshopTable extends Component {
           dataSource={this.state.data}
           expandable={{
             expandedRowRender: (record) =>
-              // this.printComponents(record.hazardData),
-              record.hazardData.map((x) => <p>{x}</p>),
-
-            // record.hazardData.map((x) => return <p style={{ margin: 0 }}>{x}</p>),
-            // expandIcon: ({ expanded, onExpand, record }) =>
-            //   expanded ? (
-            //     <MinusCircleTwoTone onClick={(e) => onExpand(record, e)} />
-            //   ) : (
-            //     <PlusCircleTwoTone onClick={(e) => onExpand(record, e)} />
-            //   ),
+              record.components.map((x) => <p>{x.componentName}</p>),
           }}
         />
       </div>
     );
   }
-}
-
-{
-  /* <p style={{ margin: 0 }}>{record._id}</p> */
 }

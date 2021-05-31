@@ -52,6 +52,7 @@ export default class WorkshopCreationPage extends Component {
       name: "test2",
     };
 
+    //Outdated
     const payload = {
       name: "testAPIname",
       tags: ["Completed", "Edited"],

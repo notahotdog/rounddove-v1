@@ -13,9 +13,10 @@ export default class ComponentField extends Component {
     };
   }
 
-  onChange = (value) => {
+  onChangeNoSubcomponents = (value) => {
     this.setState({ noSubComponents: value });
     //Associate noSubComponents with parent component
+    this.props.updateNoSubcomponents(this.props.index, value);
   };
 
   //Delete Component
@@ -29,7 +30,9 @@ export default class ComponentField extends Component {
       <div>
         <div className="componentTitle" style={{ fontWeight: "bold" }}>
           {" "}
-          {this.props.component}
+          {/* {this.props.component} */}
+          {this.props.component.componentName}
+          {this.props.component.noSubcomponents}
         </div>
 
         <div
@@ -45,7 +48,7 @@ export default class ComponentField extends Component {
             min={1}
             max={10}
             defaultValue={1}
-            onChange={this.onChanges}
+            onChange={this.onChangeNoSubcomponents}
             style={{ marginLeft: "20px" }}
           />
           <Button

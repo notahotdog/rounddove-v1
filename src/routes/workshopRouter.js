@@ -11,6 +11,7 @@ router.route("/").get((req, res) => {
 });
 
 //Handles POST Requests
+/*
 router.route("/add").post((req, res) => {
   const name = req.body.name;
   const tags = req.body.tags; //If Something is completed
@@ -21,6 +22,27 @@ router.route("/add").post((req, res) => {
     tags,
     hazardData,
   });
+
+  newWorkshop
+    .save()
+    .then(() => res.json("Message added"))
+    .catch((err) => res.status(400).json("Error" + err));
+});
+*/
+
+router.route("/add").post((req, res) => {
+  const workshopName = req.body.workshopName;
+  const tags = req.body.tags; //If Something is completed
+  const components = req.body.components;
+
+  const newWorkshop = new Workshop({
+    workshopName,
+    tags,
+    components,
+  });
+
+  //ROUTER REQUEST
+  console.log("REQUESTING ROUTER");
 
   newWorkshop
     .save()

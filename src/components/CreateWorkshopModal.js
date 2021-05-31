@@ -16,7 +16,6 @@ export default class CreateWorkshopModal extends Component {
     super(props);
 
     this.state = {
-      //   visible: this.props.visible,
       confirmLoading: false,
       ModalText: "Create New Workshop",
       workshopName: "",
@@ -29,14 +28,13 @@ export default class CreateWorkshopModal extends Component {
       },
     };
 
-    // this.showModal = this.showModal.bind(this);
     this.handleOk = this.handleOk.bind(this);
     this.showEmptyWorkshopNameAlert =
       this.showEmptyWorkshopNameAlert.bind(this);
   }
 
   componentDidMount() {
-    // console.log(" Workshop Modal Created");
+    console.log(" Workshop Modal Created");
   }
 
   handleOk = (data) => {
@@ -55,12 +53,20 @@ export default class CreateWorkshopModal extends Component {
 
       const jsonPayload = {};
 
-      //Save Data to Backend Here //ToBeChanged
+      //Failed Because the Payload has changed
+
       const payload = {
-        name: capitalizeFirstLetter(this.state.workshopName),
+        workshopName: capitalizeFirstLetter(this.state.workshopName),
         tags: ["Empty"],
-        hazardData: [...this.state.components],
+        components: this.state.components,
       };
+
+      //Save Data to Backend Here //ToBeChanged
+      // const payload = {
+      //   name: capitalizeFirstLetter(this.state.workshopName),
+      //   tags: ["Empty"],
+      //   hazardData: [...this.state.components],
+      // };
 
       console.log("Saving New Workshop to Database");
       console.log("New Workshop Payload: ", payload);
@@ -90,7 +96,6 @@ export default class CreateWorkshopModal extends Component {
 
   handleCancel = () => {
     this.props.closeModal();
-    //this.setState({ visible: false });
   };
 
   updateWorkshopName = (e) => {
@@ -98,39 +103,37 @@ export default class CreateWorkshopModal extends Component {
     // console.log("Updating workshop Name");
   };
 
-  //addComponents
-  addComponents = () => {
-    //Create an Object with a key value pair : name
-    // var component = { name: this.state.componentName };
-
-    // Add componentName
-
+  /**
+   *  Adds Component to list of components
+   */
+  addComponent = () => {
     const component = {
-      componentName: "",
-      noSubcomponent: 0,
+      componentName: this.state.componentName,
+      noSubcomponents: 1,
       subcomponents: [],
     };
 
     this.setState({
-      // components: [...this.state.components, component],
-      components: [...this.state.components, this.state.componentName],
+      components: [...this.state.components, component],
     });
-    // console.log(this.state.components);
   };
 
+  /**
+   *  Updates Component Name to be added from the input Field
+   * @param {string} e componentName
+   */
   updateComponentName = (e) => {
     this.setState({ componentName: e.target.value });
-
-    //if Enter button is pressed, also save value
-
-    // console.log("Updating workshop Name");
   };
 
-  //Deletion of Individual component
+  /**
+   *  Deletes component from component List
+   * @param {number} indexOfComponent to be deleted
+   */
   componentDeletion = (indexOfComponent) => {
     console.log(
       "Component To Be Deleted: ",
-      this.state.components[indexOfComponent]
+      this.state.components[indexOfComponent].componentName
     );
     var updatedComponents = deleteItemFromIndex(
       this.state.components,
@@ -140,16 +143,53 @@ export default class CreateWorkshopModal extends Component {
     this.setState({ components: updatedComponents });
   };
 
+  /**
+   * Updates the value of the no of Subcomponents a component has
+   * @param {number} indexOfComponent - index of the component to update the number of subcomponents
+   * @param {number} value - updated value to be stored
+   */
+  updateNoSubcomponents = (indexOfComponent, value) => {
+    var updatedComponent = this.state.components[indexOfComponent]; //pass by reference
+    updatedComponent.noSubcomponents = value;
+
+    console.log(
+      "Updated subcomponent value:",
+      updatedComponent.noSubcomponents
+    );
+
+    this.state.components.map((x) => {
+      console.log("Components List Debug:", x.componentName, x.noSubcomponents);
+    });
+
+    //Replaces the values of the array object
+    // const updatedComponentList = [...this.state.components];
+    // updatedComponentList[indexOfComponent] = updatedComponent;
+
+    // //Replace the object with the one in the array
+    // this.setState({ components: updatedComponentList });
+  };
+
+  /**
+   * Re-order component with previous component in the list
+   * @param {number} index - index of component to be swapped
+   */
   swapComponentsWithPrevious = (index) => {
     var swappedComponets = swapWithPrevious(this.state.components, index);
     this.setState({ components: swappedComponets });
   };
 
+  /**
+   * Re-order component with next component in the list*
+   * @param {number} index - index of component to be swapped
+   * */
   swapComponentsWithNext = (index) => {
     var swappedComponets = swapWithNext(this.state.components, index);
     this.setState({ components: swappedComponets });
   };
 
+  /**
+   * Displays Empty Workshop Name alert
+   */
   showEmptyWorkshopNameAlert() {
     message.error({
       content: "Upload failed, please enter a name for the workshop",
@@ -190,7 +230,7 @@ export default class CreateWorkshopModal extends Component {
               onChange={this.updateComponentName}
               allowClear
             />
-            <Button type="primary" onClick={this.addComponents}>
+            <Button type="primary" onClick={this.addComponent}>
               <PlusSquareOutlined />
               Add Component
             </Button>
@@ -206,6 +246,7 @@ export default class CreateWorkshopModal extends Component {
                   componentDeletion={this.componentDeletion}
                   swapComponentsWithNext={this.swapComponentsWithNext}
                   swapComponentsWithPrevious={this.swapComponentsWithPrevious}
+                  updateNoSubcomponents={this.updateNoSubcomponents}
                 />
               );
             })}
