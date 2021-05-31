@@ -46,7 +46,7 @@ export function checkFileTypeExcel(file) {
     return;
   }
   const isExcel =
-    file[0].type == "application/vnd.ms-excel" ||
+    file[0].type === "application/vnd.ms-excel" ||
     file[0].type ===
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
   if (!isExcel) {

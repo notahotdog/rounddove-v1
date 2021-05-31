@@ -2,6 +2,7 @@
 
 const router = require("express").Router();
 let Workshop = require("../models/workshop.model");
+let WorkshopComplete = require("../models/workshopComplete.model");
 
 //To Handle GET Requests
 router.route("/").get((req, res) => {
@@ -10,26 +11,7 @@ router.route("/").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-//Handles POST Requests
-/*
-router.route("/add").post((req, res) => {
-  const name = req.body.name;
-  const tags = req.body.tags; //If Something is completed
-  const hazardData = req.body.hazardData;
-
-  const newWorkshop = new Workshop({
-    name,
-    tags,
-    hazardData,
-  });
-
-  newWorkshop
-    .save()
-    .then(() => res.json("Message added"))
-    .catch((err) => res.status(400).json("Error" + err));
-});
-*/
-
+//Handle POST Requests
 router.route("/add").post((req, res) => {
   const workshopName = req.body.workshopName;
   const tags = req.body.tags; //If Something is completed
@@ -54,6 +36,28 @@ router.route("/:id").delete((req, res) => {
   Workshop.findByIdAndDelete(req.params.id)
     .then(() => res.json("Exercise deleted"))
     .catch((err) => res.status(400).json("Error: " + err));
+});
+
+//Post Request for upload components
+router.route("/addCompleteWorkshop").post((req, res) => {
+  const workshopName = req.body.workshopName;
+  const tags = req.body.tags; //If Something is completed
+  const components = req.body.components;
+
+  //change Model
+  const newWorkshopComplete = new WorkshopComplete({
+    workshopName,
+    tags,
+    components,
+  });
+
+  //ROUTER REQUEST
+  console.log("REQUESTING ROUTER");
+
+  newWorkshopComplete
+    .save()
+    .then(() => res.json("Message added"))
+    .catch((err) => res.status(400).json("Error" + err));
 });
 
 module.exports = router;

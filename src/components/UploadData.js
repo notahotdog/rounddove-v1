@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { Upload, message, Button, Typography, Popconfirm } from "antd";
+import { Upload, message, Button, Typography } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { findAllByDisplayValue } from "@testing-library/dom";
 // import { dataTestJSON } from "../util/JSONHandler";
 // import { displayJSON } from "../util/JSONHandler";
 import DisplayJSONData from "../util/DisplayJSONData";
-import Item from "antd/lib/list/Item";
-
+import axios from "axios";
 const { Title } = Typography;
 
 var de = false;
@@ -24,15 +22,33 @@ export default class UploadData extends Component {
     this.onClickSaveToBackend = this.onClickSaveToBackend.bind(this);
   }
 
-  //Doesnt do anything as of now
+  /**
+   * Clears jsonData when a file is removed
+   */
   onButtonRemove() {
     this.setState({ jsonData: { workshopName: "---", components: [] } });
   }
 
+  /**
+   * Saves uploaded data to backend
+   */
   onClickSaveToBackend() {
-    console.log("current state of jsonData: ", this.state.jsonData);
+    de && console.log("current state of jsonData: ", this.state.jsonData);
     if (this.state.jsonData.components.length !== 0) {
       //Saves to Backend
+
+      //Might need custom route to channel
+      axios.post(
+        "http://localhost:5000/workshop/addCompleteWorkshop",
+        this.state.jsonData
+      ); //Passes the payload to rest API call
+
+      de &&
+        console.log(
+          "Json DATA Saved to BACKEND",
+          JSON.stringify(this.state.jsonData)
+        );
+
       message.success({
         content: "Successfully saved to backend",
         className: "custom-class",
@@ -62,7 +78,7 @@ export default class UploadData extends Component {
     }
 
     de && console.log("fileObject.type", fileObj.type);
-    if (!(fileObj.type == "application/json")) {
+    if (!(fileObj.type === "application/json")) {
       this.setState({
         errorMessage: "Unknown file format. Only JSON files are uploaded",
       });
@@ -77,7 +93,7 @@ export default class UploadData extends Component {
       var JSONdata = JSON.parse(e.target.result);
 
       de && console.log("Uploaded file type: ", JSONdata);
-      this.setState({ jsonData: JSONdata });
+      this.setState({ jsonData: JSONdata }); // Saves Data within this component - Needs to be uploded to backend onClick
     };
     reader.readAsText(fileObj);
     console.log("Reading file as text");
@@ -108,8 +124,6 @@ export default class UploadData extends Component {
       },
     };
 
-    let { isDataUploaded } = this.state;
-
     console.log("JSON Data in Render: ", this.state.jsonData);
     return (
       <div>
@@ -119,7 +133,6 @@ export default class UploadData extends Component {
           style={{
             display: "flex",
             flexDirection: "row",
-            // border: "1px solid red",
           }}
         >
           <h3 style={{ marginLeft: "10px" }}>Upload Workshop Data [JSON]: </h3>
@@ -133,8 +146,6 @@ export default class UploadData extends Component {
               display: "flex",
               flexDirection: "row",
               justifyContent: "center",
-              // alignSelf: "flex-end",
-              // border: "2px solid red",
               marginLeft: "20px",
             }}
           >

@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import { Table, Tag, Space, Popconfirm, message } from "antd";
 import axios from "axios";
-import { CloudFilled } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { PlusCircleTwoTone, MinusCircleTwoTone } from "@ant-design/icons";
+// import { CloudFilled,PlusCircleTwoTone, MinusCircleTwoTone } from "@ant-design/icons";
 
 var de = false;
 
 export default class WorkshopTable extends Component {
-  //Data needs to be passed down from parents
-
   data = [
     {
       _id: "",
@@ -41,6 +38,7 @@ export default class WorkshopTable extends Component {
     // this.timer = setInterval(() => this.loadData(), 500);
   }
 
+  //TODO - Pass Data From Parents Instead
   /**
    * Fetch Data from Backend
    */
@@ -67,13 +65,11 @@ export default class WorkshopTable extends Component {
     console.log("Deletion Confirmed");
     const workshopName = workshop.workshopName;
     message.success(workshopName + " Workshop Deleted");
-    // console.log("Workshop Name", workshop._id);
     this.deleteWorkshop(workshop._id);
   };
 
   cancelWorkshopDeletion(e) {
     console.log(e);
-    // message.error("Click on No");
   }
 
   editWorkshop(e) {
@@ -102,7 +98,7 @@ export default class WorkshopTable extends Component {
   render() {
     let columns = [
       {
-        title: "Workshop name",
+        title: "Workshop Name",
         dataIndex: "workshopName",
         key: "workshopName",
         render: (text) => <a href="#/">{text}</a>,

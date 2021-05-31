@@ -49,24 +49,11 @@ export default class CreateWorkshopModal extends Component {
         confirmLoading: true,
       });
 
-      //Revised Format for payload
-
-      const jsonPayload = {};
-
-      //Failed Because the Payload has changed
-
       const payload = {
         workshopName: capitalizeFirstLetter(this.state.workshopName),
         tags: ["Empty"],
         components: this.state.components,
       };
-
-      //Save Data to Backend Here //ToBeChanged
-      // const payload = {
-      //   name: capitalizeFirstLetter(this.state.workshopName),
-      //   tags: ["Empty"],
-      //   hazardData: [...this.state.components],
-      // };
 
       console.log("Saving New Workshop to Database");
       console.log("New Workshop Payload: ", payload);

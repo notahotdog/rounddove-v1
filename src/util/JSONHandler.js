@@ -1,14 +1,3 @@
-// const fs = require("fs");
-
-import { render } from "@testing-library/react";
-
-// export function readJson(readObj){
-
-//     fs.readFile(,"utf-8", (err,jsonString) => {
-//         console.log(jsonString);
-//     });
-// }
-
 export function printJSON(jsonObj) {
   console.log(JSON.stringify(jsonObj));
 }
