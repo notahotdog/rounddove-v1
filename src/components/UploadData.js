@@ -34,7 +34,7 @@ export default class UploadData extends Component {
     if (this.state.jsonData.components.length !== 0) {
       //Saves to Backend
       message.success({
-        content: "Succesfully saved data to backend",
+        content: "Successfully saved to backend",
         className: "custom-class",
         style: {
           marginTop: "20vh",

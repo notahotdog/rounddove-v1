@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Input, Alert, Button } from "antd";
+import { Modal, Input, Alert, Button, message } from "antd";
 import { PlusSquareOutlined } from "@ant-design/icons";
 import {
   capitalizeFirstLetter,
@@ -21,7 +21,6 @@ export default class CreateWorkshopModal extends Component {
       ModalText: "Create New Workshop",
       workshopName: "",
       emptyModalName: false,
-      numberComponents: 1,
       components: [],
       componentName: "",
       jsonData: {
@@ -32,6 +31,8 @@ export default class CreateWorkshopModal extends Component {
 
     // this.showModal = this.showModal.bind(this);
     this.handleOk = this.handleOk.bind(this);
+    this.showEmptyWorkshopNameAlert =
+      this.showEmptyWorkshopNameAlert.bind(this);
   }
 
   componentDidMount() {
@@ -43,14 +44,18 @@ export default class CreateWorkshopModal extends Component {
     //Temporary fix
     // this.props.setWorkshopName(this.state.workshopName);
 
-    //Must Assert WorkshopName
+    //Assert Workshop Name
     if (!isEmptyString(this.state.workshopName)) {
       this.setState({
         ModalText: "This Modal will be closed after two seconds",
         confirmLoading: true,
       });
 
-      //Save Data to Backend Here
+      //Revised Format for payload
+
+      const jsonPayload = {};
+
+      //Save Data to Backend Here //ToBeChanged
       const payload = {
         name: capitalizeFirstLetter(this.state.workshopName),
         tags: ["Empty"],
@@ -69,9 +74,17 @@ export default class CreateWorkshopModal extends Component {
         });
         this.props.closeModal();
       }, 1000);
+
+      message.success({
+        content: "Workshop created successfully!",
+        className: "custom-class",
+        style: {
+          marginTop: "2vh",
+        },
+      });
     } else {
       this.setState({ emptyModalName: true });
-      // console.log("Pls input string parameter");
+      this.showEmptyWorkshopNameAlert();
     }
   };
 
@@ -85,12 +98,6 @@ export default class CreateWorkshopModal extends Component {
     // console.log("Updating workshop Name");
   };
 
-  updateNoComponents = (value) => {
-    // console.log("changed", e);
-    this.setState({ numberComponents: value });
-  };
-
-  //Conditional Render the Names of the Rows
   //addComponents
   addComponents = () => {
     //Create an Object with a key value pair : name
@@ -100,6 +107,7 @@ export default class CreateWorkshopModal extends Component {
 
     const component = {
       componentName: "",
+      noSubcomponent: 0,
       subcomponents: [],
     };
 
@@ -118,8 +126,7 @@ export default class CreateWorkshopModal extends Component {
     // console.log("Updating workshop Name");
   };
 
-  //For Individual Fields
-  //Component to be deleted
+  //Deletion of Individual component
   componentDeletion = (indexOfComponent) => {
     console.log(
       "Component To Be Deleted: ",
@@ -143,6 +150,16 @@ export default class CreateWorkshopModal extends Component {
     this.setState({ components: swappedComponets });
   };
 
+  showEmptyWorkshopNameAlert() {
+    message.error({
+      content: "Upload failed, please enter a name for the workshop",
+      className: "custom-class",
+      style: {
+        marginTop: "2vh",
+      },
+    });
+  }
+
   render() {
     const { confirmLoading, emptyModalName } = this.state;
     return (
@@ -155,13 +172,7 @@ export default class CreateWorkshopModal extends Component {
           onCancel={this.handleCancel}
         >
           {emptyModalName ? (
-            <Alert
-              // message="EmptyModal Name"
-              description="Please enter a name "
-              type="error"
-              closable
-              // onClose={onClose}
-            />
+            <Alert description="Please enter a name " type="error" closable />
           ) : null}
 
           <h3 style={{ font: "bold" }}>Workshop Name</h3>
@@ -170,7 +181,6 @@ export default class CreateWorkshopModal extends Component {
               placeholder="Type in workshop name"
               onChange={this.updateWorkshopName}
             />
-            {/* {this.state.workshopName} */}
           </div>
 
           <h4>Components</h4>

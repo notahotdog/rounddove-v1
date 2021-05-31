@@ -1,5 +1,6 @@
 {
   "workshopName": "Battery Workshop",
+  "tags" : ["Empty"],
   "components": [
     {
       "componentName": "Fuel Cell space/Room",

@@ -15,20 +15,18 @@ export default class ComponentField extends Component {
 
   onChange = (value) => {
     this.setState({ noSubComponents: value });
+    //Associate noSubComponents with parent component
   };
 
-  //This method needs to be called from the parent component
+  //Delete Component
   confirmComponentDeletion = (index) => {
     console.log("Component Deletion: ", index);
     this.props.componentDeletion(index);
   };
 
-  //this.props.index - used to delete index of the above page
-
   render() {
     return (
       <div>
-        {/* <h3>Test Component {this.props.component}</h3> */}
         <div className="componentTitle" style={{ fontWeight: "bold" }}>
           {" "}
           {this.props.component}
@@ -50,15 +48,6 @@ export default class ComponentField extends Component {
             onChange={this.onChanges}
             style={{ marginLeft: "20px" }}
           />
-          {/* {this.state.noSubComponents} */}
-          {/* <DeleteOutlined
-            style={{
-              alignSelf: "flex-end",
-              border: "2px solid red",
-              height: "100%",
-              justifyContent: "flex-end",
-            }}
-          /> */}
           <Button
             type="dashed"
             icon={<UpOutlined />}
