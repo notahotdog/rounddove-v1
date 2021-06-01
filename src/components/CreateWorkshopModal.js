@@ -231,7 +231,7 @@ export default class CreateWorkshopModal extends Component {
                 <ComponentField
                   component={component}
                   index={i}
-                  key={component.id}
+                  key={i}
                   componentDeletion={this.componentDeletion}
                   swapComponentsWithNext={this.swapComponentsWithNext}
                   swapComponentsWithPrevious={this.swapComponentsWithPrevious}

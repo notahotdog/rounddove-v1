@@ -39,7 +39,7 @@ export default class FacilitateWorkshopPage extends Component {
 
         <div className="card-list">
           {this.state.data.map((workshop) => {
-            return <FacilitatorCard data={workshop} />;
+            return <FacilitatorCard data={workshop} key={workshop._id} />;
           })}
         </div>
       </div>

@@ -30,12 +30,12 @@ export default class WorkshopTable extends Component {
     de && console.log("Workshop Table Instance");
 
     // Comment out when not needed
-    // axios.get("http://localhost:5000/workshop/").then((response) => {
-    //   de && console.log("fetch Data", response.data);
-    //   this.setState({ data: response.data });
-    // });
+    axios.get("http://localhost:5000/workshop/").then((response) => {
+      de && console.log("fetch Data", response.data);
+      this.setState({ data: response.data });
+    });
 
-    this.timer = setInterval(() => this.loadData(), 500);
+    // this.timer = setInterval(() => this.loadData(), 500);
   }
 
   //TODO - Pass Data From Parents Instead
@@ -152,9 +152,12 @@ export default class WorkshopTable extends Component {
           columns={columns}
           dataSource={this.state.data}
           expandable={{
-            expandedRowRender: (record) =>
-              record.components.map((x) => <p>{x.componentName}</p>),
+            expandedRowRender: (record, index) =>
+              record.components.map((x) => (
+                <p key={index}>{x.componentName}</p>
+              )),
           }}
+          rowKey="_id"
         />
       </div>
     );
