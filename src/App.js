@@ -8,6 +8,7 @@ import WorkshopCreationPage from "./components/WorkshopCreationPage";
 import UploadDataPage from "./components/UploadData";
 import EditWorkshop from "./components/EditWorkshop";
 import FacilitateWorkshopPage from "./components/FacilitateWorkshopPage";
+import DisplayWorkshop from "./components/DisplayWorkshop";
 
 import { Layout } from "antd";
 
@@ -38,6 +39,11 @@ function App() {
             path="/WorkshopCreationPage/UploadData"
             exact
             component={UploadDataPage}
+          />
+          <Route
+            path="/FacilitateWorkshopPage/DisplayWorkshop/"
+            exact
+            component={DisplayWorkshop}
           />
         </Layout>
       </div>

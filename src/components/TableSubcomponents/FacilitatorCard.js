@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "../../FacilitatorPage.css";
 import { Typography, Button, Card } from "antd";
-
+import { Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import DisplayWorkshop from "../DisplayWorkshop";
 const { Title } = Typography;
 
 export default class FacilitatorCard extends Component {
@@ -31,7 +33,17 @@ export default class FacilitatorCard extends Component {
           </div>
         </div>
         <div className="card-col-right">
-          <Button onClick={this.onStartWorkshop}> Start Workshop </Button>
+          <Button>
+            <Link
+              to={{
+                pathname: "/FacilitateWorkshopPage/DisplayWorkshop/",
+                // state: { name: "umar" },
+                state: { data: this.props.data },
+              }}
+            >
+              Start Workshop
+            </Link>
+          </Button>
           <div className="workshop-facilitator">Facilitator: Josie</div>
         </div>
       </div>
