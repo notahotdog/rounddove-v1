@@ -60,3 +60,8 @@ export function checkFileTypeExcel(file) {
   console.log("errorMessage", errorMessage);
   return errorMessage;
 }
+
+//Returns True if JSON file is in the correct format
+export function checkFileFormat(jsonObj) {
+  return true;
+}

@@ -8,6 +8,7 @@ import {
   swapWithPrevious,
   swapWithNext,
 } from "../util/Utilities";
+import { getComponentTemplate } from "../util/JSONHandler";
 import axios from "axios";
 import ComponentField from "./modalComponents/ComponentField";
 
@@ -38,10 +39,6 @@ export default class CreateWorkshopModal extends Component {
   }
 
   handleOk = (data) => {
-    //Server Backend - Handle Data being passed into backend
-    //Temporary fix
-    // this.props.setWorkshopName(this.state.workshopName);
-
     //Assert Workshop Name
     if (!isEmptyString(this.state.workshopName)) {
       this.setState({
@@ -49,16 +46,30 @@ export default class CreateWorkshopModal extends Component {
         confirmLoading: true,
       });
 
+      //Update Component Formatting with templates
+      var formattedComponents = [];
+      this.state.components.map((component) => {
+        formattedComponents.push(
+          getComponentTemplate(
+            component.componentName,
+            component.noSubcomponents
+          )
+        );
+      });
+
+      // console.log("GENERATED COMPONENTS TEMPLATE:", formattedComponents);
+
       const payload = {
         workshopName: capitalizeFirstLetter(this.state.workshopName),
         tags: ["Empty"],
-        components: this.state.components,
+        components: formattedComponents,
       };
 
       console.log("Saving New Workshop to Database");
       console.log("New Workshop Payload: ", payload);
 
-      axios.post("http://localhost:5000/workshop/add", payload); //Passes the payload to rest API call
+      axios.post("http://localhost:5000/workshop/addCompleteWorkshop", payload);
+      // axios.post("http://localhost:5000/workshop/add", payload); // No longer needed
 
       setTimeout(() => {
         this.setState({
@@ -99,6 +110,8 @@ export default class CreateWorkshopModal extends Component {
       noSubcomponents: 1,
       subcomponents: [],
     };
+
+    //Subcomponent Should Be Placed with Default Value
 
     this.setState({
       components: [...this.state.components, component],
@@ -143,17 +156,6 @@ export default class CreateWorkshopModal extends Component {
       "Updated subcomponent value:",
       updatedComponent.noSubcomponents
     );
-
-    this.state.components.map((x) => {
-      console.log("Components List Debug:", x.componentName, x.noSubcomponents);
-    });
-
-    //Replaces the values of the array object
-    // const updatedComponentList = [...this.state.components];
-    // updatedComponentList[indexOfComponent] = updatedComponent;
-
-    // //Replace the object with the one in the array
-    // this.setState({ components: updatedComponentList });
   };
 
   /**
