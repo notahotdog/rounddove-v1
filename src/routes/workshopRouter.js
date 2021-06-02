@@ -2,7 +2,6 @@
 
 const router = require("express").Router();
 let Workshop = require("../models/workshop.model");
-// let WorkshopTest = require("../models/workshop.model.test");
 // let WorkshopComplete = require("../models/workshopComplete.model");
 
 //To Handle GET Requests

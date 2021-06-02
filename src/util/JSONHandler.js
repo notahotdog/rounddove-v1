@@ -7,6 +7,18 @@ export function printJSON(jsonObj) {
 }
 
 /**
+ * Returns a unique Subnode ID
+ * @param {string} nodeName
+ * @param {string} subnodeName
+ * @returns  unique subnode id
+ */
+export function getUniqueNodeID(nodeName, subnodeName) {
+  console.log("GETTING NODE NAME");
+  console.log(nodeName.concat(subnodeName));
+  return nodeName.concat(subnodeName);
+}
+
+/**
  *  Returns an Node with proper format
  * @param {String} name
  * @param {Number} noSubnodes
@@ -28,14 +40,14 @@ export function getNodeTemplate(name, noSubnodes) {
  *  Subnode JSON Template
  */
 export const subnodeTemplate = {
-  subnodeName: "Default",
+  subnodeName: "Default subnode",
   hazards: [
     {
-      hazardName: "Default",
-      causes: ["Default"],
-      consequences: ["Default"],
-      preventativeSafeguards: ["Default"],
-      mitigatingSafeguards: ["Default"],
+      hazardName: "Default Hazard",
+      causes: ["Default Cause"],
+      consequences: ["Default Consquence"],
+      preventativeSafeguards: ["Default preventative safeguard"],
+      mitigatingSafeguards: ["Default mitigating safeguard"],
     },
   ],
 };
@@ -44,11 +56,11 @@ export const subnodeTemplate = {
  * Hazard JSON Template
  */
 export const hazardTemplate = {
-  hazardName: "Default",
-  causes: ["Default"],
-  consequences: ["Default"],
-  preventativeSafeguards: ["Default"],
-  mitigatingSafeguards: ["Default"],
+  hazardName: "Default Hazard",
+  causes: ["Default Cause"],
+  consequences: ["Default Consquence"],
+  preventativeSafeguards: ["Default preventative safeguard"],
+  mitigatingSafeguards: ["Default mitigating safeguard"],
 };
 
 //Outdated
