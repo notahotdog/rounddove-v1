@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../../FacilitatorPage.css";
-import { Menu } from "antd";
+import { Menu, Carousel, Button } from "antd";
 import { getUniqueNodeID } from "../../util/JSONHandler";
 
 const { SubMenu } = Menu;
@@ -10,23 +10,46 @@ export default class DisplayWorkshopBody extends Component {
     super(props);
 
     this.state = {
-      subnodeLoaded: this.props.data.nodes[0].nodeName, //First Subnode Loaded
+      subnodeLoaded: {
+        hazardName: "",
+        causes: [""],
+        consequences: [""],
+        preventativeSafeguards: [""],
+        mitigatingSafeguards: [""],
+      },
     };
 
     this.updateClickedItem = this.updateClickedItem.bind(this);
+    this.next = this.next.bind(this);
+    this.previous = this.previous.bind(this);
+    this.carousel = React.createRef();
+  }
+
+  next() {
+    this.carousel.next();
+  }
+  previous() {
+    this.carousel.prev();
   }
 
   //Set The State of the Component
-  updateClickedItem(node, subnode) {
-    console.log("State of Menu Item Clicked", node);
-    this.props.setNodeSelected(node.nodeName, subnode.subnodeName);
+  updateClickedItem(node, subnode, hazard) {
+    console.log("State of Menu Item Clicked Hazard", hazard);
+    this.props.setNodeSelected(
+      node.nodeName,
+      subnode.subnodeName,
+      hazard.hazardName
+    );
 
-    //Pass to parent component
+    //Need to Update Subnode
+    this.setState({ subnodeLoaded: hazard });
   }
 
   render() {
     const { data } = this.props;
-    console.log("subnodeName", this.state.subnodeLoaded);
+    const { subnodeLoaded } = this.state;
+    // console.log("subnodeName", this.state.subnodeLoaded);
+    console.log("nodeData", this.props.data.nodes[0].subnodes[0].hazards[0]);
 
     return (
       <div className="dw-body">
@@ -44,14 +67,29 @@ export default class DisplayWorkshopBody extends Component {
                 <SubMenu key={node.nodeName} title={node.nodeName}>
                   {node.subnodes.map((subnode, subnodeIndex) => {
                     return (
-                      <Menu.Item
+                      <SubMenu
                         key={node.nodeName
                           .concat(subnode.subnodeName)
-                          .concat(subnodeIndex)} //Changing the key to something more suitable to be referenced
-                        onClick={() => this.updateClickedItem(node, subnode)}
+                          .concat(subnodeIndex)}
+                        title={subnode.subnodeName}
                       >
-                        {subnode.subnodeName}
-                      </Menu.Item>
+                        {subnode.hazards.map((hazard, hazardIndex) => {
+                          return (
+                            <Menu.Item
+                              key={node.nodeName
+                                .concat(subnode.subnodeName)
+                                .concat(subnodeIndex)
+                                .concat(hazard.hazardName)
+                                .concat(hazardIndex)}
+                              onClick={() =>
+                                this.updateClickedItem(node, subnode, hazard)
+                              }
+                            >
+                              {hazard.hazardName}
+                            </Menu.Item>
+                          );
+                        })}
+                      </SubMenu>
                     );
                   })}
                 </SubMenu>
@@ -59,8 +97,35 @@ export default class DisplayWorkshopBody extends Component {
             })}
           </Menu>
         </div>
-        <div className="dw-body-right-col">Right Col</div>
+        <div className="dw-body-right-col">
+          {/* Right Col */}
+          <Button onClick={this.previous}>Previous</Button>
+          <Button onClick={this.next}>Next</Button>
+          <Carousel
+            className="dw-carousel-div"
+            arrows={true}
+            ref={(node) => (this.carousel = node)}
+          >
+            <div>{subnodeLoaded.hazardName}</div>
+            <div>
+              {subnodeLoaded.causes.map((cause) => {
+                return <div>{cause}</div>;
+              })}
+            </div>
+          </Carousel>
+        </div>
       </div>
     );
   }
 }
+
+// return (
+//   <Menu.Item
+//     key={node.nodeName
+//       .concat(subnode.subnodeName)
+//       .concat(subnodeIndex)} //Changing the key to something more suitable to be referenced
+//     onClick={() => this.updateClickedItem(node, subnode)}
+//   >
+//     {subnode.subnodeName}
+//   </Menu.Item>
+// );

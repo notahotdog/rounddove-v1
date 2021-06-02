@@ -124,12 +124,17 @@
 
 .dw-body-left-col {
   width: 20%;
-  /* background-color: aqua; */
+  background-color: white;
   border: 1px solid black;
-  height: 100%;
+  height: 80vh;
 }
 
 .dw-body-right-col {
   width: 80%;
-  /* background-color: brown; */
+  background-color: brown;
+}
+
+.dw-carousel-div {
+  background-color: aquamarine;
+  height: 80vh;
 }

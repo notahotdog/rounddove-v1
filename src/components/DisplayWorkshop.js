@@ -10,6 +10,7 @@ export default class DisplayWorkshop extends Component {
     this.state = {
       nodeSelected: "",
       subnodeSelected: "",
+      hazardSelected: "",
     };
 
     this.setNodeSelected = this.setNodeSelected.bind(this);
@@ -23,8 +24,12 @@ export default class DisplayWorkshop extends Component {
   }
 
   //Obtain From Children - Node to be assesed
-  setNodeSelected(nameNode, nameSubnode) {
-    this.setState({ nodeSelected: nameNode, subnodeSelected: nameSubnode });
+  setNodeSelected(nameNode, nameSubnode, nameHazard) {
+    this.setState({
+      nodeSelected: nameNode,
+      subnodeSelected: nameSubnode,
+      hazardSelected: nameHazard,
+    });
   }
 
   render() {
@@ -36,6 +41,7 @@ export default class DisplayWorkshop extends Component {
           <div className="dw-header-details">
             <div>Node Assessed: {this.state.nodeSelected}</div>
             <div>Sub node Assessed: {this.state.subnodeSelected}</div>
+            <div>Hazard Assessed: {this.state.hazardSelected}</div>
           </div>
         </div>
         <DisplayWorkshopBody
