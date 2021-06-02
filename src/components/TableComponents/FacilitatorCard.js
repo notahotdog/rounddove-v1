@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import "../../FacilitatorPage.css";
-import { Typography, Button, Card } from "antd";
+import { Button } from "antd";
 import { Link } from "react-router-dom";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import DisplayWorkshop from "../DisplayWorkshop";
-const { Title } = Typography;
+// import DisplayWorkshop from "../DisplayWorkshop";
 
 export default class FacilitatorCard extends Component {
   constructor(props) {
@@ -37,7 +35,6 @@ export default class FacilitatorCard extends Component {
             <Link
               to={{
                 pathname: "/FacilitateWorkshopPage/DisplayWorkshop/",
-                // state: { name: "umar" },
                 state: { data: this.props.data },
               }}
             >

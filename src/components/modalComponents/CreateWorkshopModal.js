@@ -9,7 +9,6 @@ import {
   swapWithPrevious,
   swapWithNext,
 } from "../../util/Utilities";
-// import { getNodeTemplate } from "../util/JSONHandler";
 import { getNodeTemplate } from "../../util/JSONHandler";
 
 import axios from "axios";
@@ -63,14 +62,14 @@ export default class CreateWorkshopModal extends Component {
       console.log("Saving New Workshop to Database");
       console.log("New Workshop Payload: ", payload);
 
-      //   axios.post("http://localhost:5000/workshop/addCompleteWorkshop", payload); //Need to change to fit nodes
+      axios.post("http://localhost:5000/workshop/addWorkshop", payload); //Need to change to fit nodes
       // axios.post("http://localhost:5000/workshop/add", payload); // No longer needed
 
       setTimeout(() => {
         this.setState({
           confirmLoading: false,
           workshopName: "",
-          nodes: [], //dont know if this will introduce a bug
+          nodes: [],
         });
         this.props.closeModal();
       }, 1000);
@@ -108,7 +107,7 @@ export default class CreateWorkshopModal extends Component {
    */
   addNode = () => {
     var nodeName;
-    this.state.nodeName == ""
+    this.state.nodeName === ""
       ? (nodeName = "Default Node")
       : (nodeName = this.state.nodeName);
     console.log("nodeName: ", nodeName);

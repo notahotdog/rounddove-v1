@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Layout, Typography, Button } from "antd";
 import { PlusOutlined, CloudUploadOutlined } from "@ant-design/icons";
-// import WorkshopModal from "./CreateWorkshopModal";
-import WorkshopModal from "./modalComponents/CreateWorkshopModal-Node";
+import WorkshopModal from "./modalComponents/CreateWorkshopModal";
 import WorkshopTable from "./WorkshopTable";
 import axios from "axios"; //handles push/get requests
 import { Link } from "react-router-dom";
@@ -73,6 +72,7 @@ export default class WorkshopCreationPage extends Component {
 
     //Need to change the payload
     // axios.post("http://localhost:5000/workshop/add", payload); //Passes the payload to rest API call
+    axios.post("http://localhost:5000/workshop/addWorkshop", payload); //Passes the payload to rest API call
   };
 
   render() {
@@ -112,7 +112,7 @@ export default class WorkshopCreationPage extends Component {
             Test API Set
           </Button> */}
           {/* <h1>Workshop Name: {workshopName}</h1> */}
-          {/* <WorkshopTable /> */}
+          <WorkshopTable />
         </div>
       </Layout>
     );

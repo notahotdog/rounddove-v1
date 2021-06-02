@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 
+//Displays Individual Workshop, Needs data to be passed from link
 export default class DisplayWorkshop extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     // const { state, location } = this.props;
     console.log("Workshop Generated");

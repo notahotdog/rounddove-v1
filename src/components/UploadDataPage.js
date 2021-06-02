@@ -1,258 +1,149 @@
 import React, { Component } from "react";
-import { Table, Button, Popconfirm, Row, Col, Upload } from "antd";
-import { ExcelRenderer } from "react-excel-renderer";
-import {
-  UploadOutlined,
-  DeleteOutlined,
-  PlusOutlined,
-  CheckSquareFilled,
-} from "@ant-design/icons";
-import { EditableFormRow, EditableCell } from "./TableSubcomponents/editable";
+import { Upload, message, Button, Typography } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import DisplayJSONData from "../util/DisplayJSONData";
+import axios from "axios";
+const { Title } = Typography;
 
 export default class UploadDataPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      cols: [],
-      rows: [],
-
-      errorMessage: null,
-      columns: [
-        {
-          title: "HAZARD",
-          dataIndex: "hazard",
-          editable: true,
-        },
-        { title: "CAUSE", dataIndex: "cause", editable: true },
-        { title: "CONSEQUENCE", dataIndex: "consequence", editable: true },
-        {
-          title: "PREVENTATIVE SAFEGUARDS",
-          dataIndex: "preventativeSafeguards",
-          editable: true,
-        },
-        {
-          title: "MITIGATING SAFEGAURDS",
-          dataIndex: "mitigatingSafeguards",
-          editable: true,
-        },
-
-        {
-          title: "Action",
-          dataIndex: "action",
-          render: (text, record) =>
-            this.state.rows.length >= 1 ? (
-              <Popconfirm
-                title="Are you sure you want to delete?"
-                onConfirm={{ color: "red", fontSize: "20px" }}
-              >
-                <DeleteOutlined
-                  type="delete"
-                  theme="filled"
-                  style={{ color: "red", fontSize: "20px" }}
-                />
-              </Popconfirm>
-            ) : null,
-        },
-      ],
+      jsonData: { workshopName: "---", nodes: [] },
     };
+
+    this.fileHandler = this.fileHandler.bind(this);
+    this.onButtonRemove = this.onButtonRemove.bind(this);
+    this.onClickSaveToBackend = this.onClickSaveToBackend.bind(this);
   }
 
-  //Handle Save when editing file
-  handleSave = (row) => {
-    const newData = [...this.state.rows]; //Copies the previous stateData
-    const index = newData.findIndex((item) => row.key === item.key); // Find the index of this row corresponding to the actual row
-    const item = newData[index];
+  /**
+   * Clears jsonData when a file is removed
+   */
+  onButtonRemove() {
+    this.setState({ jsonData: { workshopName: "---", nodes: [] } });
+  }
 
-    //Replaces the contents of the row
-    //Delete one element from the array[index] and replace with an obj({iterm, row})
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    this.setState({ rows: newData });
-  };
+  /**
+   * Saves uploaded data to backend
+   */
+  onClickSaveToBackend() {
+    if (this.state.jsonData.nodes.length !== 0) {
+      axios.post(
+        "http://localhost:5000/workshop/addWorkshop",
+        this.state.jsonData
+      );
 
-  //Handles file processing
-  fileHandler = (fileList) => {
-    console.log("fileList", fileList);
+      message.success({
+        content: "Successfully saved to backend",
+        className: "custom-class",
+        style: {
+          marginTop: "20vh",
+        },
+      });
+    } else {
+      message.error({
+        content: "Please upload data before saving in the database",
+        className: "custom-class",
+        style: {
+          marginTop: "20vh",
+        },
+      });
+    }
+  }
+
+  fileHandler(fileList) {
     let fileObj = fileList;
     if (!fileObj) {
       this.setState({ errorMessage: "No file uploaded" });
       return false;
     }
 
-    console.log("fileObj.type", fileObj.type);
-    if (
-      !(
-        fileObj.type == "application/vnd.ms-excel" ||
-        fileObj.type ===
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      )
-    ) {
+    if (!(fileObj.type === "application/json")) {
       this.setState({
-        errorMessage: "Unknown file format. Only Excel files are uploaded!",
+        errorMessage: "Unknown file format. Only JSON files are uploaded",
       });
       return false;
     }
 
-    //Renders Excel File
-    ExcelRenderer(fileObj, (err, resp) => {
-      if (err) {
-        console.log(err);
-      } else {
-        let newRows = [];
-        resp.rows.slice(1).map((row, index) => {
-          if (row && row != "undefined") {
-            newRows.push({
-              key: index,
-              hazard: row[0],
-              cause: row[1],
-              consequence: row[2],
-              preventativeSafeguards: row[3],
-              mitigatingSafeguards: row[4],
-            });
- 
-            if (newRows.length === 0) {
-              this.setState({ errorMessage: "No data found in file!" });
-              return false;
-            } else {
-              this.setState({
-                cols: resp.cols,
-                rows: newRows,
-                errorMessage: null,
-              });
-            }
-          }
-        });
-        return false
-      };
+    const reader = new FileReader();
 
-  //Send to server
-  handleSubmit = async () => {
-    console.log("submitting", this.state.rows);
-    //Submit to API
-  };
-
-  //Delete Rows
-  handleDelete = (key) => {
-    const rows = [...this.state.rows];
-    this.setState({ rows: rows.filter((item) => item.key !== key) });
-  };
-
-  //Add rows
-  handleAdd = () => {
-    const { count, rows } = this.state;
-
-    const newData = {
-      key: count,
-      hazard: "Thermal Runway",
-      cause: "Battery Overcharge",
-      consequence: "Battery Internal Short Circuit",
-      preventativeSafeguards: "BMS as primary safeguard",
-      mitigatingSafeguards: "Gas based fire fighting system",
+    //Async function
+    reader.onload = (e) => {
+      var JSONdata = JSON.parse(e.target.result);
+      this.setState({ jsonData: JSONdata }); // Saves Data within this Component - Needs to be uploded to backend onClick
     };
-
-    this.setState({ rows: [newData, ...rows], count: count + 1 });
-
-  };
+    reader.readAsText(fileObj);
+    console.log("Reading file as text");
+    return false;
+  }
 
   render() {
-    const components = {
-      body: {
-        row: EditableFormRow,
-        cell: EditableCell,
+    //property for the Upload Tag
+    const props = {
+      name: "file",
+      headers: {
+        authorization: "authorization-text",
+      },
+      accept: ".json", //asserts the json file format
+      beforeUpload: this.fileHandler,
+      onChange(info) {
+        if (info.file.status !== "uploading") {
+          console.log(info.file, info.fileList);
+        }
+        if (info.file.status === "done") {
+          message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === "error") {
+          message.error(`${info.file.name} file upload failed.`);
+        }
       },
     };
 
-    const columns = this.state.columns.map((col) => {
-      if (!col.editable) {
-        return col;
-      }
-
-      return {
-        ...col,
-        onCell: (record) => ({
-          //when youre at a particular cell, but what exactly does it do?
-          record,
-          editable: col.editable,
-          dataIndex: col.dataIndex,
-          title: col.title,
-          handleSave: this.handleSave,
-        }),
-      };
-    });
-
+    console.log("JSON Data in Render: ", this.state.jsonData);
     return (
       <div>
-        <h1>Import Hazard Data</h1>
-        <Row gutter={16} justify="space-between">
-          {/* <Col
-            span={8}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: "5%",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <div className="page-title">Upload Data</div>
-            </div>
-          </Col> */}
-          <Col
-            span={8}
-            align="right"
-            style={{ display: "flex", justifyContent: "space-between" }}
-          >
-            {this.state.rows.length > 0 && (
-              <>
-                <Button
-                  onClick={this.handleAdd}
-                  size="large"
-                  type="info"
-                  style={{ marginBottom: 16 }}
-                >
-                  <PlusOutlined type="plus" />
-                  Add a row
-                </Button>
-                <Button
-                  onClick={this.handleSubmit}
-                  size="large"
-                  type="primary"
-                  style={{
-                    marginBottom: 16,
-                    marginLeft: 10,
-                  }}
-                >
-                  Submit Data
-                </Button>
-              </>
-            )}
-          </Col>
-        </Row>
-
-        <div>
-          <Upload
-            name="file"
-            beforeUpload={this.fileHandler}
-            onRemove={() => this.setState({ rows: [] })}
-          >
-            <Button>
-              <UploadOutlined type="upload" /> Click to Upload
+        <Title level={1}>Upload Data To Database </Title>
+        <div
+          className="uploadData"
+          style={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <h3 style={{ marginLeft: "10px" }}>Upload Workshop Data [JSON]: </h3>
+          <Upload {...props} onRemove={this.onButtonRemove}>
+            <Button icon={<UploadOutlined />} style={{ marginLeft: "20px" }}>
+              Click to Upload
             </Button>
           </Upload>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              marginLeft: "20px",
+            }}
+          >
+            <Button
+              style={{
+                backgroundColor: "#a0d911",
+                color: "white",
+                fontWeight: "10px",
+              }}
+              onClick={this.onClickSaveToBackend}
+            >
+              Save To Database
+            </Button>
+          </div>
         </div>
-        <div style={{ marginTop: 20 }}>
-          <Table
-            components={components}
-            rowClassName={() => "editable"}
-            dataSource={this.state.rows}
-            columns={columns}
-          />
-        </div>
+        <br />
+        {this.state.jsonData.length !== 0 ? (
+          <DisplayJSONData data={this.state.jsonData} />
+        ) : (
+          <div>Please Upload Data</div>
+        )}
       </div>
     );
-    // return <div> {this.props.location.state.name}Upload Page Data</div>;
   }
 }

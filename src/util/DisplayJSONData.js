@@ -23,23 +23,21 @@ export default class DisplayJSONData extends Component {
             Workshop Name : {data.workshopName}{" "}
           </Title>
           <Title className="json-no-components" level={5}>
-            No of Components : {data.components.length}
+            No of Nodes : {data.nodes.length}
           </Title>
         </div>
 
         <div className="json-display-body">
-          {data.components.map((component, index) => {
+          {data.nodes.map((node, index) => {
             return (
               <div className="json-display-component" key={index}>
-                <div className="json-component-name">
-                  Component: {component.componentName}
-                </div>
+                <div className="json-component-name">Node: {node.nodeName}</div>
                 <div className="json-display-subcomponents">
-                  {component.subcomponents.map((subcomponent, subIndex) => {
+                  {node.subnodes.map((subnode, subIndex) => {
                     return (
                       <div key={subIndex}>
                         <div className="json-subcomponent-name">
-                          Subcomponent: {subcomponent.subcomponentName}
+                          Subnode: {subnode.subnodeName}
                         </div>
 
                         <div className="json-display-hazards-col-heading">
@@ -56,7 +54,7 @@ export default class DisplayJSONData extends Component {
                           </div>
                         </div>
 
-                        {subcomponent.hazards.map((hazard, hazardIndex) => {
+                        {subnode.hazards.map((hazard, hazardIndex) => {
                           return (
                             <div
                               className="json-display-hazard"

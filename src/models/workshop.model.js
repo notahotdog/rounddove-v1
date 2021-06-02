@@ -1,12 +1,39 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const componentSchema = new Schema({
-  componentName: {
+const hazardSchema = new Schema({
+  hazardName: {
     type: String,
   },
-  subcomponents: {
+  causes: {
     type: [String],
+  },
+  consequences: {
+    type: [String],
+  },
+  preventativeSafeguards: {
+    type: [String],
+  },
+  mitigatingSafeguards: {
+    type: [String],
+  },
+});
+
+const subnodeSchema = new Schema({
+  subnodeName: {
+    type: String,
+  },
+  hazards: {
+    type: [hazardSchema],
+  },
+});
+
+const nodeSchema = new Schema({
+  nodeName: {
+    type: String,
+  },
+  subnodes: {
+    type: [subnodeSchema],
   },
 });
 
@@ -19,10 +46,10 @@ const workshopSchema = new Schema({
     type: [String],
     default: ["pending"],
   },
-  components: {
-    type: [componentSchema],
+  nodes: {
+    type: [nodeSchema],
   },
 });
 
-const workshop = mongoose.model("workshop", workshopSchema, "workshop");
+const workshop = mongoose.model("workshop", workshopSchema, "workshop"); //The first param specifies the collection name
 module.exports = workshop;

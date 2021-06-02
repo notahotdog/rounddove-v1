@@ -11,7 +11,7 @@ export default class WorkshopTable extends Component {
     {
       _id: "",
       workshopName: "",
-      components: [],
+      nodes: [],
       tags: [],
     },
   ];
@@ -61,6 +61,10 @@ export default class WorkshopTable extends Component {
       });
   }
 
+  /**
+   * Deleted object from Backend
+   * @param {Object} workshop  object to be deleted
+   */
   confirmWorkshopDeletion = (workshop) => {
     console.log("Deletion Confirmed");
     const workshopName = workshop.workshopName;
@@ -73,7 +77,6 @@ export default class WorkshopTable extends Component {
   }
 
   editWorkshop(e) {
-    // e.preventDefault();
     console.log("EDITING WORKSHOP");
 
     //Bring me to another Page with the relevant props
@@ -85,14 +88,6 @@ export default class WorkshopTable extends Component {
     >
       Load Backend{" "}
     </Link>;
-
-    // return <Link to="/">Page</Link>;
-  }
-
-  printComponents(x) {
-    x.map((item) => console.log(item));
-    // console.log("Hazard Data to be printed: ", x);
-    // return <p> {x}</p>;
   }
 
   render() {
@@ -153,9 +148,7 @@ export default class WorkshopTable extends Component {
           dataSource={this.state.data}
           expandable={{
             expandedRowRender: (record, index) =>
-              record.components.map((x) => (
-                <p key={index}>{x.componentName}</p>
-              )),
+              record.nodes.map((x) => <p key={x._id}>{x.nodeName}</p>),
           }}
           rowKey="_id"
         />

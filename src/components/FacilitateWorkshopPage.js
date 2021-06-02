@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import FacilitatorCard from "./TableSubcomponents/FacilitatorCard";
+import FacilitatorCard from "./TableComponents/FacilitatorCard";
 import axios from "axios";
 import "../FacilitatorPage.css";
 
