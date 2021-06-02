@@ -18,15 +18,14 @@ export default class CreateWorkshopModal extends Component {
 
     this.state = {
       confirmLoading: false,
-      ModalText: "Create New Workshop",
       workshopName: "",
       emptyModalName: false,
       components: [],
       componentName: "",
-      jsonData: {
-        workshopName: "",
-        components: [],
-      },
+      // jsonData: {
+      //   workshopName: "",
+      //   components: [],
+      // },
     };
 
     this.handleOk = this.handleOk.bind(this);
@@ -42,7 +41,6 @@ export default class CreateWorkshopModal extends Component {
     //Assert Workshop Name
     if (!isEmptyString(this.state.workshopName)) {
       this.setState({
-        ModalText: "This Modal will be closed after two seconds",
         confirmLoading: true,
       });
 
@@ -105,10 +103,17 @@ export default class CreateWorkshopModal extends Component {
    *  Adds Component to list of components
    */
   addComponent = () => {
+    var nodeName;
+    this.state.componentName == ""
+      ? (nodeName = "Default Node")
+      : (nodeName = this.state.componentName);
+    console.log("nodeName: ", nodeName);
+
     const component = {
-      componentName: this.state.componentName,
+      componentName: nodeName,
+      // componentName: this.state.componentName,
       noSubcomponents: 1,
-      subcomponents: [],
+      // subcomponents: [],
     };
 
     //Subcomponent Should Be Placed with Default Value

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Layout, Typography, Button } from "antd";
 import { PlusOutlined, CloudUploadOutlined } from "@ant-design/icons";
-import WorkshopModal from "./CreateWorkshopModal";
+// import WorkshopModal from "./CreateWorkshopModal";
+import WorkshopModal from "./modalComponents/CreateWorkshopModal-Node";
 import WorkshopTable from "./WorkshopTable";
 import axios from "axios"; //handles push/get requests
 import { Link } from "react-router-dom";
@@ -10,19 +11,15 @@ const { Title } = Typography;
 var de = false;
 
 export default class WorkshopCreationPage extends Component {
-  //Main Node
-  //Sub Node
-  //Hazard Node
   constructor(props) {
     super(props);
 
     this.state = {
       modalVisible: false,
-      workshopName: "",
+      // workshopName: "", //used for debugging but is not needed
     };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
-    this.setWorkshopName = this.setWorkshopName.bind(this);
     this.testApi = this.testApi.bind(this);
   }
 
@@ -30,50 +27,55 @@ export default class WorkshopCreationPage extends Component {
     de && console.log("Workshop Creation Page");
   }
 
-  //Todo - Fetch Backend when it detects an addition, set data as list of items to be collected for processing
-  fetchWorkshop = () => {
-    //getWorkshop Details from backend
-  };
-
+  /**
+   * Displays Modal
+   */
   showModal = () => {
     this.setState({ modalVisible: true });
   };
 
+  /**
+   * Hides Modal
+   */
   hideModal = () => {
     this.setState({ modalVisible: false });
   };
 
+  /**
+   * Test API mimic workshop creation
+   */
   testApi = () => {
-    //Trigger an api store
-    var obj1 = {
-      name: "test1",
-    };
-    var obj2 = {
-      name: "test2",
+    const payload = {
+      workshopName: "Test API Workshop ",
+      tags: ["Empty"],
+      nodes: [
+        {
+          nodeName: "TestNode-1",
+          subnodes: [
+            {
+              subnodeName: "subnode-1",
+              hazards: [
+                {
+                  hazardName: "hazard-1",
+                  causes: ["cause-1", "cause-2"],
+                  consequences: ["consequence-1", "consequence-2"],
+                  preventativeSafeguards: ["pSafeguard-1", "pSafeguard-2"],
+                  mitigatingSafeguards: ["mSafeguard-1"],
+                },
+              ],
+            },
+          ],
+        },
+      ],
     };
 
-    //Outdated
-    const payload = {
-      name: "testAPIname",
-      tags: ["Completed", "Edited"],
-      hazardData: [obj1, obj2],
-    };
     console.log("Test Payload: ", payload);
 
-    axios.post("http://localhost:5000/workshop/add", payload); //Passes the payload to rest API call
-  };
-
-  setWorkshopName = (name) => {
-    this.setState({ workshopName: name });
-  };
-
-  //Load Backend Data
-  uploadBackendData = () => {
-    // console.log("Upload backend data");
+    //Need to change the payload
+    // axios.post("http://localhost:5000/workshop/add", payload); //Passes the payload to rest API call
   };
 
   render() {
-    // const { workshopName } = this.state;
     return (
       <Layout>
         <div className="workshop-creation-page">
@@ -81,7 +83,6 @@ export default class WorkshopCreationPage extends Component {
           <WorkshopModal
             visible={this.state.modalVisible}
             closeModal={this.hideModal}
-            setWorkshopName={this.setWorkshopName}
           />
           <div className="button-choice">
             <Button type="primary" onClick={this.showModal}>
@@ -91,14 +92,14 @@ export default class WorkshopCreationPage extends Component {
             <Button
               type="primary"
               style={{ marginLeft: "20px", color: "white" }}
-              onClick={this.uploadBackendData}
+              // onClick={() => console.log("Load BackEnd Data Button Pressed")}
             >
               <CloudUploadOutlined />
               <Link
                 style={{ color: "white" }}
                 to={{
                   pathname: "/WorkshopCreationPage/UploadData",
-                  state: { name: "jacob" },
+                  // state: { name: "jacob" },
                 }}
               >
                 Load Backend{" "}
@@ -111,7 +112,7 @@ export default class WorkshopCreationPage extends Component {
             Test API Set
           </Button> */}
           {/* <h1>Workshop Name: {workshopName}</h1> */}
-          <WorkshopTable />
+          {/* <WorkshopTable /> */}
         </div>
       </Layout>
     );

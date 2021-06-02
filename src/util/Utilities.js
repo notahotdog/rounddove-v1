@@ -1,13 +1,27 @@
+/**
+ * Capitalizes the first letter of a String
+ * @param {string} str string to capitalise
+ * @returns  String with first letter capitalised
+ */
 export function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-//Checks if empty string
+/**
+ * Checks if the string is empty
+ * @param {string} str to check if empty
+ * @returns  bool
+ */
 export function isEmptyString(str) {
   return str === "" || str === null;
 }
 
-//Deletes Item from array at Index
+/**
+ * Deletes Item from array at Index
+ * @param {array} array
+ * @param {number} index of item to be deleted
+ * @returns array with item removed
+ */
 export function deleteItemFromIndex(array, index) {
   var tempArray = array;
   if (index > -1) {
@@ -16,7 +30,12 @@ export function deleteItemFromIndex(array, index) {
   return tempArray;
 }
 
-//Swaps from Higher Index to lowerIndex
+/**
+ *  Swaps from higherIndex to lowerIndex
+ * @param {array} array - to be swapped
+ * @param {number} index - of item to be swapped
+ * @returns
+ */
 export function swapWithPrevious(array, index) {
   var tempArray = array;
   if (index > 0) {
@@ -27,11 +46,17 @@ export function swapWithPrevious(array, index) {
   return tempArray;
 }
 
-//Swaps from Higher Index to lowerIndex
+/**
+ *  Swaps from lowerIndex to higherIndex
+ * @param {array} array - to be swapped
+ * @param {number} index - of item to be swapped
+ * @returns
+ */
 export function swapWithNext(array, index) {
   var tempArray = array;
+
+  //check if boundary exceeded
   if (index < array.length - 1) {
-    //If it doesnt exceed theearswapable boundary
     var temp = tempArray[index];
     tempArray[index] = tempArray[index + 1];
     tempArray[index + 1] = temp;
@@ -39,7 +64,12 @@ export function swapWithNext(array, index) {
   return tempArray;
 }
 
-//Returns true if file type excel
+//Not used for now
+/**
+ * Check if the filetype is an excel
+ * @param {object} file
+ * @returns
+ */
 export function checkFileTypeExcel(file) {
   let errorMessage = "";
   if (!file || !file[0]) {
@@ -61,7 +91,11 @@ export function checkFileTypeExcel(file) {
   return errorMessage;
 }
 
-//Returns True if JSON file is in the correct format
+/**
+ * Checks if the jsonObject is in the correct format
+ * @param {object} jsonObj to be evaluated
+ * @returns
+ */
 export function checkFileFormat(jsonObj) {
   return true;
 }

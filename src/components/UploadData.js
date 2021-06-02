@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Upload, message, Button, Typography } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 // import { dataTestJSON } from "../util/JSONHandler";
-// import { displayJSON } from "../util/JSONHandler";
 import DisplayJSONData from "../util/DisplayJSONData";
 import axios from "axios";
 const { Title } = Typography;

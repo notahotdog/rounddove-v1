@@ -1,32 +1,57 @@
+/**
+ * PrintJSON to console
+ * @param {Object} jsonObj to be console logged
+ */
 export function printJSON(jsonObj) {
   console.log(JSON.stringify(jsonObj));
 }
 
-export function displayJSON(props) {
-  // console.log("DISPLAY JSON DATA");
-  return (
-    <div>
-      <h1>DISPLAY JSON DATA</h1>
-      {/* <h1> Workshop Name: {jsonObj.workshopName}</h1> */}
-    </div>
-  );
+/**
+ *  Returns an Node with proper format
+ * @param {String} name
+ * @param {Number} noSubnodes
+ * @returns Node with template of n no Subnodes
+ */
+export function getNodeTemplate(name, noSubnodes) {
+  var nodeObj = {
+    nodeName: name,
+    subnodes: [],
+  };
+
+  for (var i = 0; i < noSubnodes; i++) {
+    nodeObj.subnodes.push(subnodeTemplate);
+  }
+  return nodeObj;
 }
 
-// export function getDefaultSubcomponentTemplate(name) {
-//   const obj = {
-//     subcomponentName: "default",
-//     hazards: [
-//       {
-//         hazardName: "default",
-//         cause: ["default"],
-//         consequence: ["default"],
-//         preventitiveSafeguards: ["default"],
-//         mitigatingSafeguards: ["default"],
-//       },
-//     ],
-//   };
-//   return obj;
-// }
+/**
+ *  Subnode JSON Template
+ */
+export const subnodeTemplate = {
+  subnodeName: "Default",
+  hazards: [
+    {
+      hazardName: "Default",
+      causes: ["Default"],
+      consequences: ["Default"],
+      preventativeSafeguards: ["Default"],
+      mitigatingSafeguards: ["Default"],
+    },
+  ],
+};
+
+/**
+ * Hazard JSON Template
+ */
+export const hazardTemplate = {
+  hazardName: "Default",
+  causes: ["Default"],
+  consequences: ["Default"],
+  preventativeSafeguards: ["Default"],
+  mitigatingSafeguards: ["Default"],
+};
+
+//Outdated
 
 export function getComponentTemplate(name, noSubcomponents) {
   var componentObj = {
@@ -53,13 +78,3 @@ export const subcomponentTemplate = {
     },
   ],
 };
-
-export const hazardTemplate = {
-  hazardName: "Default",
-  causes: ["Default"],
-  consequences: ["Default"],
-  preventativeSafeguards: ["Default"],
-  mitigatingSafeguards: ["Default"],
-};
-
-// export class DisplayJson
