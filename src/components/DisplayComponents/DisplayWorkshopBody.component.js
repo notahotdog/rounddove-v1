@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../../FacilitatorPage.css";
 import { Menu, Carousel, Button } from "antd";
-import { getUniqueNodeID } from "../../util/JSONHandler";
 
 const { SubMenu } = Menu;
 
@@ -10,7 +9,7 @@ export default class DisplayWorkshopBody extends Component {
     super(props);
 
     this.state = {
-      subnodeLoaded: {
+      hazardLoaded: {
         hazardName: "",
         causes: [""],
         consequences: [""],
@@ -41,14 +40,12 @@ export default class DisplayWorkshopBody extends Component {
       hazard.hazardName
     );
 
-    //Need to Update Subnode
-    this.setState({ subnodeLoaded: hazard });
+    this.setState({ hazardLoaded: hazard });
   }
 
   render() {
     const { data } = this.props;
-    const { subnodeLoaded } = this.state;
-    // console.log("subnodeName", this.state.subnodeLoaded);
+    const { hazardLoaded } = this.state;
     console.log("nodeData", this.props.data.nodes[0].subnodes[0].hazards[0]);
 
     return (
@@ -106,9 +103,9 @@ export default class DisplayWorkshopBody extends Component {
             arrows={true}
             ref={(node) => (this.carousel = node)}
           >
-            <div>{subnodeLoaded.hazardName}</div>
+            <div>{hazardLoaded.hazardName}</div>
             <div>
-              {subnodeLoaded.causes.map((cause) => {
+              {hazardLoaded.causes.map((cause) => {
                 return <div>{cause}</div>;
               })}
             </div>
@@ -118,14 +115,3 @@ export default class DisplayWorkshopBody extends Component {
     );
   }
 }
-
-// return (
-//   <Menu.Item
-//     key={node.nodeName
-//       .concat(subnode.subnodeName)
-//       .concat(subnodeIndex)} //Changing the key to something more suitable to be referenced
-//     onClick={() => this.updateClickedItem(node, subnode)}
-//   >
-//     {subnode.subnodeName}
-//   </Menu.Item>
-// );

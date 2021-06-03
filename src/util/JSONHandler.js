@@ -1,3 +1,27 @@
+//Ensures that repeated instances of the object are removed from the array
+/**
+ *
+ * @param {array of objects} array
+ * @param {string} hazard to be removed
+ */
+export function filterMoreThanOneInstanceHazard(array, hazard) {
+  var oneInstanceFound = false;
+  // var hazardtoNotBeRepeated = hazard;
+  var filteredArray = [];
+  array.forEach((hazardIter) => {
+    if (hazardIter.hazardName !== hazard) {
+      filteredArray.push(hazardIter);
+    } else if (!oneInstanceFound && hazardIter.hazardName === hazard) {
+      filteredArray.push(hazardIter);
+    }
+
+    if (hazard.hazardName === hazard) {
+      oneInstanceFound = true;
+    }
+  });
+  console.log("Filtered Hazard List:", filteredArray);
+}
+
 /**
  * PrintJSON to console
  * @param {Object} jsonObj to be console logged

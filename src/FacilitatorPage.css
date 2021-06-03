@@ -138,3 +138,27 @@
   background-color: aquamarine;
   height: 80vh;
 }
+
+.ew-main-div {
+  height: 100vh;
+  background-color: lightcyan;
+  display: flex;
+  flex-direction: column;
+}
+
+.ew-main-body {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.ew-left-col {
+  background-color: lightsalmon;
+  width: 30%;
+  height: 97vh;
+}
+.ew-right-col {
+  background-color: lightseagreen;
+  width: 70%;
+  height: 97vh;
+}

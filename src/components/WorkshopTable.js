@@ -22,7 +22,6 @@ export default class WorkshopTable extends Component {
     this.state = {
       data: this.data,
     };
-    this.editWorkshop = this.editWorkshop.bind(this);
   }
 
   //Todo - Place in a higher level component than drill to this component
@@ -76,20 +75,6 @@ export default class WorkshopTable extends Component {
     console.log(e);
   }
 
-  editWorkshop(e) {
-    console.log("EDITING WORKSHOP");
-
-    //Bring me to another Page with the relevant props
-    <Link
-      to={{
-        pathname: "/WorkshopCreationPage/EditWorkshop",
-        // state: { name: "testData" },
-      }}
-    >
-      Load Backend{" "}
-    </Link>;
-  }
-
   render() {
     let columns = [
       {
@@ -125,7 +110,14 @@ export default class WorkshopTable extends Component {
         key: "action",
         render: (text, workshop) => (
           <Space size="middle">
-            <a onClick={this.editWorkshop}>Edit {workshop.workshopName}</a>
+            <Link
+              to={{
+                pathname: "/WorkshopCreationPage/EditWorkshop",
+                state: { workshop: workshop },
+              }}
+            >
+              Edit {workshop.workshopName}
+            </Link>
             <Popconfirm
               title="Are you sure to delete this task?"
               onConfirm={() => this.confirmWorkshopDeletion(workshop)}

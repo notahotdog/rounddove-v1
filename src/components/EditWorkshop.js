@@ -1,11 +1,29 @@
 import React, { Component } from "react";
 
 export default class EditWorkshop extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      workshop: "",
+    };
+  }
+
+  componentDidMount() {
+    console.log("Edit Workshop Instance");
+    // console.log(this.props.location.state.workshop);
+    this.setState({ workshop: this.props.location.state.workshop });
+  }
+
   render() {
-    return (
-      <div>
-        <h1>{this.props.location.name} Workshop Edit Page</h1>
-      </div>
-    );
+    if (this.state.workshop !== "") {
+      return (
+        <div>
+          <h1>{this.state.workshop.workshopName}</h1>
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
   }
 }

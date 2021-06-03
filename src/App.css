@@ -44,6 +44,29 @@
   background-color: white;
 }
 
+.mainpage-div {
+  background-color: #61dafb;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+.main-page-leftcol {
+  border: 2px solid black;
+  width: 30%;
+}
+
+.left-title {
+  font-size: 20px;
+}
+.left-item {
+  border: 2px solid purple;
+}
+
+.main-page-rightcol {
+  border: 2px solid red;
+  width: 70%;
+}
+
 .workshop-creation-page {
   background-color: white;
 }

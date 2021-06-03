@@ -47,7 +47,7 @@ export default class CreateWorkshopModal extends Component {
 
       //Update Node Formatting with templates
       var formattedNodes = [];
-      this.state.nodes.map((node) => {
+      this.state.nodes.forEach((node) => {
         formattedNodes.push(getNodeTemplate(node.nodeName, node.noSubnodes));
       });
 

@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Layout, Typography, Button } from "antd";
-import { PlusOutlined, CloudUploadOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  CloudUploadOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
 import WorkshopModal from "./modalComponents/CreateWorkshopModal";
 import WorkshopTable from "./WorkshopTable";
 import axios from "axios"; //handles push/get requests
@@ -79,11 +83,12 @@ export default class WorkshopCreationPage extends Component {
     return (
       <Layout>
         <div className="workshop-creation-page">
-          <Title level={2}> Create Workshop</Title>
           <WorkshopModal
             visible={this.state.modalVisible}
             closeModal={this.hideModal}
           />
+
+          <Title level={2}> Create Workshop</Title>
           <div className="button-choice">
             <Button type="primary" onClick={this.showModal}>
               <PlusOutlined />
@@ -99,10 +104,24 @@ export default class WorkshopCreationPage extends Component {
                 style={{ color: "white" }}
                 to={{
                   pathname: "/WorkshopCreationPage/UploadData",
-                  // state: { name: "jacob" },
                 }}
               >
                 Load Backend{" "}
+              </Link>
+            </Button>
+
+            <Button
+              type="primary"
+              style={{ marginLeft: "20px", color: "white" }}
+            >
+              <Link
+                style={{ color: "white" }}
+                to={{
+                  pathname: "/WorkshopCreationPage/EditHazardsPage",
+                }}
+              >
+                <EditOutlined />
+                Edit Hazards
               </Link>
             </Button>
           </div>

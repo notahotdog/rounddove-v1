@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import DisplayWorkshopBody from "./DisplayComponents/DisplayWorkshopBody.component";
-import { Menu } from "antd";
 
 //Displays Individual Workshop, Needs data to be passed from link
 export default class DisplayWorkshop extends Component {

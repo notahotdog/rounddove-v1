@@ -3,6 +3,7 @@
 const router = require("express").Router();
 let Workshop = require("../models/workshop.model");
 // let WorkshopComplete = require("../models/workshopComplete.model");
+let Hazard = require("../models/hazard.model");
 
 //To Handle GET Requests
 router.route("/").get((req, res) => {
@@ -11,7 +12,35 @@ router.route("/").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-//Node
+router.route("/hazard").get((req, res) => {
+  // console.log("ROUTER HAZZAAARDJ");
+  Hazard.find()
+    .then((users) => res.json(users))
+    .catch((err) => res.status(400).json("Error" + err));
+});
+
+router.route("/addHazard").post((req, res) => {
+  const hazardName = req.body.hazardName;
+  const causes = req.body.causes;
+  const consequences = req.body.consequences;
+  const preventativeSafeguards = req.body.preventativeSafeguards;
+  const mitigatingSafeguards = req.body.mitigatingSafeguards;
+
+  const newHazard = new Hazard({
+    hazardName,
+    causes,
+    consequences,
+    preventativeSafeguards,
+    mitigatingSafeguards,
+  });
+
+  console.log("Router Saving Hazard");
+
+  newHazard
+    .save()
+    .then(() => res.json("Hazard Added"))
+    .catch((err) => res.status(400).json("Error" + err));
+});
 
 //POST Request - Add Workshop
 router.route("/addWorkshop").post((req, res) => {

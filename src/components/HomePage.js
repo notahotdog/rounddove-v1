@@ -1,13 +1,27 @@
 import React, { Component } from "react";
 import { message, Button } from "antd";
+import { Typography } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import { getComponentTemplate } from "../util/JSONHandler";
 
+const { Title } = Typography;
+
 export default class HomePage extends Component {
-  state = {
-    value: "Some Text Here",
-    isInEditMode: false,
-  };
+  // state = {
+  //   value: "Some Text Here",
+  //   isInEditMode: false,
+  //   valCtr: 0,
+  // };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      valCtr: 0,
+    };
+
+    // this.incrementCtr = this.incrementCtr.bind(this);
+  }
 
   printMessage() {
     alert("Test Button");
@@ -36,10 +50,30 @@ export default class HomePage extends Component {
     return <h1 onDoubleClick={this.changeEditMode}>{this.state.value} </h1>;
   };
 
+  // incrementCtr() {
+  //   this.setState({ valCtr: (this.state.valCtr += 1) });
+  // }
+
   render() {
     return (
-      <div>
-        <h1>HomePage Test</h1>
+      <div className="mainpage-div">
+        <div className="main-page-leftcol">
+          <Title level={2} className="left-title">
+            Left Column
+          </Title>
+          <div
+            className="left-item"
+            style={{ backgroundColour: "red" }}
+            onClick={this.incrementCtr}
+          >
+            Item 1 {this.state.valCtr}
+          </div>
+          <div className="left-item" style={{ order: 2 }}>
+            Item 2
+          </div>
+        </div>
+        <div className="main-page-rightcol">R</div>
+        {/* <h1>HomePage Test</h1>
         <h1> Add more stuff</h1>
         <Button onClick={this.printMessage}>Test Button</Button>
         <Button
@@ -51,8 +85,6 @@ export default class HomePage extends Component {
         />
         <Button onClick={this.testObject}> Test Template</Button>
         {/* {JSON.stringify(subcomponentTemplate)} */}
-        <div></div>
-        {JSON.stringify(getComponentTemplate("testcomponent", 2))}
       </div>
     );
   }
