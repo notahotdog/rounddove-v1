@@ -1,3 +1,58 @@
+//correct key names
+const templateKeys = [
+  "workshopName",
+  "tags",
+  "nodes",
+  "nodeName",
+  "subnodes",
+  "subnodeName",
+  "hazards",
+  "hazardName",
+  "causes",
+  "consequences",
+  "preventativeSafeguards",
+  "mitigatingSafeguards",
+];
+
+//recursively obtain all keys used and puts them into an array
+const GetAllKeys = (obj, results = []) => {
+  const result = results;
+  Object.keys(obj).forEach((key) => {
+    if (typeof obj[key] === "object" && typeof obj[key][0] !== "string") {
+      if (typeof obj[key][0] === "object") result.push(key);
+      GetAllKeys(obj[key], result);
+    } else result.push(key);
+  });
+
+  return result;
+}; //returns array of keys used in whole object
+
+//recursively go through all keys and their values
+var checkVal = 0; //global var for checking data types
+const CheckAllValues = (obj) => {
+  Object.keys(obj).forEach((key) => {
+    if (typeof obj[key] === "object") CheckAllValues(obj[key]);
+    else if (typeof obj[key] !== "string") checkVal -= 1;
+  });
+
+  return checkVal;
+}; //returns 0 if all data types correct
+
+//compare keys against the key template and check key value data types
+//only need to import this function
+export function CompareObjects(testObj) {
+  //remove duplicates in array
+  var testKeyArray = [...new Set(GetAllKeys(testObj))];
+  //compare string versions of key array
+  if (JSON.stringify(testKeyArray) === JSON.stringify(templateKeys)) {
+    checkVal = 0;
+    //check data type of key values
+    if (CheckAllValues(testObj) === 0) return true;
+  }
+
+  return false;
+}
+
 //Ensures that repeated instances of the object are removed from the array
 /**
  *

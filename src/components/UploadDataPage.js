@@ -3,6 +3,7 @@ import { Upload, message, Button, Typography } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import DisplayJSONData from "../util/DisplayJSONData";
 import axios from "axios";
+import { CompareObjects } from "../util/JSONHandler";
 const { Title } = Typography;
 
 export default class UploadDataPage extends Component {
@@ -72,7 +73,13 @@ export default class UploadDataPage extends Component {
     //Async function
     reader.onload = (e) => {
       var JSONdata = JSON.parse(e.target.result);
-      this.setState({ jsonData: JSONdata }); // Saves Data within this Component - Needs to be uploded to backend onClick
+      if (CompareObjects(JSONdata)) {
+        this.setState({ jsonData: JSONdata }); // Saves Data within this Component - Needs to be uploded to backend onClick
+      } else {
+        alert("upload failed due to improper data structure");
+
+        return false;
+      }
     };
     reader.readAsText(fileObj);
     console.log("Reading file as text");

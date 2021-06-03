@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Typography, Button, Menu } from "antd";
+import { Menu } from "antd";
 import EditableHazardComponent from "./TableComponents/EditableHazardComponent";
 
-const { Title } = Typography;
+// const { Title } = Typography;
 
 export default class EditHazardsPage extends Component {
   constructor(props) {
@@ -11,7 +11,13 @@ export default class EditHazardsPage extends Component {
 
     this.state = {
       hazardList: [],
-      hazardSelected: {},
+      hazardSelected: {
+        hazardName: "Default",
+        causes: ["Default"],
+        consequences: ["Default"],
+        preventativeSafeguards: ["Default"],
+        mitigatingSafeguards: ["Default"],
+      },
     };
 
     this.getHazardData = this.getHazardData.bind(this);

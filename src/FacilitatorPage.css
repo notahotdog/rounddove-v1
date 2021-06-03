@@ -162,3 +162,29 @@
   width: 70%;
   height: 97vh;
 }
+
+.ew-hazard-sel-title {
+  background-color: lightcoral;
+  height: 3vh;
+}
+
+.ew-hazard-content {
+  background-color: white;
+  height: 94vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.ew-hazard-col {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 50%;
+}
+
+.ehi-box {
+  font-size: 14px;
+  line-height: 1.3;
+  border: 1px solid black;
+}
