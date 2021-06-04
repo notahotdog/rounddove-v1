@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import EditableHazardItem from "./EditableHazardItem";
 
 export default class EditableHazardComponent extends Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
 
     this.state = {
       hazardSelected: {
+        id: this.props.hazardSelected.id,
         hazardName: this.props.hazardSelected.hazardName,
         causes: this.props.hazardSelected.causes,
         // causes: ["cause1", "cause2"],
@@ -19,12 +21,13 @@ export default class EditableHazardComponent extends Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     //Set the state of the props
-    // this.setState({})
-    // this.setState({ hazardSelected: this.props.hazardSelected });
-    // console.log(this.props.hazardSelected);
     console.log("Editable Hazard Component Mounted");
     // this.setState({ hazardSelected: this.props.hazardSelected });
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   /**
@@ -33,14 +36,17 @@ export default class EditableHazardComponent extends Component {
    */
   componentDidUpdate(prevProps) {
     if (this.props.hazardSelected !== prevProps.hazardSelected) {
-      console.log("new props");
+      console.log("Hazard Selected Updated: ", this.props.hazardSelected);
       this.setState({ hazardSelected: this.props.hazardSelected });
     }
   }
 
   render() {
     // const { hazardSelected } = this.props;
-    console.log(this.state.hazardSelected);
+    console.log(
+      "Editable Hazard Component ID selected",
+      this.state.hazardSelected
+    );
     return (
       <div>
         <div className="ew-hazard-sel-title">
@@ -57,7 +63,12 @@ export default class EditableHazardComponent extends Component {
             <h1>Consequences</h1>
             {this.state.hazardSelected.consequences.map(
               (consequence, index) => {
-                return <EditableHazardItem key={index} data={consequence} />;
+                return (
+                  <EditableHazardItem
+                    key={consequence.concat(index)}
+                    data={consequence}
+                  />
+                );
               }
             )}
           </div>

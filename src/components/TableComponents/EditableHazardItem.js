@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { Input } from "antd";
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import { FiEdit, FiSave } from "react-icons/fi";
+import { RiDeleteBin4Fill } from "react-icons/ri";
 
 export default class EditableHazardItem extends Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
 
@@ -21,11 +25,20 @@ export default class EditableHazardItem extends Component {
   setNotEditable() {
     this.setState({ editable: false });
   }
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
 
   componentDidUpdate(prevProps) {
     if (this.props.data !== prevProps.data) {
-      console.log("new props");
-      this.setState({ dataAssessed: this.props.dataAssessed });
+      console.log("Edit Hazard Item Updated");
+      console.log("Data Assessed: ", this.props.data);
+      this.setState({ dataAssessed: this.props.data });
+      // this.setState({ dataAssessed: this.props.dataAssessed });
     }
   }
 
@@ -33,7 +46,13 @@ export default class EditableHazardItem extends Component {
     if (!this.state.editable) {
       return (
         <div className="ehi-box">
-          <div onDoubleClick={this.setEditable}>{this.state.dataAssessed}</div>
+          {/* {this.state.dataAssessed} */}
+          <div className="ehi-box-default" onDoubleClick={this.setEditable}>
+            <div style={{ marginLeft: "5px" }}>{this.state.dataAssessed}</div>
+          </div>
+          <AiOutlineEdit />
+          <AiOutlineDelete />
+          {/* <RiDeleteBin4Fill /> */}
         </div>
       );
     } else {
@@ -42,7 +61,12 @@ export default class EditableHazardItem extends Component {
           <Input
             defaultValue={this.state.dataAssessed}
             onDoubleClick={this.setNotEditable}
+            size="small"
+            style={{ width: "95%" }}
           />
+          <FiSave />
+          {/* <AiOutlineEdit /> */}
+          <AiOutlineDelete />
         </div>
       );
     }

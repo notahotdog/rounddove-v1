@@ -96,8 +96,11 @@ export default class DisplayWorkshopBody extends Component {
         </div>
         <div className="dw-body-right-col">
           {/* Right Col */}
-          <Button onClick={this.previous}>Previous</Button>
-          <Button onClick={this.next}>Next</Button>
+          <div className="dw-body-right-header">
+            <Button onClick={this.previous}>Previous</Button>
+            <Button onClick={this.next}>Next</Button>
+            <div> Mark as Completed</div>
+          </div>
           <Carousel
             className="dw-carousel-div"
             arrows={true}

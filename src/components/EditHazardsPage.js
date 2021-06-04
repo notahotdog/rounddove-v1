@@ -2,16 +2,17 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Menu } from "antd";
 import EditableHazardComponent from "./TableComponents/EditableHazardComponent";
-
 // const { Title } = Typography;
 
 export default class EditHazardsPage extends Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
 
     this.state = {
       hazardList: [],
       hazardSelected: {
+        id: "",
         hazardName: "Default",
         causes: ["Default"],
         consequences: ["Default"],
@@ -60,6 +61,7 @@ export default class EditHazardsPage extends Component {
 
   componentDidMount() {
     console.log("Edit Hazards Page Instance");
+    this._isMounted = true;
 
     // axios.get("http://localhost:5000/workshop/").then((response) => {
     //   console.log("Fetch Data", response.data);
@@ -76,13 +78,15 @@ export default class EditHazardsPage extends Component {
     //Get Extract all the Hazards Found from the Backend sort by ascending order of hazards
     //Iterate through all the data/nodes/subnodes/store the associated
   }
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
 
   //Update Hazard Selected
-  updateHazardSelected(hazard) {
-    console.log(hazard.hazardName, " Selected");
-    console.log(hazard._id);
-
-    this.setState({ hazardSelected: hazard });
+  updateHazardSelected(hazard, hazardID) {
+    var hazardObj = hazard;
+    hazardObj.id = hazard._id; //Makes the hazard id identifiable could be bad practice
+    this.setState({ hazardSelected: hazardObj });
     // alert("hazardName: ", hazard.hazardName, "    hazardID:", hazard.__id);
   }
 
@@ -111,8 +115,10 @@ export default class EditHazardsPage extends Component {
               {this.state.hazardList.map((hazard, index) => {
                 return (
                   <Menu.Item
-                    key={index}
-                    onClick={() => this.updateHazardSelected(hazard)}
+                    key={hazard._id}
+                    onClick={() =>
+                      this.updateHazardSelected(hazard, hazard._id)
+                    }
                   >
                     {hazard.hazardName}
                   </Menu.Item>
