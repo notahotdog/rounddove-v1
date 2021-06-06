@@ -3,6 +3,7 @@ import { Input } from "antd";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { FiEdit, FiSave } from "react-icons/fi";
 import { RiDeleteBin4Fill } from "react-icons/ri";
+import e from "cors";
 
 export default class EditableHazardItem extends Component {
   _isMounted = false;
@@ -42,11 +43,23 @@ export default class EditableHazardItem extends Component {
     }
   }
 
+  //Update individual field state
+  updateFieldName = (e) => {
+    this.setState({ dataAssessed: e.target.value });
+    // this.props.updateData(e.target.value, this.props.index);
+  };
+
+  //Detect Changed state than triggers the option to change
+  saveToParent() {
+    this.props.updateData(this.state.dataAssessed, this.props.index);
+  }
+
   render() {
     if (!this.state.editable) {
       return (
         <div className="ehi-box">
           {/* {this.state.dataAssessed} */}
+          {this.saveToParent()}
           <div className="ehi-box-default" onDoubleClick={this.setEditable}>
             <div style={{ marginLeft: "5px" }}>{this.state.dataAssessed}</div>
           </div>
@@ -63,6 +76,7 @@ export default class EditableHazardItem extends Component {
             onDoubleClick={this.setNotEditable}
             size="small"
             style={{ width: "95%" }}
+            onChange={this.updateFieldName}
           />
           <FiSave />
           {/* <AiOutlineEdit /> */}

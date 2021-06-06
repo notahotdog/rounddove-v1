@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import EditableHazardItem from "./EditableHazardItem";
+import { Button } from "antd";
+import axios from "axios";
 
 export default class EditableHazardComponent extends Component {
   _isMounted = false;
@@ -11,13 +13,15 @@ export default class EditableHazardComponent extends Component {
         id: this.props.hazardSelected.id,
         hazardName: this.props.hazardSelected.hazardName,
         causes: this.props.hazardSelected.causes,
-        // causes: ["cause1", "cause2"],
         consequences: this.props.hazardSelected.consequences,
         preventativeSafeguards:
           this.props.hazardSelected.preventativeSafeguards,
         mitigatingSafeguards: this.props.hazardSelected.mitigatingSafeguards,
       },
     };
+
+    this.saveHazardUpdatetoBackend = this.saveHazardUpdatetoBackend.bind(this);
+    this.updateData = this.updateData.bind(this);
   }
 
   componentDidMount() {
@@ -41,16 +45,44 @@ export default class EditableHazardComponent extends Component {
     }
   }
 
-  render() {
-    // const { hazardSelected } = this.props;
+  /**
+   *  Update
+   */
+  saveHazardUpdatetoBackend() {
     console.log(
-      "Editable Hazard Component ID selected",
+      "SAVE HAZARD TO BACKEND: ",
+      JSON.stringify(this.state.hazardSelected)
+    );
+
+    //Update Backend
+    axios.post(
+      "http://localhost:5000/workshop/updateHazard",
       this.state.hazardSelected
     );
+  }
+
+  //Function to pass data from child to parent component
+  updateData(consequence, index) {
+    const tempArr = this.state.hazardSelected.consequences; //Should copy not pass by ref
+    tempArr[index] = consequence;
+    //Improper method to change state variables
+  }
+
+  render() {
+    // console.log(
+    //   "Editable Hazard Component ID selected",
+    //   this.state.hazardSelected
+    // );
     return (
       <div>
         <div className="ew-hazard-sel-title">
           Hazard Selected : {this.props.hazardSelected.hazardName}
+          <Button
+            style={{ marginLeft: "20px" }}
+            onClick={this.saveHazardUpdatetoBackend}
+          >
+            Save to Backend
+          </Button>
         </div>
         <div className="ew-hazard-content">
           <div className="ew-hazard-col">
@@ -67,6 +99,8 @@ export default class EditableHazardComponent extends Component {
                   <EditableHazardItem
                     key={consequence.concat(index)}
                     data={consequence}
+                    index={index}
+                    updateData={this.updateData}
                   />
                 );
               }

@@ -16,11 +16,11 @@
             },
             {
               "hazardName": "Electrical Fire",
-              "cause": [
+              "causes": [
                 " Poor Connection to trigger the heat in the cable",
                 "Fatigue Built up on electric cables and components"
               ],
-              "consequence": ["Fire", "Smoke", "Toxic Air"],
+              "consequences": ["Fire", "Smoke", "Toxic Air"],
               "preventitiveSafeguards": [
                 "Proper commisioning and testing of electrical system",
                 "Fire resistant cabling used"

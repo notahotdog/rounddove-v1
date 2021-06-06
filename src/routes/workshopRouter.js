@@ -42,6 +42,30 @@ router.route("/addHazard").post((req, res) => {
     .catch((err) => res.status(400).json("Error" + err));
 });
 
+//Update Hazard
+router.route("/updateHazard").post((req, res) => {
+  const id = req.body.id; //Id to update the hazard
+
+  const hazardName = req.body.hazardName;
+  const causes = req.body.causes;
+  const consequences = req.body.consequences;
+  const preventativeSafeguards = req.body.preventativeSafeguards;
+  const mitigatingSafeguards = req.body.mitigatingSafeguards;
+
+  var updatedHazard = {
+    hazardName,
+    causes,
+    consequences,
+    preventativeSafeguards,
+    mitigatingSafeguards,
+  };
+
+  // Hazard.updateOne({"_id" : id})
+  Hazard.findByIdAndUpdate(req.body.id, updatedHazard)
+    .then(() => res.json("Hazard Update"))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
 //POST Request - Add Workshop
 router.route("/addWorkshop").post((req, res) => {
   const workshopName = req.body.workshopName;

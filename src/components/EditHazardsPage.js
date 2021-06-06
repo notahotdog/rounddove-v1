@@ -70,6 +70,8 @@ export default class EditHazardsPage extends Component {
     //   // this.setState({ data: response.data });
     // });
 
+    //should periodically fetch data
+
     axios.get("http://localhost:5000/workshop/hazard").then((response) => {
       console.log("Fetch Data", response.data);
       this.setState({ hazardList: response.data });
@@ -87,7 +89,6 @@ export default class EditHazardsPage extends Component {
     var hazardObj = hazard;
     hazardObj.id = hazard._id; //Makes the hazard id identifiable could be bad practice
     this.setState({ hazardSelected: hazardObj });
-    // alert("hazardName: ", hazard.hazardName, "    hazardID:", hazard.__id);
   }
 
   render() {
