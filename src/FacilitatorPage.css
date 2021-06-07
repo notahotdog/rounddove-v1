@@ -202,3 +202,11 @@
   width: 95%;
   /* background-color: chartreuse; */
 }
+
+.eh-addField {
+  /* width:%; */
+  display: flex;
+  flex-direction: row;
+  margin-left: 3px;
+  margin-right: 2px;
+}

@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { Input } from "antd";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
-import { FiEdit, FiSave } from "react-icons/fi";
-import { RiDeleteBin4Fill } from "react-icons/ri";
-import e from "cors";
+import { FiSave } from "react-icons/fi";
 
 export default class EditableHazardItem extends Component {
   _isMounted = false;
@@ -17,6 +15,7 @@ export default class EditableHazardItem extends Component {
 
     this.setEditable = this.setEditable.bind(this);
     this.setNotEditable = this.setNotEditable.bind(this);
+    this.deleteCurrentField = this.deleteCurrentField.bind(this);
   }
 
   setEditable() {
@@ -26,6 +25,16 @@ export default class EditableHazardItem extends Component {
   setNotEditable() {
     this.setState({ editable: false });
   }
+
+  /**
+   *  Change field type to not editable if user press enter
+   * @param {event} e
+   */
+  handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      this.setNotEditable();
+    }
+  };
   componentDidMount() {
     this._isMounted = true;
   }
@@ -51,7 +60,25 @@ export default class EditableHazardItem extends Component {
 
   //Detect Changed state than triggers the option to change
   saveToParent() {
-    this.props.updateData(this.state.dataAssessed, this.props.index);
+    this.props.updateData(
+      this.state.dataAssessed,
+      this.props.index,
+      this.props.itemType
+    );
+  }
+
+  //Delete hazardField
+  deleteCurrentField() {
+    //Triggers parent function that takes in the type, and the index of the function
+    console.log(
+      "Deleting field: ",
+      this.state.dataAssessed,
+      " type: ",
+      this.props.itemType,
+      " index:",
+      this.props.index
+    );
+    this.props.deleteField(this.props.itemType, this.props.index);
   }
 
   render() {
@@ -64,8 +91,7 @@ export default class EditableHazardItem extends Component {
             <div style={{ marginLeft: "5px" }}>{this.state.dataAssessed}</div>
           </div>
           <AiOutlineEdit />
-          <AiOutlineDelete />
-          {/* <RiDeleteBin4Fill /> */}
+          <AiOutlineDelete onClick={this.deleteCurrentField} />
         </div>
       );
     } else {
@@ -74,13 +100,13 @@ export default class EditableHazardItem extends Component {
           <Input
             defaultValue={this.state.dataAssessed}
             onDoubleClick={this.setNotEditable}
+            onKeyPress={this.handleKeyPress}
             size="small"
             style={{ width: "95%" }}
             onChange={this.updateFieldName}
           />
           <FiSave />
-          {/* <AiOutlineEdit /> */}
-          <AiOutlineDelete />
+          <AiOutlineDelete onClick={this.deleteCurrentField} />
         </div>
       );
     }

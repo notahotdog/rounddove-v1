@@ -10,6 +10,11 @@ export default class HomePage extends Component {
 
     this.state = {
       valCtr: 0,
+      // data: ["workshop1", "workshop2", "workshop3"],
+      data: [
+        { name: "workshop1", workshopId: "9123846os" },
+        { name: "workshopr2", workshopId: "asfas9123846os" },
+      ],
     };
   }
 
@@ -22,6 +27,13 @@ export default class HomePage extends Component {
   };
 
   render() {
-    return <div className="mainpage-div">HomePage</div>;
+    return (
+      <div
+        className="mainpage-div"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        HomePage
+      </div>
+    );
   }
 }

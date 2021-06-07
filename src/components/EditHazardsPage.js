@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Menu } from "antd";
 import EditableHazardComponent from "./TableComponents/EditableHazardComponent";
-// const { Title } = Typography;
 
 export default class EditHazardsPage extends Component {
   _isMounted = false;
@@ -23,28 +22,17 @@ export default class EditHazardsPage extends Component {
 
     this.getHazardData = this.getHazardData.bind(this);
     this.updateClickedItem = this.updateHazardSelected.bind(this);
+    this.loadData = this.loadData.bind(this);
   }
 
   //Extract Hazard Data
   getHazardData(workshopList) {
     var extractedHazardsList = [];
 
-    // workshopList.map((workshop) => {
-    //   workshop.nodes.map((nodes) => {
-    //     nodes.map((node) => {
-    //       node.subnodes.map((subnode) => {
-    //         subnode.hazards.map((hazard) => {
-    //           extractedHazardsList.push(hazard);
-    //         });
-    //       });
-    //     });
-    //   });
-    // });
-
-    workshopList.map((workshop) => {
-      workshop.nodes.map((node) => {
-        node.subnodes.map((subnode) => {
-          subnode.hazards.map((hazard) => {
+    workshopList.forEach((workshop) => {
+      workshop.nodes.forEach((node) => {
+        node.subnodes.forEach((subnode) => {
+          subnode.hazards.forEach((hazard) => {
             extractedHazardsList.push(hazard);
           });
         });
@@ -72,27 +60,38 @@ export default class EditHazardsPage extends Component {
 
     //should periodically fetch data
 
-    axios.get("http://localhost:5000/workshop/hazard").then((response) => {
-      console.log("Fetch Data", response.data);
-      this.setState({ hazardList: response.data });
-    });
+    // axios.get("http://localhost:5000/workshop/hazard").then((response) => {
+    //   console.log("Fetch Data", response.data);
+    //   this.setState({ hazardList: response.data });
+    // });
+
+    this.timer = setInterval(() => this.loadData(), 500);
 
     //Get Extract all the Hazards Found from the Backend sort by ascending order of hazards
     //Iterate through all the data/nodes/subnodes/store the associated
   }
+
+  loadData() {
+    axios.get("http://localhost:5000/workshop/hazard").then((response) => {
+      this.setState({ hazardList: response.data });
+    });
+  }
+
   componentWillUnmount() {
     this._isMounted = false;
   }
 
-  //Update Hazard Selected
-  updateHazardSelected(hazard, hazardID) {
+  /**
+   * set state of Hazard Selected
+   * @param {Object} hazard
+   */
+  updateHazardSelected(hazard) {
     var hazardObj = hazard;
     hazardObj.id = hazard._id; //Makes the hazard id identifiable could be bad practice
     this.setState({ hazardSelected: hazardObj });
   }
 
   render() {
-    // console.log("Loaded Edit Hazards Data", this.state.data);
     return (
       <div className="ew-main-div">
         <div className="ew-main-header">
@@ -111,7 +110,7 @@ export default class EditHazardsPage extends Component {
                 key="Add Hazard Button"
                 onClick={() => alert("ADD Hazard")}
               >
-                Add Hazard
+                Show Modal here Add Hazard
               </Menu.Item>
               {this.state.hazardList.map((hazard, index) => {
                 return (

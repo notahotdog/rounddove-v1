@@ -12,13 +12,18 @@ router.route("/").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+/**
+ * Retrieve Hazard Data from endpoint
+ */
 router.route("/hazard").get((req, res) => {
-  // console.log("ROUTER HAZZAAARDJ");
   Hazard.find()
     .then((users) => res.json(users))
     .catch((err) => res.status(400).json("Error" + err));
 });
 
+/**
+ * Add Hazard to endpoint
+ */
 router.route("/addHazard").post((req, res) => {
   const hazardName = req.body.hazardName;
   const causes = req.body.causes;
