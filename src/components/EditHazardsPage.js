@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Menu, Modal } from "antd";
+import { Menu } from "antd";
 import EditableHazardComponent from "./TableComponents/EditableHazardComponent";
 import AddHazardModal from "./modalComponents/AddHazardModal";
 // import { getHazardsFromDB } from "../util/BackendService";

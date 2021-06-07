@@ -22,12 +22,18 @@ export default class EditableHazardComponent extends Component {
       },
       addConsequence: "",
       addCause: "",
+      addPreventativeSafeguard: "",
+      addMitigatingSafeguard: "",
     };
 
     this.saveHazardUpdatetoBackend = this.saveHazardUpdatetoBackend.bind(this);
     this.updateData = this.updateData.bind(this);
+
     this.addConsequence = this.addConsequence.bind(this);
     this.addCause = this.addCause.bind(this);
+    this.addPreventativeSafeguard = this.addPreventativeSafeguard.bind(this);
+    this.addMitigatingSafeguard = this.addMitigatingSafeguard.bind(this);
+
     this.deleteField = this.deleteField.bind(this);
     this.deleteHazardfromBackend = this.deleteHazardfromBackend.bind(this);
   }
@@ -86,6 +92,14 @@ export default class EditableHazardComponent extends Component {
     } else if (itemType === "consequence") {
       const consequencesArr = this.state.hazardSelected.consequences; //Should copy not pass by ref
       consequencesArr[index] = data;
+    } else if (itemType == "preventativeSafeguard") {
+      const preventativeSafeguardArr =
+        this.state.hazardSelected.preventativeSafeguards;
+      preventativeSafeguardArr[index] = data;
+    } else if (itemType == "mitigatingSafeguard") {
+      const mitigatingSafeguardArr =
+        this.state.hazardSelected.mitigatingSafeguards;
+      mitigatingSafeguardArr[index] = data;
     }
 
     //Improper method to change state variables
@@ -116,12 +130,43 @@ export default class EditableHazardComponent extends Component {
     var hazardSelectedUpdate = { ...this.state.hazardSelected };
     hazardSelectedUpdate.consequences = consequences;
     this.setState({ hazardSelected: hazardSelectedUpdate });
-    // this.setState({ addConsequence: "" });
   }
 
   //Update Add Consequence Field Value
   updateAddConsequenceValue = (e) => {
     this.setState({ addConsequence: e.target.value });
+  };
+
+  //Preventative safeguards
+  addPreventativeSafeguard() {
+    var preventativeSafeguards = [
+      ...this.state.hazardSelected.preventativeSafeguards,
+    ];
+    preventativeSafeguards.push(this.state.addPreventativeSafeguard);
+    var hazardSelectedUpdate = { ...this.state.hazardSelected };
+    hazardSelectedUpdate.preventativeSafeguards = preventativeSafeguards;
+    this.setState({ hazardSelected: hazardSelectedUpdate });
+  }
+
+  //Update Add Consequence Field Value
+  updateAddPreventativeSafeguardValue = (e) => {
+    this.setState({ addPreventativeSafeguard: e.target.value });
+  };
+
+  //Mitigating safeguards
+  addMitigatingSafeguard() {
+    var mitigatingSafeguards = [
+      ...this.state.hazardSelected.mitigatingSafeguards,
+    ];
+    mitigatingSafeguards.push(this.state.addMitigatingSafeguard);
+    var hazardSelectedUpdate = { ...this.state.hazardSelected };
+    hazardSelectedUpdate.mitigatingSafeguards = mitigatingSafeguards;
+    this.setState({ hazardSelected: hazardSelectedUpdate });
+  }
+
+  //Update Add Consequence Field Value
+  updateAddMitigatingSafeguardValue = (e) => {
+    this.setState({ addMitigatingSafeguard: e.target.value });
   };
 
   /**
@@ -131,22 +176,39 @@ export default class EditableHazardComponent extends Component {
    */
   deleteField(itemType, index) {
     var hazardSelectedUpdate = { ...this.state.hazardSelected };
+
     if (itemType === "cause") {
       var causes = [...this.state.hazardSelected.causes];
       causes.splice(index, 1);
       hazardSelectedUpdate.causes = causes;
-      this.setState({
-        hazardSelected: hazardSelectedUpdate,
-      });
+      this.setState({ hazardSelected: hazardSelectedUpdate });
     }
 
     if (itemType === "consequence") {
       var consequences = [...this.state.hazardSelected.consequences];
       consequences.splice(index, 1);
-      // var hazardSelectedUpdate = { ...this.state.hazardSelected };
       hazardSelectedUpdate.consequences = consequences;
       this.setState({ hazardSelected: hazardSelectedUpdate });
-      this.setState({ addConsequence: "" });
+    }
+
+    //preventativeSafeguards
+    if (itemType === "preventativeSafeguard") {
+      var preventativeSafeguards = [
+        ...this.state.hazardSelected.preventativeSafeguards,
+      ];
+      preventativeSafeguards.splice(index, 1);
+      hazardSelectedUpdate.preventativeSafeguards = preventativeSafeguards;
+      this.setState({ hazardSelected: hazardSelectedUpdate });
+    }
+
+    //mitigatingSafeguards
+    if (itemType === "mitigatingSafeguard") {
+      var mitigatingSafeguards = [
+        ...this.state.hazardSelected.mitigatingSafeguards,
+      ];
+      mitigatingSafeguards.splice(index, 1);
+      hazardSelectedUpdate.mitigatingSafeguards = mitigatingSafeguards;
+      this.setState({ hazardSelected: hazardSelectedUpdate });
     }
   }
 
@@ -226,6 +288,72 @@ export default class EditableHazardComponent extends Component {
                     index={index}
                     updateData={this.updateData}
                     itemType="consequence"
+                    deleteField={this.deleteField}
+                  />
+                );
+              }
+            )}
+          </div>
+          <div className="ew-hazard-col">
+            <h1>Preventative Safeguards</h1>
+            <div className="eh-addField">
+              <Input
+                placeholder=" + Add Preventative Safeguards"
+                onChange={this.updateAddPreventativeSafeguardValue}
+                allowClear
+              />
+              <Button onClick={this.addPreventativeSafeguard}>
+                <RiAddLine
+                  style={{
+                    marginTop: "3px",
+                  }}
+                />
+                Add
+              </Button>
+            </div>
+
+            {this.state.hazardSelected.preventativeSafeguards.map(
+              (preventativeSafeguard, index) => {
+                return (
+                  <EditableHazardItem
+                    key={preventativeSafeguard.concat(index)}
+                    data={preventativeSafeguard}
+                    index={index}
+                    updateData={this.updateData}
+                    itemType="preventativeSafeguard"
+                    deleteField={this.deleteField}
+                  />
+                );
+              }
+            )}
+          </div>
+          <div className="ew-hazard-col">
+            <h1>Mitigating Safeguards</h1>
+            <div className="eh-addField">
+              <Input
+                placeholder=" + Add Mitigating Safeguards"
+                onChange={this.updateAddMitigatingSafeguardValue}
+                allowClear
+              />
+              <Button onClick={this.addMitigatingSafeguard}>
+                <RiAddLine
+                  style={{
+                    marginTop: "3px",
+                  }}
+                />
+                Add
+              </Button>
+            </div>
+
+            {this.state.hazardSelected.mitigatingSafeguards.map(
+              (mitigatingSafeguard, index) => {
+                return (
+                  <EditableHazardItem
+                    key={mitigatingSafeguard.concat(index)}
+                    data={mitigatingSafeguard}
+                    index={index}
+                    updateData={this.updateData}
+                    itemType="mitigatingSafeguard"
                     deleteField={this.deleteField}
                   />
                 );

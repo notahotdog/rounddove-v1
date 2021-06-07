@@ -48,7 +48,6 @@ export default class EditableHazardItem extends Component {
       console.log("Edit Hazard Item Updated");
       console.log("Data Assessed: ", this.props.data);
       this.setState({ dataAssessed: this.props.data });
-      // this.setState({ dataAssessed: this.props.dataAssessed });
     }
   }
 
@@ -69,15 +68,6 @@ export default class EditableHazardItem extends Component {
 
   //Delete hazardField
   deleteCurrentField() {
-    //Triggers parent function that takes in the type, and the index of the function
-    console.log(
-      "Deleting field: ",
-      this.state.dataAssessed,
-      " type: ",
-      this.props.itemType,
-      " index:",
-      this.props.index
-    );
     this.props.deleteField(this.props.itemType, this.props.index);
   }
 
@@ -85,7 +75,6 @@ export default class EditableHazardItem extends Component {
     if (!this.state.editable) {
       return (
         <div className="ehi-box">
-          {/* {this.state.dataAssessed} */}
           {this.saveToParent()}
           <div className="ehi-box-default" onDoubleClick={this.setEditable}>
             <div style={{ marginLeft: "5px" }}>{this.state.dataAssessed}</div>
@@ -112,5 +101,3 @@ export default class EditableHazardItem extends Component {
     }
   }
 }
-
-// export default onClickOutside(EditableHazardItem);
