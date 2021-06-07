@@ -47,6 +47,14 @@ router.route("/addHazard").post((req, res) => {
     .catch((err) => res.status(400).json("Error" + err));
 });
 
+//Delete Hazard
+router.route("/deleteHazard").delete((req, res) => {
+  // const id = req.body.id;
+  Hazard.findByIdAndDelete(req.body.id)
+    .then(() => res.json("Hazard Deleted"))
+    .catch((err) => res.status(404).json("Error" + err));
+});
+
 //Update Hazard
 router.route("/updateHazard").post((req, res) => {
   const id = req.body.id; //Id to update the hazard
@@ -67,8 +75,8 @@ router.route("/updateHazard").post((req, res) => {
 
   // Hazard.updateOne({"_id" : id})
   Hazard.findByIdAndUpdate(req.body.id, updatedHazard)
-    .then(() => res.json("Hazard Update"))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .then(() => res.json("Hazard Updated"))
+    .catch((err) => res.status(404).json("Error: " + err));
 });
 
 //POST Request - Add Workshop

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Menu } from "antd";
+import { Menu, Modal } from "antd";
 import EditableHazardComponent from "./TableComponents/EditableHazardComponent";
+import AddHazardModal from "./modalComponents/AddHazardModal";
+// import { getHazardsFromDB } from "../util/BackendService";
 
 export default class EditHazardsPage extends Component {
   _isMounted = false;
@@ -9,7 +11,7 @@ export default class EditHazardsPage extends Component {
     super(props);
 
     this.state = {
-      hazardList: [],
+      hazardList: [""],
       hazardSelected: {
         id: "",
         hazardName: "Default",
@@ -18,11 +20,14 @@ export default class EditHazardsPage extends Component {
         preventativeSafeguards: ["Default"],
         mitigatingSafeguards: ["Default"],
       },
+      modalVisible: false,
     };
 
     this.getHazardData = this.getHazardData.bind(this);
     this.updateClickedItem = this.updateHazardSelected.bind(this);
     this.loadData = this.loadData.bind(this);
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
   }
 
   //Extract Hazard Data
@@ -40,11 +45,6 @@ export default class EditHazardsPage extends Component {
     });
 
     console.log("Extracted Hazard List: ", extractedHazardsList);
-    //For Adding Selected Data to Backend Database
-    // axios.post(
-    //   "http://localhost:5000/workshop/addHazard",
-    //   extractedHazardsList[9]
-    // ); //Need to change to fit nodes
   }
 
   componentDidMount() {
@@ -77,6 +77,17 @@ export default class EditHazardsPage extends Component {
     });
   }
 
+  showModal = () => {
+    this.setState({ modalVisible: true });
+  };
+
+  /**
+   * Hides Modal
+   */
+  hideModal = () => {
+    this.setState({ modalVisible: false });
+  };
+
   componentWillUnmount() {
     this._isMounted = false;
   }
@@ -97,6 +108,10 @@ export default class EditHazardsPage extends Component {
         <div className="ew-main-header">
           <h1>Edit Hazards</h1>
         </div>
+        <AddHazardModal
+          visible={this.state.modalVisible}
+          closeModal={this.hideModal}
+        />
         <div className="ew-main-body">
           <div className="ew-left-col">
             <Menu
@@ -106,11 +121,8 @@ export default class EditHazardsPage extends Component {
               theme="dark"
               inlineCollapsed={this.state.collapsed}
             >
-              <Menu.Item
-                key="Add Hazard Button"
-                onClick={() => alert("ADD Hazard")}
-              >
-                Show Modal here Add Hazard
+              <Menu.Item key="Add Hazard Button" onClick={this.showModal}>
+                Add Hazard
               </Menu.Item>
               {this.state.hazardList.map((hazard, index) => {
                 return (
@@ -132,8 +144,6 @@ export default class EditHazardsPage extends Component {
             />
           </div>
         </div>
-
-        {/* <div>this.state.data.</div> */}
       </div>
     );
   }

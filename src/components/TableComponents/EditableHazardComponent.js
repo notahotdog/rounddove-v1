@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import EditableHazardItem from "./EditableHazardItem";
 import { Button, Input, message } from "antd";
 import axios from "axios";
-import { RiAddFill, RiAddLine } from "react-icons/ri";
-import { CloudFilled } from "@ant-design/icons";
+import { RiAddLine } from "react-icons/ri";
+// import { CloudFilled } from "@ant-design/icons";
 
 export default class EditableHazardComponent extends Component {
   _isMounted = false;
@@ -29,13 +29,12 @@ export default class EditableHazardComponent extends Component {
     this.addConsequence = this.addConsequence.bind(this);
     this.addCause = this.addCause.bind(this);
     this.deleteField = this.deleteField.bind(this);
+    this.deleteHazardfromBackend = this.deleteHazardfromBackend.bind(this);
   }
 
   componentDidMount() {
     this._isMounted = true;
-    //Set the state of the props
     console.log("Editable Hazard Component Mounted");
-    // this.setState({ hazardSelected: this.props.hazardSelected });
   }
   componentWillUnmount() {
     this._isMounted = false;
@@ -52,8 +51,19 @@ export default class EditableHazardComponent extends Component {
     }
   }
 
+  //Can be placed in another file tbh
   /**
-   *  Update
+   * Deletes Hazard from Backend
+   */
+  deleteHazardfromBackend() {
+    axios.delete("http://localhost:5000/workshop/deleteHazard", {
+      data: { id: this.state.hazardSelected.id },
+    });
+    console.log("Hazard Deleted");
+  }
+
+  /**
+   *  Update Hazard details to Backend
    */
   saveHazardUpdatetoBackend() {
     console.log(
@@ -62,20 +72,11 @@ export default class EditableHazardComponent extends Component {
     );
     message.success("Saved Hazard Data to Backend");
 
-    //Update Backend
     axios.post(
       "http://localhost:5000/workshop/updateHazard",
       this.state.hazardSelected
     );
   }
-
-  // //Function to pass data from child to parent component
-  // updateData(consequence, index) {
-  //   //itemtype
-  //   const tempArr = this.state.hazardSelected.consequences; //Should copy not pass by ref
-  //   tempArr[index] = consequence;
-  //   //Improper method to change state variables
-  // }
 
   //Function to pass data from child to parent component
   updateData(data, index, itemType) {
@@ -87,8 +88,6 @@ export default class EditableHazardComponent extends Component {
       consequencesArr[index] = data;
     }
 
-    //update data
-
     //Improper method to change state variables
   }
 
@@ -96,14 +95,11 @@ export default class EditableHazardComponent extends Component {
    * Add consequence to list of consequence
    */
   addCause() {
-    alert("adding cause");
     var causes = [...this.state.hazardSelected.causes];
     causes.push(this.state.addCause);
     var hazardSelectedUpdate = { ...this.state.hazardSelected };
     hazardSelectedUpdate.causes = causes;
-    // hazardSelectedUpdate.causes = causes;
     this.setState({ hazardSelected: hazardSelectedUpdate });
-    // this.setState({ addCause: "" });
   }
 
   //Update Add Consequence Field Value
@@ -128,25 +124,26 @@ export default class EditableHazardComponent extends Component {
     this.setState({ addConsequence: e.target.value });
   };
 
-  //deleteField
+  /**
+   *  Deletes an item from its array
+   * @param {string} itemType to be deleted
+   * @param {number} index  of item to be deleted
+   */
   deleteField(itemType, index) {
     var hazardSelectedUpdate = { ...this.state.hazardSelected };
-    if (itemType == "cause") {
+    if (itemType === "cause") {
       var causes = [...this.state.hazardSelected.causes];
       causes.splice(index, 1);
       hazardSelectedUpdate.causes = causes;
-      // hazardSelectedUpdate.causes = [
-      //   ...this.state.hazardSelected.causes,
-      // ].splice(index, 1);
       this.setState({
         hazardSelected: hazardSelectedUpdate,
       });
     }
 
-    if (itemType == "consequence") {
+    if (itemType === "consequence") {
       var consequences = [...this.state.hazardSelected.consequences];
       consequences.splice(index, 1);
-      var hazardSelectedUpdate = { ...this.state.hazardSelected };
+      // var hazardSelectedUpdate = { ...this.state.hazardSelected };
       hazardSelectedUpdate.consequences = consequences;
       this.setState({ hazardSelected: hazardSelectedUpdate });
       this.setState({ addConsequence: "" });
@@ -154,10 +151,6 @@ export default class EditableHazardComponent extends Component {
   }
 
   render() {
-    // console.log(
-    //   "Editable Hazard Component ID selected",
-    //   this.state.hazardSelected
-    // );
     return (
       <div>
         <div className="ew-hazard-sel-title">
@@ -167,6 +160,12 @@ export default class EditableHazardComponent extends Component {
             onClick={this.saveHazardUpdatetoBackend}
           >
             Save to Backend
+          </Button>
+          <Button
+            style={{ marginLeft: "20px" }}
+            onClick={this.deleteHazardfromBackend}
+          >
+            Delete Hazard
           </Button>
         </div>
         <div className="ew-hazard-content">
