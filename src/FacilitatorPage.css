@@ -209,3 +209,93 @@
   margin-left: 3px;
   margin-right: 2px;
 }
+
+.ewd-overview {
+  height: 100vh;
+  background-color: aqua;
+  display: flex;
+  flex-direction: column;
+}
+
+.ewd-header {
+  background-color: brown;
+  height: 20vh;
+}
+.ewd-body {
+  background-color: blueviolet;
+  height: 80vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.ewd-leftcol {
+  width: 30%;
+  background-color: chartreuse;
+}
+
+.ewd-rightcol {
+  width: 70%;
+  background-color: darkseagreen;
+}
+
+.ew-header {
+  /* margin-bottom: 0.5em; */
+  color: rgba(0, 0, 0, 0.85);
+  background-color: aqua;
+  font-weight: 600;
+  font-size: 28px;
+  display: flex;
+  flex-direction: row;
+  height: 200px;
+  border: 3px solid black;
+}
+
+.ew-header-left-col {
+  /* background-color: blue; */
+  width: 60%;
+}
+
+.ew-header-title {
+  display: flex;
+  /* margin-bottom: 0.5em; */
+  color: rgba(0, 0, 0, 0.85);
+  /* background-color: red; */
+  font-weight: 600;
+  font-size: 30px;
+  height: 40%;
+}
+
+.ew-header-node-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 60%;
+  background-color: red;
+}
+
+.ew-node-details-item {
+  font-size: 0.8em;
+}
+
+.ew-header-right-col {
+  width: 40%;
+  background-color: blueviolet;
+}
+.ew-body {
+  height: 520px;
+  background-color: darkslateblue;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.ew-body-left-col {
+  background-color: cadetblue;
+  width: 30%;
+}
+
+.ew-body-right-col {
+  background-color: darkgoldenrod;
+  width: 70%;
+}

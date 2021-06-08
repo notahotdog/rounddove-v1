@@ -99,6 +99,21 @@ router.route("/addWorkshop").post((req, res) => {
     .catch((err) => res.status(400).json("Error" + err));
 });
 
+//Get Workshop Data
+router.route("/workshopDetails/:id").get((req, res) => {
+  Workshop.findById(req.params.id)
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.route("/:id").delete((req, res) => {
+  Workshop.findByIdAndDelete(req.params.id)
+    .then(() => res.json("Workshop deleted"))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+module.exports = router;
+
 // //Handle POST Requests
 // router.route("/add").post((req, res) => {
 //   const workshopName = req.body.workshopName;
@@ -141,11 +156,3 @@ router.route("/addWorkshop").post((req, res) => {
 //     .then(() => res.json("Message added"))
 //     .catch((err) => res.status(400).json("Error" + err));
 // });
-
-router.route("/:id").delete((req, res) => {
-  Workshop.findByIdAndDelete(req.params.id)
-    .then(() => res.json("Workshop deleted"))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-module.exports = router;

@@ -92,11 +92,11 @@ export default class EditableHazardComponent extends Component {
     } else if (itemType === "consequence") {
       const consequencesArr = this.state.hazardSelected.consequences; //Should copy not pass by ref
       consequencesArr[index] = data;
-    } else if (itemType == "preventativeSafeguard") {
+    } else if (itemType === "preventativeSafeguard") {
       const preventativeSafeguardArr =
         this.state.hazardSelected.preventativeSafeguards;
       preventativeSafeguardArr[index] = data;
-    } else if (itemType == "mitigatingSafeguard") {
+    } else if (itemType === "mitigatingSafeguard") {
       const mitigatingSafeguardArr =
         this.state.hazardSelected.mitigatingSafeguards;
       mitigatingSafeguardArr[index] = data;
