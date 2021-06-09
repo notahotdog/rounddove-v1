@@ -75,7 +75,6 @@ export default class WorkshopCreationPage extends Component {
     console.log("Test Payload: ", payload);
 
     //Need to change the payload
-    // axios.post("http://localhost:5000/workshop/add", payload); //Passes the payload to rest API call
     axios.post("http://localhost:5000/workshop/addWorkshop", payload); //Passes the payload to rest API call
   };
 

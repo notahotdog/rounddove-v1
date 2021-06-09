@@ -41,9 +41,8 @@ export default class EditWorkshop extends Component {
 
     this.setNodeSelected = this.setNodeSelected.bind(this);
     this.loadData = this.loadData.bind(this);
+    this.addNodeToNodeList = this.addNodeToNodeList.bind(this);
   }
-
-  //Should periodically fetch data since it only passes the props on componentMound
 
   componentDidMount() {
     console.log(this.props.location.state.workshop._id, "Workshop Generated");
@@ -69,12 +68,37 @@ export default class EditWorkshop extends Component {
     }
   }
 
+  saveDataToBackend(data) {
+    //From the workshop ID it replaces the values, the body will be the data Item
+    //Need to apprend data to
+    const payload = {
+      id: this.state.data._id,
+      workshopName: data.workshopName,
+      tags: data.tags,
+      nodes: data.nodes,
+    };
+
+    console.log("Update Data to BACKEND: ", payload);
+    axios.post("http://localhost:5000/workshop/updateWorkshop", payload); //Send Payload to Backend
+  }
+
   setNodeSelected(nameNode, nameSubnode, nameHazard) {
     this.setState({
       nodeSelected: nameNode,
       subnodeSelected: nameSubnode,
       hazardSelected: nameHazard,
     });
+  }
+
+  //Add Node Functionality
+  addNodeToNodeList(node) {
+    var data = { ...this.state.data };
+    var nodes = [...this.state.data.nodes];
+    nodes.push(node);
+    data.nodes = nodes;
+    console.log("update Data w addNode:", data);
+    //Trigger Save Data To Backend
+    this.saveDataToBackend(data);
   }
 
   render() {
@@ -114,6 +138,7 @@ export default class EditWorkshop extends Component {
         <EditWorkshopBody
           data={this.state.data}
           setNodeSelected={this.setNodeSelected}
+          addNode={this.addNodeToNodeList}
         />
       </div>
     );

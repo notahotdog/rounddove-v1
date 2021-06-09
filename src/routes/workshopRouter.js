@@ -99,6 +99,23 @@ router.route("/addWorkshop").post((req, res) => {
     .catch((err) => res.status(400).json("Error" + err));
 });
 
+//Update Workshop
+router.route("/updateWorkshop").post((req, res) => {
+  const nodes = req.body.nodes;
+  const workshopName = req.body.workshopName;
+  const tags = req.body.tags;
+
+  var workshop = {
+    workshopName,
+    nodes,
+    tags,
+  };
+
+  Workshop.findByIdAndUpdate(req.body.id, workshop)
+    .then(() => res.json("Workshop Updated"))
+    .catch((err) => res.status(404).json("Error: " + err));
+});
+
 //Get Workshop Data
 router.route("/workshopDetails/:id").get((req, res) => {
   Workshop.findById(req.params.id)
