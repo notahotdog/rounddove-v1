@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Button, message, Alert, Input } from "antd";
+import { Modal, message, Alert, Input } from "antd";
 import { isEmptyString } from "../../util/Utilities";
 import { getSubNodeTemplate } from "../../util/JSONHandler";
 
@@ -8,7 +8,6 @@ export default class AddSubnodeModal extends Component {
     super(props);
 
     this.state = {
-      visible: true,
       subnodeName: "",
       emptySubNodeName: false,
     };

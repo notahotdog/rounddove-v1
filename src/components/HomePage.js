@@ -32,6 +32,7 @@ export default class HomePage extends Component {
         className="mainpage-div"
         style={{ display: "flex", flexDirection: "column" }}
       >
+        {" "}
         HomePage
       </div>
     );

@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Menu } from "antd";
 import AddNodeModal from "./AddNodeModal";
 import AddSubnodeModal from "./AddSubnodeModal";
+import AddHazardModal from "./AddHazardWithOptionsModal";
 import { getKeyThenIncreaseKey } from "antd/lib/message";
+import { filterMoreThanOneInstanceHazard } from "../../util/JSONHandler";
 const { SubMenu, Carousel, Button } = Menu;
 
 export default class EditWorkshopBody extends Component {
@@ -17,19 +19,17 @@ export default class EditWorkshopBody extends Component {
         preventativeSafeguards: [""],
         mitigatingSafeguards: [""],
       },
-      isSubnodeModalVisible: false,
       isNodeModalVisible: false,
+      isSubnodeModalVisible: false,
       nodeIndexToAddSubnode: 0,
+      isHazardModalVisible: false,
+      subnodeIndexToAddHazard: 0,
     };
 
     this.updateClickedItem = this.updateClickedItem.bind(this);
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
     this.carousel = React.createRef();
-
-    // this.addNode = this.addNode.bind(this);
-    // this.addSubNode = this.addSubNode.bind(this);
-    this.addHazard = this.addHazard.bind(this);
 
     this.showNodeModal = this.showNodeModal.bind(this);
     this.hideNodeModal = this.hideNodeModal.bind(this);
@@ -38,6 +38,10 @@ export default class EditWorkshopBody extends Component {
     this.showSubNodeModal = this.showSubNodeModal.bind(this);
     this.hideSubNodeModal = this.hideSubNodeModal.bind(this);
     this.closeSubNodeModal = this.closeSubNodeModal.bind(this); //need to bind if you want to use this.props
+
+    this.showHazardModal = this.showHazardModal.bind(this);
+    this.hideHazardModal = this.hideHazardModal.bind(this);
+    this.closeHazardModal = this.closeHazardModal.bind(this);
   }
 
   next() {
@@ -67,14 +71,12 @@ export default class EditWorkshopBody extends Component {
   }
 
   closeNodeModal(node) {
-    //passNode to be added To Parent
     this.props.addNode(node);
     this.hideNodeModal();
   }
 
-  //The node is not
   showSubNodeModal(node, nodeIndex) {
-    console.log("Node to add subnode", node);
+    console.log("Node to add subnode", node); //Node is actually not needed, just used for debugging
     this.setState({ nodeIndexToAddSubnode: nodeIndex });
     this.setState({ isSubnodeModalVisible: true });
   }
@@ -84,14 +86,23 @@ export default class EditWorkshopBody extends Component {
   }
 
   closeSubNodeModal(subNode) {
-    //Pass to parent the subNode and the nodeIndex
-    // this.props.addSubNode();
     this.props.addSubNode(this.state.nodeIndexToAddSubnode, subNode);
     this.setState({ isSubnodeModalVisible: false });
   }
 
-  addHazard() {
-    alert("add Hazard");
+  showHazardModal(nodeIndex, subnodeIndex) {
+    this.setState({ isHazardModalVisible: true });
+    this.setState({ nodeIndexToAddSubnode: nodeIndex }); //set the nodeIndex to be updated
+    this.setState({ subnodeIndexToAddHazard: subnodeIndex }); //set the subnodeIndex to be updated
+  }
+  closeHazardModal(node) {
+    const { nodeIndexToAddSubnode, subnodeIndexToAddHazard } = this.state;
+    this.props.addHazard(nodeIndexToAddSubnode, subnodeIndexToAddHazard, node);
+    this.setState({ isHazardModalVisible: false });
+  }
+
+  hideHazardModal() {
+    this.setState({ isHazardModalVisible: false });
   }
 
   render() {
@@ -109,6 +120,11 @@ export default class EditWorkshopBody extends Component {
             visible={this.state.isSubnodeModalVisible}
             hideModal={this.hideSubNodeModal}
             closeModal={this.closeSubNodeModal}
+          />
+          <AddHazardModal
+            visible={this.state.isHazardModalVisible}
+            hideModal={this.hideHazardModal}
+            closeModal={this.closeHazardModal}
           />
           <Menu
             onClick={this.handleClick}
@@ -135,7 +151,13 @@ export default class EditWorkshopBody extends Component {
                           .concat(subnodeIndex)}
                         title={subnode.subnodeName}
                       >
-                        <Menu.Item> Add Hazard</Menu.Item>
+                        <Menu.Item
+                          onClick={() =>
+                            this.showHazardModal(nodeIndex, subnodeIndex)
+                          }
+                        >
+                          Add Hazard
+                        </Menu.Item>
                         {subnode.hazards.map((hazard, hazardIndex) => {
                           return (
                             <Menu.Item

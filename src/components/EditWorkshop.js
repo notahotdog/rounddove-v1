@@ -44,6 +44,7 @@ export default class EditWorkshop extends Component {
     this.loadData = this.loadData.bind(this);
     this.addNodeToNodeList = this.addNodeToNodeList.bind(this);
     this.addSubNodeToNode = this.addSubNodeToNode.bind(this);
+    this.addHazardToSubNode = this.addHazardToSubNode.bind(this);
   }
 
   componentDidMount() {
@@ -72,7 +73,6 @@ export default class EditWorkshop extends Component {
 
   saveDataToBackend(data) {
     //From the workshop ID it replaces the values, the body will be the data Item
-    //Need to apprend data to
     const payload = {
       id: this.state.data._id,
       workshopName: data.workshopName,
@@ -92,14 +92,16 @@ export default class EditWorkshop extends Component {
     });
   }
 
-  //Add Node Functionality
+  /**
+   * Adds Node to node list
+   * @param {Obj} node to be added
+   */
   addNodeToNodeList(node) {
     var data = { ...this.state.data };
     var nodes = [...this.state.data.nodes];
     nodes.push(node);
     data.nodes = nodes;
     console.log("update Data w addNode:", data);
-    //Trigger Save Data To Backend
     this.saveDataToBackend(data);
   }
 
@@ -113,6 +115,22 @@ export default class EditWorkshop extends Component {
     nodeUpdate.subnodes.push(subNode); //increment the subnodes to the particular node
     var data = { ...this.state.data };
     data.nodes[nodeIndex] = nodeUpdate;
+    this.saveDataToBackend(data);
+  }
+
+  /**
+   * Adds Hazard to subnode
+   * @param {Num} nodeIndex index of Node to be appended to
+   * @param {Num} subNodeIndex index of subnode to be appended to
+   * @param {Num} hazardData Object data to be appended
+   */
+  addHazardToSubNode(nodeIndex, subNodeIndex, hazardData) {
+    var subNodeUpdate = {
+      ...this.state.data.nodes[nodeIndex].subnodes[subNodeIndex],
+    };
+    subNodeUpdate.hazards.push(hazardData);
+    var data = { ...this.state.data };
+    data.nodes[nodeIndex].subnodes[subNodeIndex] = subNodeUpdate;
     this.saveDataToBackend(data);
   }
 
@@ -175,6 +193,7 @@ export default class EditWorkshop extends Component {
           setNodeSelected={this.setNodeSelected}
           addNode={this.addNodeToNodeList}
           addSubNode={this.addSubNodeToNode}
+          addHazard={this.addHazardToSubNode}
         />
       </div>
     );

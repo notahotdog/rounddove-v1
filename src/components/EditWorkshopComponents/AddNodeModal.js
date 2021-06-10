@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Button, Alert, Input, message } from "antd";
+import { Modal, Alert, Input, message } from "antd";
 import { getNodeTemplate } from "../../util/JSONHandler";
 import { isEmptyString } from "../../util/Utilities";
 
@@ -29,11 +29,9 @@ export default class AddNodeModal extends Component {
     }
   }
   handleCancel() {
-    // this.setState({ visible: false });
     this.props.hideModal();
   }
 
-  //Updates Node Name typed
   updateNodeName = (e) => {
     this.setState({ nodeName: e.target.value });
   };
