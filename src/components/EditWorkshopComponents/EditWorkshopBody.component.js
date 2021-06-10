@@ -19,7 +19,7 @@ export default class EditWorkshopBody extends Component {
       },
       isSubnodeModalVisible: false,
       isNodeModalVisible: false,
-      nodetoAddSubnode: {},
+      nodeIndexToAddSubnode: 0,
     };
 
     this.updateClickedItem = this.updateClickedItem.bind(this);
@@ -28,7 +28,7 @@ export default class EditWorkshopBody extends Component {
     this.carousel = React.createRef();
 
     // this.addNode = this.addNode.bind(this);
-    this.addSubNode = this.addSubNode.bind(this);
+    // this.addSubNode = this.addSubNode.bind(this);
     this.addHazard = this.addHazard.bind(this);
 
     this.showNodeModal = this.showNodeModal.bind(this);
@@ -37,6 +37,7 @@ export default class EditWorkshopBody extends Component {
 
     this.showSubNodeModal = this.showSubNodeModal.bind(this);
     this.hideSubNodeModal = this.hideSubNodeModal.bind(this);
+    this.closeSubNodeModal = this.closeSubNodeModal.bind(this); //need to bind if you want to use this.props
   }
 
   next() {
@@ -71,28 +72,21 @@ export default class EditWorkshopBody extends Component {
     this.hideNodeModal();
   }
 
-  /**
-   * Sets template for subnode object , adds to list of subnodes in the node and replace with
-   * @param {Object} node to be added to
-   * @param {*} nodeIndex to be replaced within the nodes array
-   */
-  addSubNode(node, nodeIndex) {
-    var subnodeName = node.nodeName;
-    var alertMessage = "adding subnode " + subnodeName;
-    alert(alertMessage); //Needs to pass in the Name of the subNode
-    this.showSubNodeModal();
-
-    //Pass the Name from the child and append to node
-
-    //Trigger Modal - > Modal determines the Name of the
-    //Should this update the entire subnode to the backend db?
-  }
-
-  showSubNodeModal() {
+  //The node is not
+  showSubNodeModal(node, nodeIndex) {
+    console.log("Node to add subnode", node);
+    this.setState({ nodeIndexToAddSubnode: nodeIndex });
     this.setState({ isSubnodeModalVisible: true });
   }
 
   hideSubNodeModal() {
+    this.setState({ isSubnodeModalVisible: false });
+  }
+
+  closeSubNodeModal(subNode) {
+    //Pass to parent the subNode and the nodeIndex
+    // this.props.addSubNode();
+    this.props.addSubNode(this.state.nodeIndexToAddSubnode, subNode);
     this.setState({ isSubnodeModalVisible: false });
   }
 
@@ -102,8 +96,6 @@ export default class EditWorkshopBody extends Component {
 
   render() {
     const { data } = this.props;
-
-    // const { hazardLoaded } = this.state;
 
     return (
       <div className="ew-body">
@@ -116,6 +108,7 @@ export default class EditWorkshopBody extends Component {
           <AddSubnodeModal
             visible={this.state.isSubnodeModalVisible}
             hideModal={this.hideSubNodeModal}
+            closeModal={this.closeSubNodeModal}
           />
           <Menu
             onClick={this.handleClick}
@@ -129,10 +122,11 @@ export default class EditWorkshopBody extends Component {
             {data.nodes.map((node, nodeIndex) => {
               return (
                 <SubMenu key={node.nodeName} title={node.nodeName}>
-                  <Menu.Item onClick={() => this.addSubNode(node)}>
+                  <Menu.Item
+                    onClick={() => this.showSubNodeModal(node, nodeIndex)}
+                  >
                     Add SubNode
                   </Menu.Item>
-
                   {node.subnodes.map((subnode, subnodeIndex) => {
                     return (
                       <SubMenu

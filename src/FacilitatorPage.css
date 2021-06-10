@@ -276,6 +276,19 @@
 
 .ew-node-details-item {
   font-size: 0.8em;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.item-subtitle {
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
+}
+.item-button {
+  align-self: center;
+  justify-content: center;
+  margin-left: auto;
 }
 
 .ew-header-right-col {

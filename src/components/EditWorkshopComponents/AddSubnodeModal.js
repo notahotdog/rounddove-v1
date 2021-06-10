@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Modal, Button } from "antd";
+import { Modal, Button, message, Alert, Input } from "antd";
+import { isEmptyString } from "../../util/Utilities";
+import { getSubNodeTemplate } from "../../util/JSONHandler";
 
 export default class AddSubnodeModal extends Component {
   constructor(props) {
@@ -7,6 +9,8 @@ export default class AddSubnodeModal extends Component {
 
     this.state = {
       visible: true,
+      subnodeName: "",
+      emptySubNodeName: false,
     };
 
     this.handleOk = this.handleOk.bind(this);
@@ -14,14 +18,36 @@ export default class AddSubnodeModal extends Component {
   }
 
   handleOk() {
-    // this.setState({ visible: false });
-    this.props.hideModal();
+    var { subnodeName } = this.state;
+    if (!isEmptyString(subnodeName)) {
+      var subNode = getSubNodeTemplate(subnodeName);
+      console.log("OK SUBNODE: ", subNode);
+      this.props.closeModal(subNode);
+    } else {
+      this.setState({ emptySubNodeName: false });
+      this.showEmptySubNodeAlert();
+    }
   }
   handleCancel() {
-    // this.setState({ visible: false });
+    this.props.hideModal();
+  }
+
+  updateSubnodeName = (e) => {
+    this.setState({ subnodeName: e.target.value });
+  };
+
+  showEmptySubNodeAlert() {
+    message.error({
+      content: "Please enter a name for the sub node",
+      className: "custom-class",
+      style: {
+        marginTop: "2vh",
+      },
+    });
   }
 
   render() {
+    const { emptySubNodeName } = this.state;
     return (
       <div>
         <Modal
@@ -30,9 +56,15 @@ export default class AddSubnodeModal extends Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          {emptySubNodeName ? (
+            <Alert description="Please enter a name " type="error" closable />
+          ) : null}
+          <h3>Sub Node Name</h3>
+          <Input
+            placeholder="Sub Node Name"
+            onChange={this.updateSubnodeName}
+            allowClear
+          />
         </Modal>
       </div>
     );

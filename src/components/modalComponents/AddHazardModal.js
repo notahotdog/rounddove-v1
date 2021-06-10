@@ -13,6 +13,7 @@ export default class AddHazardModal extends Component {
     };
 
     this.handleOk = this.handleOk.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
     this.updateHazard = this.updateHazard.bind(this);
     this.saveToBackend = this.saveToBackend.bind(this);
   }

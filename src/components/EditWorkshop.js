@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../FacilitatorPage.css";
 import EditWorkshopBody from "./EditWorkshopComponents/EditWorkshopBody.component";
 import axios from "axios";
+import { Button } from "antd";
 
 export default class EditWorkshop extends Component {
   constructor(props) {
@@ -42,6 +43,7 @@ export default class EditWorkshop extends Component {
     this.setNodeSelected = this.setNodeSelected.bind(this);
     this.loadData = this.loadData.bind(this);
     this.addNodeToNodeList = this.addNodeToNodeList.bind(this);
+    this.addSubNodeToNode = this.addSubNodeToNode.bind(this);
   }
 
   componentDidMount() {
@@ -101,6 +103,19 @@ export default class EditWorkshop extends Component {
     this.saveDataToBackend(data);
   }
 
+  /**
+   *  Adds subnode to node selected takes in the index of the node to be appended
+   * @param {Num} nodeIndex  of the node to be appended to
+   * @param {Obj} subNode  Object of subnode to be added
+   */
+  addSubNodeToNode(nodeIndex, subNode) {
+    var nodeUpdate = { ...this.state.data.nodes[nodeIndex] };
+    nodeUpdate.subnodes.push(subNode); //increment the subnodes to the particular node
+    var data = { ...this.state.data };
+    data.nodes[nodeIndex] = nodeUpdate;
+    this.saveDataToBackend(data);
+  }
+
   render() {
     return (
       <div>
@@ -110,13 +125,33 @@ export default class EditWorkshop extends Component {
 
             <div className="ew-header-node-details">
               <div className="ew-node-details-item">
-                Node Assessed: {this.state.nodeSelected}
+                <div className="item-subtitle">
+                  Node Assessed: {this.state.nodeSelected}
+                </div>
+                <Button
+                  className="item-button"
+                  style={{ alignItem: "flex-end" }}
+                >
+                  Delete Node
+                </Button>
               </div>
               <div className="ew-node-details-item">
                 Sub node Assessed: {this.state.subnodeSelected}
+                <Button
+                  className="item-button"
+                  style={{ alignItem: "flex-end" }}
+                >
+                  Delete SubNode
+                </Button>
               </div>
               <div className="ew-node-details-item">
                 Hazard Assessed: {this.state.hazardSelected}
+                <Button
+                  className="item-button"
+                  style={{ alignItem: "flex-end" }}
+                >
+                  Delete Hazard
+                </Button>
               </div>
             </div>
           </div>
@@ -126,7 +161,7 @@ export default class EditWorkshop extends Component {
               Tags{" "}
               {this.state.tags.map((tag, index) => {
                 return (
-                  <div className="ew-node-details-item" key={index}>
+                  <div className="ew-node-details-tags" key={index}>
                     {tag}
                   </div>
                 );
@@ -139,6 +174,7 @@ export default class EditWorkshop extends Component {
           data={this.state.data}
           setNodeSelected={this.setNodeSelected}
           addNode={this.addNodeToNodeList}
+          addSubNode={this.addSubNodeToNode}
         />
       </div>
     );

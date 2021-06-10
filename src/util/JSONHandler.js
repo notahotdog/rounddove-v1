@@ -115,6 +115,12 @@ export function getNodeTemplate(name, noSubnodes) {
   return nodeObj;
 }
 
+export function getSubNodeTemplate(name) {
+  var subnodeObj = { ...subnodeTemplate };
+  subnodeObj.subnodeName = name;
+  return subnodeObj;
+}
+
 /**
  *  Subnode JSON Template
  */
@@ -140,32 +146,4 @@ export const hazardTemplate = {
   consequences: ["Default Consquence"],
   preventativeSafeguards: ["Default preventative safeguard"],
   mitigatingSafeguards: ["Default mitigating safeguard"],
-};
-
-//Outdated
-
-export function getComponentTemplate(name, noSubcomponents) {
-  var componentObj = {
-    componentName: name,
-    subcomponents: [],
-  };
-
-  for (var i = 0; i < noSubcomponents; i++) {
-    componentObj.subcomponents.push(subcomponentTemplate);
-  }
-  return componentObj;
-}
-
-//Should return a json object
-export const subcomponentTemplate = {
-  subcomponentName: "Default",
-  hazards: [
-    {
-      hazardName: "Default",
-      causes: ["Default"],
-      consequences: ["Default"],
-      preventativeSafeguards: ["Default"],
-      mitigatingSafeguards: ["Default"],
-    },
-  ],
 };
