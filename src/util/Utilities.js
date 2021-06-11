@@ -1,3 +1,5 @@
+import { message } from "antd";
+
 /**
  * Capitalizes the first letter of a String
  * @param {string} str string to capitalise
@@ -62,6 +64,45 @@ export function swapWithNext(array, index) {
     tempArray[index + 1] = temp;
   }
   return tempArray;
+}
+
+export function addVisibilityElement(obj) {
+  var jsonData = { ...obj };
+  var causes = [...jsonData.causes];
+  var consequences = [...jsonData.consequences];
+  var preventativeSafeguards = [...jsonData.preventativeSafeguards];
+  var mitigatingSafeguards = [...jsonData.mitigatingSafeguards];
+
+  var updatedCausesList = [];
+  causes.forEach((cause) => {
+    var tempObj = { name: cause, visible: true };
+    updatedCausesList.push(tempObj);
+  });
+  jsonData.causes = updatedCausesList;
+
+  var updatedConsequenceList = [];
+  consequences.forEach((consequence) => {
+    var tobj = { name: consequence, visible: true };
+    updatedConsequenceList.push(tobj);
+  });
+  jsonData.consequences = updatedConsequenceList;
+
+  var updatedPSList = [];
+  preventativeSafeguards.forEach((pSafe) => {
+    var tempObj = { name: pSafe, visible: true };
+    updatedPSList.push(tempObj);
+  });
+  jsonData.preventativeSafeguards = updatedPSList;
+
+  var updatedMSList = [];
+  mitigatingSafeguards.forEach((mSafe) => {
+    var tempObj = { name: mSafe, visible: true };
+    updatedMSList.push(tempObj);
+  });
+
+  jsonData.mitigatingSafeguards = updatedMSList;
+  console.log("json data ammended: ", jsonData);
+  return jsonData;
 }
 
 //Not used for now

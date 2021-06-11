@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Menu } from "antd";
+import DisplayHazardsComponent from "./DisplayHazardsComponent";
 import AddNodeModal from "./AddNodeModal";
 import AddSubnodeModal from "./AddSubnodeModal";
 import AddHazardModal from "./AddHazardWithOptionsModal";
@@ -51,12 +52,23 @@ export default class EditWorkshopBody extends Component {
     this.carousel.prev();
   }
 
-  updateClickedItem(node, subnode, hazard) {
+  updateClickedItem(
+    node,
+    subnode,
+    hazard,
+    nodeIndex,
+    subnodeIndex,
+    hazardIndex
+  ) {
     console.log("State of Menu Item Clicked Hazard", hazard);
+    //Should Pass in the index of all the components
     this.props.setNodeSelected(
       node.nodeName,
       subnode.subnodeName,
-      hazard.hazardName
+      hazard.hazardName,
+      nodeIndex,
+      subnodeIndex,
+      hazardIndex
     );
 
     this.setState({ hazardLoaded: hazard });
@@ -167,7 +179,14 @@ export default class EditWorkshopBody extends Component {
                                 .concat(hazard.hazardName)
                                 .concat(hazardIndex)}
                               onClick={() =>
-                                this.updateClickedItem(node, subnode, hazard)
+                                this.updateClickedItem(
+                                  node,
+                                  subnode,
+                                  hazard,
+                                  nodeIndex,
+                                  subnodeIndex,
+                                  hazardIndex
+                                )
                               }
                             >
                               {hazard.hazardName}
@@ -182,7 +201,11 @@ export default class EditWorkshopBody extends Component {
             })}
           </Menu>
         </div>
-        <div className="ew-body-right-col">Right Col</div>
+        <div className="ew-body-right-col">
+          <DisplayHazardsComponent
+            hazardName={this.state.hazardLoaded.hazardName}
+          />
+        </div>
       </div>
     );
 

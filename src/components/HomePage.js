@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { message } from "antd";
+import { message, Button } from "antd";
 // import { Typography } from "antd";
+import { addVisibilityElement } from "../util/Utilities";
 
 // const { Title } = Typography;
 
@@ -15,7 +16,18 @@ export default class HomePage extends Component {
         { name: "workshop1", workshopId: "9123846os" },
         { name: "workshopr2", workshopId: "asfas9123846os" },
       ],
+
+      hazardData: {
+        id: "",
+        hazardName: "Default",
+        causes: ["Default"],
+        consequences: ["consequence 1", "consequence 2"],
+        preventativeSafeguards: ["Default"],
+        mitigatingSafeguards: ["Default"],
+      },
     };
+
+    this.addVisibilityElement = this.addVisibilityElement.bind(this);
   }
 
   printMessage() {
@@ -26,6 +38,10 @@ export default class HomePage extends Component {
     message.info("This is a normal message");
   };
 
+  addVisibilityElement() {
+    addVisibilityElement(this.state.hazardData);
+  }
+
   render() {
     return (
       <div
@@ -34,6 +50,7 @@ export default class HomePage extends Component {
       >
         {" "}
         HomePage
+        <Button onClick={this.addVisibilityElement}> tBJKJ</Button>
       </div>
     );
   }
