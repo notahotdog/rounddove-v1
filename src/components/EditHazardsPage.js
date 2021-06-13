@@ -3,6 +3,7 @@ import axios from "axios";
 import { Menu } from "antd";
 import EditableHazardComponent from "./TableComponents/EditableHazardComponent";
 import AddHazardModal from "./modalComponents/AddHazardModal";
+import LoadDataPromptPage from "./DisplayComponents/LoadDataPromptPage";
 // import { getHazardsFromDB } from "../util/BackendService";
 
 export default class EditHazardsPage extends Component {
@@ -21,6 +22,8 @@ export default class EditHazardsPage extends Component {
         mitigatingSafeguards: ["Default"],
       },
       modalVisible: false,
+      isHazardSelected: false,
+      //Saves choice within parent component
     };
 
     this.getHazardData = this.getHazardData.bind(this);
@@ -28,6 +31,7 @@ export default class EditHazardsPage extends Component {
     this.loadData = this.loadData.bind(this);
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
+    this.setHazardSelectedTrue = this.setHazardSelectedTrue.bind(this);
   }
 
   //Extract Hazard Data
@@ -77,6 +81,11 @@ export default class EditHazardsPage extends Component {
     });
   }
 
+  setHazardSelectedTrue() {
+    console.log("HAZARD IS SELECTED");
+    this.setState({ isHazardSelected: true });
+  }
+
   showModal = () => {
     this.setState({ modalVisible: true });
   };
@@ -103,6 +112,7 @@ export default class EditHazardsPage extends Component {
   }
 
   render() {
+    const { isHazardSelected } = this.state;
     return (
       <div className="ew-main-div">
         <div className="ew-main-header">
@@ -128,9 +138,10 @@ export default class EditHazardsPage extends Component {
                 return (
                   <Menu.Item
                     key={hazard._id}
-                    onClick={() =>
-                      this.updateHazardSelected(hazard, hazard._id)
-                    }
+                    onClick={() => {
+                      this.updateHazardSelected(hazard, hazard._id);
+                      this.setHazardSelectedTrue();
+                    }}
                   >
                     {hazard.hazardName}
                   </Menu.Item>
@@ -138,11 +149,20 @@ export default class EditHazardsPage extends Component {
               })}
             </Menu>
           </div>
-          <div className="ew-right-col">
+          {isHazardSelected ? (
+            <div className="ew-right-col">
+              <EditableHazardComponent
+                hazardSelected={this.state.hazardSelected}
+              />
+            </div>
+          ) : (
+            <LoadDataPromptPage />
+          )}
+          {/* <div className="ew-right-col">
             <EditableHazardComponent
               hazardSelected={this.state.hazardSelected}
             />
-          </div>
+          </div> */}
         </div>
       </div>
     );

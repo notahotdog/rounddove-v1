@@ -185,6 +185,7 @@ export default class EditWorkshop extends Component {
   }
 
   render() {
+    // console.log("edit workhop render");
     return (
       <div>
         <div className="ew-header">

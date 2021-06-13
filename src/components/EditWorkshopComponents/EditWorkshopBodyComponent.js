@@ -6,6 +6,7 @@ import AddSubnodeModal from "./AddSubnodeModal";
 import AddHazardModal from "./AddHazardWithOptionsModal";
 import { getKeyThenIncreaseKey } from "antd/lib/message";
 import { filterMoreThanOneInstanceHazard } from "../../util/JSONHandler";
+import LoadDataPromptPage from "../DisplayComponents/LoadDataPromptPage";
 const { SubMenu, Carousel, Button } = Menu;
 
 export default class EditWorkshopBody extends Component {
@@ -25,7 +26,10 @@ export default class EditWorkshopBody extends Component {
       nodeIndexToAddSubnode: 0,
       isHazardModalVisible: false,
       subnodeIndexToAddHazard: 0,
+      isHazardSelected: false,
     };
+
+    this.setHazardSelectedTrue = this.setHazardSelectedTrue.bind(this);
 
     this.updateClickedItem = this.updateClickedItem.bind(this);
     this.next = this.next.bind(this);
@@ -43,6 +47,11 @@ export default class EditWorkshopBody extends Component {
     this.showHazardModal = this.showHazardModal.bind(this);
     this.hideHazardModal = this.hideHazardModal.bind(this);
     this.closeHazardModal = this.closeHazardModal.bind(this);
+  }
+
+  setHazardSelectedTrue() {
+    console.log("HAZARD IS SELECTED");
+    this.setState({ isHazardSelected: true });
   }
 
   next() {
@@ -119,7 +128,8 @@ export default class EditWorkshopBody extends Component {
 
   render() {
     const { data } = this.props;
-
+    // console.log("edit workshop body render");
+    const { isHazardSelected } = this.state;
     return (
       <div className="ew-body">
         <div className="ew-body-left-col">
@@ -178,7 +188,7 @@ export default class EditWorkshopBody extends Component {
                                 .concat(subnodeIndex)
                                 .concat(hazard.hazardName)
                                 .concat(hazardIndex)}
-                              onClick={() =>
+                              onClick={() => {
                                 this.updateClickedItem(
                                   node,
                                   subnode,
@@ -186,8 +196,9 @@ export default class EditWorkshopBody extends Component {
                                   nodeIndex,
                                   subnodeIndex,
                                   hazardIndex
-                                )
-                              }
+                                );
+                                this.setHazardSelectedTrue();
+                              }}
                             >
                               {hazard.hazardName}
                             </Menu.Item>
@@ -201,10 +212,16 @@ export default class EditWorkshopBody extends Component {
             })}
           </Menu>
         </div>
+
         <div className="ew-body-right-col">
-          <DisplayHazardsComponent
-            hazardName={this.state.hazardLoaded.hazardName}
-          />
+          {isHazardSelected ? (
+            <DisplayHazardsComponent
+              hazardName={this.state.hazardLoaded.hazardName}
+              //Need to insert the choice
+            />
+          ) : (
+            <LoadDataPromptPage />
+          )}
         </div>
       </div>
     );

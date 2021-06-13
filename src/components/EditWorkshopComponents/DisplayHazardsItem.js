@@ -5,9 +5,6 @@ export default class DisplayHazardsItem extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      checked: this.props.mitigatingSafeguard.visible,
-    };
     this.checkItem = this.checkItem.bind(this);
     this.updateChecked = this.updateChecked.bind(this);
   }
@@ -22,24 +19,21 @@ export default class DisplayHazardsItem extends Component {
   }
 
   updateChecked() {
-    //Should Update Parent Component
-    console.log("updateChecked: ", this.props.index, this.props.dType);
+    // console.log("updateChecked: ", this.props.index, this.props.dType);
     const { dType, index } = this.props;
     this.props.toggleChecked(dType, index);
-    //     this.setState({ checked: !this.state.checked });
   }
 
   render() {
     return (
       <div className="dhi-box">
-        <div className="dh-item-content">
-          {this.props.mitigatingSafeguard.name}
-        </div>
+        <div className="dh-item-content">{this.props.item.name}</div>
 
         <Checkbox
           onChange={this.onChange}
-          checked={this.props.mitigatingSafeguard.visible}
+          checked={this.props.item.visible}
           onClick={this.updateChecked}
+          style={{ marginLeft: "auto", marginRight: "5px" }}
         />
       </div>
     );

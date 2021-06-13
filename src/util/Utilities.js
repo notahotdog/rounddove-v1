@@ -75,28 +75,28 @@ export function addVisibilityElement(obj) {
 
   var updatedCausesList = [];
   causes.forEach((cause) => {
-    var tempObj = { name: cause, visible: true };
+    var tempObj = { name: cause, visible: false };
     updatedCausesList.push(tempObj);
   });
   jsonData.causes = updatedCausesList;
 
   var updatedConsequenceList = [];
   consequences.forEach((consequence) => {
-    var tobj = { name: consequence, visible: true };
+    var tobj = { name: consequence, visible: false };
     updatedConsequenceList.push(tobj);
   });
   jsonData.consequences = updatedConsequenceList;
 
   var updatedPSList = [];
   preventativeSafeguards.forEach((pSafe) => {
-    var tempObj = { name: pSafe, visible: true };
+    var tempObj = { name: pSafe, visible: false };
     updatedPSList.push(tempObj);
   });
   jsonData.preventativeSafeguards = updatedPSList;
 
   var updatedMSList = [];
   mitigatingSafeguards.forEach((mSafe) => {
-    var tempObj = { name: mSafe, visible: true };
+    var tempObj = { name: mSafe, visible: false };
     updatedMSList.push(tempObj);
   });
 
