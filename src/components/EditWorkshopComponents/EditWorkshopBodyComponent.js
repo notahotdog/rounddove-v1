@@ -16,6 +16,7 @@ export default class EditWorkshopBody extends Component {
     this.state = {
       hazardLoaded: {
         hazardName: "",
+        hazardAllocated: false,
         causes: [""],
         consequences: [""],
         preventativeSafeguards: [""],
@@ -128,6 +129,7 @@ export default class EditWorkshopBody extends Component {
 
   render() {
     const { data } = this.props;
+    console.log("DATTATTAT:", data);
     // console.log("edit workshop body render");
     const { isHazardSelected } = this.state;
     return (
@@ -217,6 +219,7 @@ export default class EditWorkshopBody extends Component {
           {isHazardSelected ? (
             <DisplayHazardsComponent
               hazardName={this.state.hazardLoaded.hazardName}
+              hazardToBeEdited={this.state.hazardLoaded}
               //Need to insert the choice
             />
           ) : (

@@ -129,6 +129,7 @@ export const subnodeTemplate = {
   hazards: [
     {
       hazardName: "Default Hazard",
+      hazardAllocated: false,
       causes: ["Default Cause"],
       consequences: ["Default Consquence"],
       preventativeSafeguards: ["Default preventative safeguard"],
@@ -142,6 +143,7 @@ export const subnodeTemplate = {
  */
 export const hazardTemplate = {
   hazardName: "Default Hazard",
+  hazardAllocated: false,
   causes: ["Default Cause"],
   consequences: ["Default Consquence"],
   preventativeSafeguards: ["Default preventative safeguard"],

@@ -4,6 +4,10 @@ import { UploadOutlined } from "@ant-design/icons";
 import DisplayJSONData from "../util/DisplayJSONData";
 import axios from "axios";
 import { CompareObjects } from "../util/JSONHandler";
+import {
+  addVisibilityElement,
+  addVisibilityToWorkshop,
+} from "../util/Utilities";
 const { Title } = Typography;
 
 export default class UploadDataPage extends Component {
@@ -30,10 +34,19 @@ export default class UploadDataPage extends Component {
    * Saves uploaded data to backend
    */
   onClickSaveToBackend() {
+    //Parse this.state.json data through the viewFinder
+
+    console.log("Data before being transformed", this.state.jsonData);
+
+    var workshopVisible = addVisibilityToWorkshop(this.state.jsonData, true);
+
+    console.log("Workshop with visibility element: ", workshopVisible);
+
     if (this.state.jsonData.nodes.length !== 0) {
       axios.post(
         "http://localhost:5000/workshop/addWorkshop",
-        this.state.jsonData
+        workshopVisible
+        // this.state.jsonData
       );
 
       message.success({

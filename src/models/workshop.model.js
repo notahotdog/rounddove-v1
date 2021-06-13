@@ -1,21 +1,33 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const hazardItemSchema = new Schema({
+  name: {
+    type: String,
+  },
+  visible: {
+    type: Boolean,
+  },
+});
+
 const hazardSchema = new Schema({
   hazardName: {
     type: String,
   },
+  hazardAllocated: {
+    type: Boolean,
+  },
   causes: {
-    type: [String],
+    type: [hazardItemSchema],
   },
   consequences: {
-    type: [String],
+    type: [hazardItemSchema],
   },
   preventativeSafeguards: {
-    type: [String],
+    type: [hazardItemSchema],
   },
   mitigatingSafeguards: {
-    type: [String],
+    type: [hazardItemSchema],
   },
 });
 
@@ -53,3 +65,24 @@ const workshopSchema = new Schema({
 
 const workshop = mongoose.model("workshop", workshopSchema, "workshop"); //The first param specifies the collection name
 module.exports = workshop;
+
+// const hazardSchema = new Schema({
+//   hazardName: {
+//     type: String,
+//   },
+//   hazardAllocated: {
+//     type: Boolean,
+//   },
+//   causes: {
+//     type: [String],
+//   },
+//   consequences: {
+//     type: [String],
+//   },
+//   preventativeSafeguards: {
+//     type: [String],
+//   },
+//   mitigatingSafeguards: {
+//     type: [String],
+//   },
+// });

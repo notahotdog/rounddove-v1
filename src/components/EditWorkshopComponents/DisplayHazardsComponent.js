@@ -5,6 +5,7 @@ import DisplayHazardsItem from "./DisplayHazardsItem";
 import { addVisibilityElement } from "../../util/Utilities";
 import { getKeyThenIncreaseKey } from "antd/lib/message";
 import LoadDataPromptPage from "../DisplayComponents/LoadDataPromptPage";
+import { update } from "../../models/workshop.model";
 
 const { Option } = Select;
 
@@ -15,6 +16,8 @@ export default class DisplayHazardsComponent extends Component {
     this.state = {
       hazardNameParent: "",
       hazardList: [""],
+      hazardAllocated: false,
+      parentHazard: this.props.hazardName,
       hazardSelected: {
         id: "",
         hazardName: "Default",
@@ -43,7 +46,7 @@ export default class DisplayHazardsComponent extends Component {
         const { hazardList } = this.state;
         const updateList = [];
         hazardList.forEach((hazard) => {
-          var hazardObj = addVisibilityElement(hazard);
+          var hazardObj = addVisibilityElement(hazard, false);
           updateList.push(hazardObj);
         });
         console.log("x", updateList);
@@ -157,12 +160,21 @@ export default class DisplayHazardsComponent extends Component {
   }
 
   render() {
+    //isHazardSelected - refers to the hazardBackend Reference
     const { hazardSelected, isHazardSelected } = this.state;
     var editHazardMode = !this.state.savedSelection; // if the selection is not saved(false) , editHazardn
+    const updateHazardData = this.props.hazardToBeEdited;
+    const isHazardAllocated = updateHazardData.hazardAllocated;
+    console.log("hazard Allocated?", updateHazardData);
+
+    console.log("HAZARD SELECTED FORMAT ", hazardSelected);
 
     return (
       <div className="dh-component">
         <div className="dh-header">
+          <div style={{ marginRight: "5px" }}>
+            parent Hazard {updateHazardData.hazardName} .{" "}
+          </div>
           Hazard Selected {hazardSelected.hazardName} .
           <div className="dh-h1">Load Hazard Details: </div>
           <div className="dh-h2">
@@ -203,7 +215,86 @@ export default class DisplayHazardsComponent extends Component {
           </div>
         </div>
         <div className="dh-body">
-          {!isHazardSelected ? (
+          {isHazardAllocated ? (
+            <div className="dh-body">
+              <div className="dh-col">
+                <h1 className="dh-col-header">Causes</h1>
+                <Checkbox onChange={(e) => this.toggleCheckAll(e, "cause")}>
+                  Select All
+                </Checkbox>
+                {updateHazardData.causes.map((cause, cIndex) => {
+                  return (
+                    <DisplayHazardsItem
+                      item={cause}
+                      index={cIndex}
+                      dType="cause"
+                      toggleChecked={this.toggleChecked}
+                    />
+                  );
+                })}
+              </div>
+              <div className="dh-col">
+                <h1 className="dh-col-header">Consequences</h1>
+                <Checkbox
+                  onChange={(e) => this.toggleCheckAll(e, "consequence")}
+                >
+                  Select All
+                </Checkbox>
+                {updateHazardData.consequences.map((consequence, cIndex) => {
+                  return (
+                    <DisplayHazardsItem
+                      item={consequence}
+                      index={cIndex}
+                      dType="consequence"
+                      toggleChecked={this.toggleChecked}
+                    />
+                  );
+                })}
+              </div>
+              <div className="dh-col">
+                <h1 className="dh-col-header">Preventative Safeguards</h1>
+                <Checkbox onChange={(e) => this.toggleCheckAll(e, "pSg")}>
+                  Select All
+                </Checkbox>
+                {updateHazardData.preventativeSafeguards.map(
+                  (preventativeSafeguard, pIndex) => {
+                    return (
+                      <DisplayHazardsItem
+                        item={preventativeSafeguard}
+                        index={pIndex}
+                        dType="pSg"
+                        toggleChecked={this.toggleChecked}
+                      />
+                    );
+                  }
+                )}
+              </div>
+              <div className="dh-col">
+                <h1 className="dh-col-header">Mitigating Safeguards</h1>
+                <Checkbox onChange={(e) => this.toggleCheckAll(e, "mSg")}>
+                  Select All
+                </Checkbox>
+                {updateHazardData.mitigatingSafeguards.map(
+                  (mitigatingSafeguard, mIndex) => {
+                    return (
+                      <DisplayHazardsItem
+                        item={mitigatingSafeguard}
+                        index={mIndex}
+                        dType="mSg"
+                        toggleChecked={this.toggleChecked}
+                      />
+                    );
+                  }
+                )}
+              </div>
+            </div>
+          ) : (
+            <div>lol</div>
+          )}
+          {!isHazardSelected ? ( //REPLACE THIS OPTION WITH is hazard allocated, after which, its ishazardSelected,
+            //Once the hazard is selected, does it have any previous data allocated to it if
+
+            //if yes?
             <LoadDataPromptPage />
           ) : (
             <div className="dh-body">

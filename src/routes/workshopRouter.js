@@ -92,6 +92,8 @@ router.route("/addWorkshop").post((req, res) => {
   });
 
   console.log("Router Saving Workshop");
+  // console.log("THE FUCKING NEW WORKSHOP", newWorkshop);
+  // console.log("node fucking object", JSON.stringify(nodes));
 
   newWorkshop
     .save()

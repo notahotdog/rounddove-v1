@@ -1,4 +1,5 @@
 import { message } from "antd";
+import workshop from "../models/workshop.model";
 
 /**
  * Capitalizes the first letter of a String
@@ -66,12 +67,69 @@ export function swapWithNext(array, index) {
   return tempArray;
 }
 
-export function addVisibilityElement(obj) {
+/**
+ * Modifies uploaded Workshop schema to suit local use, by adding visibility element
+ * @param {JSON} workshopObj
+ * @returns updated json with visibility element
+ */
+/**
+ * Modifies uploaded Workshop schema to suit local use, by adding visibility element
+ * @param {JSON} workshopObj
+ * @param {boolean} isHazardAllocated sets whether the default hazard should be true/false
+ * @returns updated json with visibility element
+ */
+export function addVisibilityToWorkshop(workshopObj, isHazardAllocated) {
+  //Iterates through the nodes/subnodes,
+  var workshopObj = { ...workshopObj };
+
+  var updatedNodeList = [];
+
+  workshopObj.nodes.map((node, nodeIndex) => {
+    //as it iterates through the nodes
+    var nodeName = node.nodeName;
+    var updatedSubnodeList = [];
+
+    node.subnodes.map((subnode, subnodeIndex) => {
+      var subnodeName = subnode.subnodeName;
+      var updatedHazardList = []; //adds to the hazard List of a subnode
+
+      subnode.hazards.map((hazard, hazardIndex) => {
+        updatedHazardList.push(addVisibilityElement(hazard, isHazardAllocated));
+      });
+
+      const updatedSubnode = {
+        subnodeName: subnodeName,
+        hazards: updatedHazardList,
+      };
+      updatedSubnodeList.push(updatedSubnode);
+    });
+
+    const updatedNode = {
+      nodeName: nodeName,
+      subnodes: updatedSubnodeList,
+    };
+
+    updatedNodeList.push(updatedNode);
+  });
+
+  workshopObj.nodes = updatedNodeList;
+
+  console.log("Data after being transformed: ", workshopObj);
+  return workshopObj; //updatedObj
+}
+
+/**
+ * Adds visiblity to an object
+ * @param {json} hazard Obj
+ * @returns
+ */
+export function addVisibilityElement(obj, isHazardAllocated) {
   var jsonData = { ...obj };
   var causes = [...jsonData.causes];
   var consequences = [...jsonData.consequences];
   var preventativeSafeguards = [...jsonData.preventativeSafeguards];
   var mitigatingSafeguards = [...jsonData.mitigatingSafeguards];
+  jsonData["hazardAllocated"] = isHazardAllocated; // adds Visibility to an element requires boolean input
 
   var updatedCausesList = [];
   causes.forEach((cause) => {

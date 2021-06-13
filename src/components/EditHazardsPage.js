@@ -108,7 +108,10 @@ export default class EditHazardsPage extends Component {
   updateHazardSelected(hazard) {
     var hazardObj = hazard;
     hazardObj.id = hazard._id; //Makes the hazard id identifiable could be bad practice
-    this.setState({ hazardSelected: hazardObj });
+    this.setState({ hazardSelected: hazardObj }, () => {
+      //testHazard Selected feature
+      console.log("Hazard Selected: ", this.state.hazardSelected);
+    });
   }
 
   render() {
@@ -139,7 +142,7 @@ export default class EditHazardsPage extends Component {
                   <Menu.Item
                     key={hazard._id}
                     onClick={() => {
-                      this.updateHazardSelected(hazard, hazard._id);
+                      this.updateHazardSelected(hazard);
                       this.setHazardSelectedTrue();
                     }}
                   >
