@@ -95,21 +95,46 @@ export default class DisplayWorkshopBody extends Component {
           </Menu>
         </div>
         <div className="dw-body-right-col">
-          {/* Right Col */}
           <div className="dw-body-right-header">
             <Button onClick={this.previous}>Previous</Button>
             <Button onClick={this.next}>Next</Button>
-            <div> Mark as Completed</div>
           </div>
           <Carousel
             className="dw-carousel-div"
             arrows={true}
             ref={(node) => (this.carousel = node)}
           >
-            <div>{hazardLoaded.hazardName}</div>
+            <h1> Hazard: {hazardLoaded.hazardName}</h1>
             <div>
+              <h1>Causes</h1>
               {hazardLoaded.causes.map((cause) => {
-                return <div>{cause}</div>;
+                if (cause.visible) {
+                  return <div>{cause.name}</div>;
+                }
+              })}
+            </div>
+            <div>
+              <h1>Consequences</h1>
+              {hazardLoaded.consequences.map((consequence) => {
+                if (consequence.visible) {
+                  return <div>{consequence.name}</div>;
+                }
+              })}
+            </div>
+            <div>
+              <h1>Preventative Safeguards</h1>
+              {hazardLoaded.preventativeSafeguards.map((pSafeguard) => {
+                if (pSafeguard.visible) {
+                  return <div>{pSafeguard.name}</div>;
+                }
+              })}
+            </div>
+            <div>
+              <h1>Mitigating Safeguards</h1>
+              {hazardLoaded.mitigatingSafeguards.map((mSafeguard) => {
+                if (mSafeguard.visible) {
+                  return <div>{mSafeguard.name}</div>;
+                }
               })}
             </div>
           </Carousel>

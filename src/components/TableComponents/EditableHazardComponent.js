@@ -238,6 +238,7 @@ export default class EditableHazardComponent extends Component {
               <Input
                 placeholder=" + Add Cause"
                 onChange={this.updateAddCauseValue}
+                allowClear
               />
               <Button onClick={this.addCause}>
                 <RiAddLine

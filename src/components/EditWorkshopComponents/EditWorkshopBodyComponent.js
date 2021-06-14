@@ -55,7 +55,6 @@ export default class EditWorkshopBody extends Component {
   }
 
   saveUpdatedNode(nodeData) {
-    // this.props.saveUpdatedNode();
     this.props.updateNodeHazard(nodeData);
     // console.log("UPDATED NODE TO BE SAVED", nodeData);
   }

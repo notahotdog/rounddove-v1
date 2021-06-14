@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import "../FacilitatorPage.css";
 import EditWorkshopBody from "./EditWorkshopComponents/EditWorkshopBodyComponent";
 import axios from "axios";
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import { deleteItemFromIndex } from "../util/Utilities";
+import EditNodeNameModal from "./EditWorkshopComponents/EditNodeNameModal";
+import EditSubnodeNameModal from "./EditWorkshopComponents/EditSubnodeNameModal";
+import EditHazardNameModal from "./EditWorkshopComponents/EditHazardNameModal";
 
 export default class EditWorkshop extends Component {
   constructor(props) {
@@ -16,6 +19,9 @@ export default class EditWorkshop extends Component {
       nodeSelIndex: 0,
       subnodeSelIndex: 0,
       hazardSelndex: 0,
+      isOpenNodeNameModal: false,
+      isOpenSubnodeNameModal: false,
+      isOpenHazardNameModal: false,
       tags: [""],
       data: {
         workshop: "",
@@ -54,6 +60,19 @@ export default class EditWorkshop extends Component {
     this.deleteHazardFromSubNode = this.deleteHazardFromSubNode.bind(this);
 
     this.updateNodeHazard = this.updateNodeHazard.bind(this);
+    this.openNodeNameModal = this.openNodeNameModal.bind(this);
+    this.closeNodeNameModal = this.closeNodeNameModal.bind(this);
+    this.closeSaveNodeNameModal = this.closeSaveNodeNameModal.bind(this);
+
+    this.openSubnodeNameModal = this.openSubnodeNameModal.bind(this);
+    this.closeSaveSubnodeNameModal = this.closeSaveSubnodeNameModal.bind(this);
+    this.closeSubnodeNameModal = this.closeSubnodeNameModal.bind(this);
+
+    this.openHazardNameModal = this.openHazardNameModal.bind(this);
+    this.closeSaveHazardNameModal = this.closeSaveHazardNameModal.bind(this);
+    this.closeHazardNameModal = this.closeHazardNameModal.bind(this);
+
+    this.updateName = this.updateName.bind(this);
   }
 
   componentDidMount() {
@@ -102,9 +121,27 @@ export default class EditWorkshop extends Component {
     console.log("Workshop Data: ", data);
     //Update this data to the backend
 
-    //Set the data
     this.saveDataToBackend(data);
-    //saveDataToBackend
+  }
+
+  updateName() {
+    var nodeName = this.state.nodeSelected;
+    var nodeIndex = this.state.nodeSelIndex;
+    var subnodeName = this.state.subnodeSelected;
+    var subnodeIndex = this.state.subnodeSelIndex;
+    var hazardName = this.state.hazardSelected;
+    var hazardIndex = this.state.hazardSelndex;
+
+    var data = { ...this.state.data };
+
+    data.nodes[nodeIndex].nodeName = nodeName;
+    data.nodes[nodeIndex].subnodes[subnodeIndex].subnodeName = subnodeName;
+    data.nodes[nodeIndex].subnodes[subnodeIndex].hazards[
+      hazardIndex
+    ].hazardName = hazardName;
+
+    console.log("(Update Name) Workshop Data: ", data);
+    this.saveDataToBackend(data);
   }
 
   saveDataToBackend(data) {
@@ -213,11 +250,83 @@ export default class EditWorkshop extends Component {
     this.saveDataToBackend(data);
   }
 
+  openNodeNameModal() {
+    this.setState({ isOpenNodeNameModal: true });
+  }
+
+  closeSaveNodeNameModal(nodeName) {
+    console.log("SAVED RENAMED Node Modal:", nodeName);
+    //Save this data to the backend
+    this.setState({ nodeSelected: nodeName }, () => {
+      this.updateName();
+    });
+
+    this.closeNodeNameModal();
+  }
+
+  closeNodeNameModal() {
+    this.setState({ isOpenNodeNameModal: false });
+  }
+
+  openSubnodeNameModal() {
+    this.setState({ isOpenSubnodeNameModal: true });
+  }
+
+  closeSaveSubnodeNameModal(subnodeName) {
+    console.log("SAVED RENAMED SubnodeNode Modal:", subnodeName);
+    this.setState({ subnodeSelected: subnodeName }, () => {
+      this.updateName();
+    });
+    this.closeSubnodeNameModal();
+  }
+
+  closeSubnodeNameModal() {
+    this.setState({ isOpenSubnodeNameModal: false });
+  }
+
+  openHazardNameModal() {
+    this.setState({ isOpenHazardNameModal: true });
+  }
+
+  closeSaveHazardNameModal(hazardName) {
+    console.log("SAVED RENAMED Hazard Modal:", hazardName);
+    this.setState({ hazardSelected: hazardName }, () => {
+      this.updateName();
+    });
+
+    //Needs to be saved to backend
+    this.closeHazardNameModal();
+  }
+
+  closeHazardNameModal() {
+    this.setState({ isOpenHazardNameModal: false });
+  }
+
   render() {
-    // console.log("edit workhop render");
+    const {
+      isOpenNodeNameModal,
+      isOpenSubnodeNameModal,
+      isOpenHazardNameModal,
+    } = this.state;
+
     return (
       <div>
         <div className="ew-header">
+          <EditNodeNameModal
+            visible={isOpenNodeNameModal}
+            closeModal={this.closeSaveNodeNameModal}
+            hideModal={this.closeNodeNameModal}
+          />
+          <EditSubnodeNameModal
+            visible={isOpenSubnodeNameModal}
+            closeModal={this.closeSaveSubnodeNameModal}
+            hideModal={this.closeSubnodeNameModal}
+          />
+          <EditHazardNameModal
+            visible={isOpenHazardNameModal}
+            closeModal={this.closeSaveHazardNameModal}
+            hideModal={this.closeHazardNameModal}
+          />
           <div className="ew-header-left-col">
             <div className="ew-header-title">{this.state.workshopName}</div>
 
@@ -228,6 +337,13 @@ export default class EditWorkshop extends Component {
                   --- i:
                   {this.state.nodeSelIndex}
                 </div>
+                <Button
+                  className="item-button"
+                  style={{ alignItem: "flex-end" }}
+                  onClick={this.openNodeNameModal}
+                >
+                  Edit Node Name
+                </Button>
                 <Button
                   className="item-button"
                   style={{ alignItem: "flex-end" }}
@@ -242,6 +358,13 @@ export default class EditWorkshop extends Component {
                 <Button
                   className="item-button"
                   style={{ alignItem: "flex-end" }}
+                  onClick={this.openSubnodeNameModal}
+                >
+                  Edit Subnode Name
+                </Button>
+                <Button
+                  className="item-button"
+                  style={{ alignItem: "flex-end" }}
                   onClick={this.deleteSubNodeFromNode}
                 >
                   Delete SubNode
@@ -250,6 +373,13 @@ export default class EditWorkshop extends Component {
               <div className="ew-node-details-item">
                 Hazard Assessed: {this.state.hazardSelected}
                 --- i: {this.state.hazardSelndex}
+                <Button
+                  className="item-button"
+                  style={{ alignItem: "flex-end" }}
+                  onClick={this.openHazardNameModal}
+                >
+                  Edit Hazard Name
+                </Button>
                 <Button
                   className="item-button"
                   style={{ alignItem: "flex-end" }}
