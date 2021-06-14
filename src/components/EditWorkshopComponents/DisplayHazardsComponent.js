@@ -39,6 +39,9 @@ export default class DisplayHazardsComponent extends Component {
   componentDidMount() {
     //Should set this
     console.log("hazard Loaded: ", this.props.hazardName);
+    this.setState({
+      hazardAllocated: this.props.hazardToBeEdited.hazardAllocated,
+    });
     this.setState({ hazardNameParent: this.props.hazardName });
     axios.get("http://localhost:5000/workshop/hazard").then((response) => {
       this.setState({ hazardList: response.data }, () => {
@@ -55,8 +58,25 @@ export default class DisplayHazardsComponent extends Component {
     });
   }
 
+  saveHazardChoice() {
+    //Saves Choice within parent component
+    this.setState({ savedSelection: !this.state.savedSelection });
+    var updatedState = this.state.hazardSelected;
+    updatedState.hazardAllocated = true;
+    this.props.saveUpdatedNode(updatedState);
+    // this.props.saveUpdatedNode(this.state.hazardSelected);
+    //Passes Hazard to Parent Component
+    // const {hazardSelected} = this.state;
+    // this.props.saveHazardSelection(hazardSelected);
+  }
+
+  /**
+   *  Updates when hazard box select is changed
+   * @param {e} value
+   */
   onChange(value) {
-    //set state of hazard Selected
+    this.setState({ hazardAllocated: false, savedSelection: true });
+
     this.setState({ isHazardSelected: true });
     console.log(`selected ${value}`);
     const { hazardList } = this.state;
@@ -70,13 +90,8 @@ export default class DisplayHazardsComponent extends Component {
   }
 
   /**
-   * Toggle between checking/ unchecking everything
-   * @param {target} e  target to be modified
-   */
-
-  /**
-   *
-   * @param {target} e
+   * Toggle between checking/ unchecking everything*
+   * @param {target} e Target to be modified
    * @param {String} itemType of
    */
   toggleCheckAll(e, itemType) {
@@ -116,7 +131,11 @@ export default class DisplayHazardsComponent extends Component {
     this.setState({ hazardSelected: obj });
   }
 
-  //Should Provide for all Values
+  /**
+   * Toggles between checked and unchecked field
+   * @param {string} dType type of field
+   * @param {num} index of field to be modified
+   */
   toggleChecked(dType, index) {
     const { hazardSelected } = this.state;
     var obj = { ...hazardSelected };
@@ -143,31 +162,13 @@ export default class DisplayHazardsComponent extends Component {
     this.setState({ hazardSelected: obj });
   }
 
-  //   onBlur() {
-  //     console.log("blur");
-  //   }
-  //   onFocus() {
-  //     console.log("focus");
-  //   }
-
-  //   onSearch(val) {
-  //     console.log("search:", val);
-  //   }
-
-  saveHazardChoice() {
-    //Saves Choice within parent component
-    this.setState({ savedSelection: !this.state.savedSelection });
-  }
-
   render() {
     //isHazardSelected - refers to the hazardBackend Reference
     const { hazardSelected, isHazardSelected } = this.state;
-    var editHazardMode = !this.state.savedSelection; // if the selection is not saved(false) , editHazardn
+    var editHazardMode = !this.state.savedSelection; // if the selection is not saved(false) , edit Hazard
     const updateHazardData = this.props.hazardToBeEdited;
-    const isHazardAllocated = updateHazardData.hazardAllocated;
-    console.log("hazard Allocated?", updateHazardData);
-
-    console.log("HAZARD SELECTED FORMAT ", hazardSelected);
+    const isHazardAllocated = this.state.hazardAllocated;
+    // console.log("isHAZARD ALLOCATE", isHazardAllocated);
 
     return (
       <div className="dh-component">
@@ -228,6 +229,7 @@ export default class DisplayHazardsComponent extends Component {
                       item={cause}
                       index={cIndex}
                       dType="cause"
+                      isDisabled={true}
                       toggleChecked={this.toggleChecked}
                     />
                   );
@@ -246,6 +248,7 @@ export default class DisplayHazardsComponent extends Component {
                       item={consequence}
                       index={cIndex}
                       dType="consequence"
+                      isDisabled={true}
                       toggleChecked={this.toggleChecked}
                     />
                   );
@@ -263,6 +266,7 @@ export default class DisplayHazardsComponent extends Component {
                         item={preventativeSafeguard}
                         index={pIndex}
                         dType="pSg"
+                        isDisabled={true}
                         toggleChecked={this.toggleChecked}
                       />
                     );
@@ -281,6 +285,7 @@ export default class DisplayHazardsComponent extends Component {
                         item={mitigatingSafeguard}
                         index={mIndex}
                         dType="mSg"
+                        isDisabled={true}
                         toggleChecked={this.toggleChecked}
                       />
                     );
@@ -288,14 +293,11 @@ export default class DisplayHazardsComponent extends Component {
                 )}
               </div>
             </div>
-          ) : (
-            <div>lol</div>
-          )}
-          {!isHazardSelected ? ( //REPLACE THIS OPTION WITH is hazard allocated, after which, its ishazardSelected,
-            //Once the hazard is selected, does it have any previous data allocated to it if
-
-            //if yes?
-            <LoadDataPromptPage />
+          ) : null}
+          {!isHazardSelected ? (
+            isHazardAllocated ? null : (
+              <LoadDataPromptPage />
+            )
           ) : (
             <div className="dh-body">
               <div className="dh-col">

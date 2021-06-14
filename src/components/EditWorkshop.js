@@ -52,6 +52,8 @@ export default class EditWorkshop extends Component {
     this.deleteNodeFromNodeList = this.deleteNodeFromNodeList.bind(this);
     this.deleteSubNodeFromNode = this.deleteSubNodeFromNode.bind(this);
     this.deleteHazardFromSubNode = this.deleteHazardFromSubNode.bind(this);
+
+    this.updateNodeHazard = this.updateNodeHazard.bind(this);
   }
 
   componentDidMount() {
@@ -76,6 +78,33 @@ export default class EditWorkshop extends Component {
         });
       });
     }
+  }
+
+  updateNodeHazard(updatedHazard) {
+    const { nodeSelIndex, subnodeSelIndex, hazardSelndex } = this.state;
+    console.log(
+      "Node Index: ",
+      nodeSelIndex,
+      " subnode Index: ",
+      subnodeSelIndex,
+      " hazard Index: ",
+      hazardSelndex
+    );
+
+    //Update the hazard with the current proposed Hazard
+    var data = { ...this.state.data };
+    console.log("Workshop before update");
+    console.log("Workshop Data: ", data);
+
+    console.log("Workshop after update");
+    data.nodes[nodeSelIndex].subnodes[subnodeSelIndex].hazards[hazardSelndex] =
+      updatedHazard;
+    console.log("Workshop Data: ", data);
+    //Update this data to the backend
+
+    //Set the data
+    this.saveDataToBackend(data);
+    //saveDataToBackend
   }
 
   saveDataToBackend(data) {
@@ -252,6 +281,7 @@ export default class EditWorkshop extends Component {
           addNode={this.addNodeToNodeList}
           addSubNode={this.addSubNodeToNode}
           addHazard={this.addHazardToSubNode}
+          updateNodeHazard={this.updateNodeHazard}
         />
       </div>
     );

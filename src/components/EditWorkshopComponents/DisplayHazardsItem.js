@@ -32,6 +32,7 @@ export default class DisplayHazardsItem extends Component {
         <Checkbox
           onChange={this.onChange}
           checked={this.props.item.visible}
+          disabled={this.props.isDisabled}
           onClick={this.updateChecked}
           style={{ marginLeft: "auto", marginRight: "5px" }}
         />

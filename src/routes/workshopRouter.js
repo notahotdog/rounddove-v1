@@ -113,6 +113,8 @@ router.route("/updateWorkshop").post((req, res) => {
     tags,
   };
 
+  console.log("workshop data", JSON.stringify(workshop));
+
   Workshop.findByIdAndUpdate(req.body.id, workshop)
     .then(() => res.json("Workshop Updated"))
     .catch((err) => res.status(404).json("Error: " + err));

@@ -130,10 +130,14 @@ export const subnodeTemplate = {
     {
       hazardName: "Default Hazard",
       hazardAllocated: false,
-      causes: ["Default Cause"],
-      consequences: ["Default Consquence"],
-      preventativeSafeguards: ["Default preventative safeguard"],
-      mitigatingSafeguards: ["Default mitigating safeguard"],
+      causes: [{ name: "Default Cause", visible: true }],
+      consequences: [{ name: "Default Consequence", visible: true }],
+      preventativeSafeguards: [
+        { name: "Default preventative safeguard", visible: true },
+      ],
+      mitigatingSafeguards: [
+        { name: "Default mitigating safeguard", visible: true },
+      ],
     },
   ],
 };

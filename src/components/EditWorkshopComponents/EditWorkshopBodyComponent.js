@@ -21,16 +21,18 @@ export default class EditWorkshopBody extends Component {
         consequences: [""],
         preventativeSafeguards: [""],
         mitigatingSafeguards: [""],
+        isHazardAllocated: false,
       },
       isNodeModalVisible: false,
       isSubnodeModalVisible: false,
       nodeIndexToAddSubnode: 0,
       isHazardModalVisible: false,
       subnodeIndexToAddHazard: 0,
-      isHazardSelected: false,
+      isHazardAllocated: false,
     };
 
     this.setHazardSelectedTrue = this.setHazardSelectedTrue.bind(this);
+    this.setIsHazardAllocated = this.setIsHazardAllocated.bind(this);
 
     this.updateClickedItem = this.updateClickedItem.bind(this);
     this.next = this.next.bind(this);
@@ -48,6 +50,14 @@ export default class EditWorkshopBody extends Component {
     this.showHazardModal = this.showHazardModal.bind(this);
     this.hideHazardModal = this.hideHazardModal.bind(this);
     this.closeHazardModal = this.closeHazardModal.bind(this);
+
+    this.saveUpdatedNode = this.saveUpdatedNode.bind(this);
+  }
+
+  saveUpdatedNode(nodeData) {
+    // this.props.saveUpdatedNode();
+    this.props.updateNodeHazard(nodeData);
+    // console.log("UPDATED NODE TO BE SAVED", nodeData);
   }
 
   setHazardSelectedTrue() {
@@ -60,6 +70,11 @@ export default class EditWorkshopBody extends Component {
   }
   previous() {
     this.carousel.prev();
+  }
+
+  setIsHazardAllocated(boolState) {
+    console.log("sethazard Allocated triggered", boolState);
+    this.setState({ isHazardAllocated: boolState });
   }
 
   updateClickedItem(
@@ -129,8 +144,6 @@ export default class EditWorkshopBody extends Component {
 
   render() {
     const { data } = this.props;
-    console.log("DATTATTAT:", data);
-    // console.log("edit workshop body render");
     const { isHazardSelected } = this.state;
     return (
       <div className="ew-body">
@@ -220,6 +233,8 @@ export default class EditWorkshopBody extends Component {
             <DisplayHazardsComponent
               hazardName={this.state.hazardLoaded.hazardName}
               hazardToBeEdited={this.state.hazardLoaded}
+              setIsHazardAllocated={this.setIsHazardAllocated}
+              saveUpdatedNode={this.saveUpdatedNode}
               //Need to insert the choice
             />
           ) : (
@@ -228,74 +243,5 @@ export default class EditWorkshopBody extends Component {
         </div>
       </div>
     );
-
-    // return (
-    //   <div className="dw-body">
-    //     <div className="dw-body-left-col">
-    //       <Menu
-    //         // onClick={this.handleClick}
-    //         style={{ width: "100%" }}
-    //         defaultSelectedKeys={["1"]}
-    //         defaultOpenKeys={["sub1"]}
-    //         mode="inline"
-    //         theme="dark"
-    //       >
-    //         {data.nodes.map((node) => {
-    //           return (
-    //             <SubMenu key={node.nodeName} title={node.nodeName}>
-    //               {node.subnodes.map((subnode, subnodeIndex) => {
-    //                 return (
-    //                   <SubMenu
-    //                     key={node.nodeName
-    //                       .concat(subnode.subnodeName)
-    //                       .concat(subnodeIndex)}
-    //                     title={subnode.subnodeName}
-    //                   >
-    //                     {subnode.hazards.map((hazard, hazardIndex) => {
-    //                       return (
-    //                         <Menu.Item
-    //                           key={node.nodeName
-    //                             .concat(subnode.subnodeName)
-    //                             .concat(subnodeIndex)
-    //                             .concat(hazard.hazardName)
-    //                             .concat(hazardIndex)}
-    //                           onClick={() =>
-    //                             this.updateClickedItem(node, subnode, hazard)
-    //                           }
-    //                         >
-    //                           {hazard.hazardName}
-    //                         </Menu.Item>
-    //                       );
-    //                     })}
-    //                   </SubMenu>
-    //                 );
-    //               })}
-    //             </SubMenu>
-    //           );
-    //         })}
-    //       </Menu>
-    //     </div>
-    //     <div className="dw-body-right-col">
-    //       {/* Right Col */}
-    //       <div className="dw-body-right-header">
-    //         <Button onClick={this.previous}>Previous</Button>
-    //         <Button onClick={this.next}>Next</Button>
-    //         <div> Mark as Completed</div>
-    //       </div>
-    //       <Carousel
-    //         className="dw-carousel-div"
-    //         arrows={true}
-    //         ref={(node) => (this.carousel = node)}
-    //       >
-    //         <div>{hazardLoaded.hazardName}</div>
-    //         <div>
-    //           {hazardLoaded.causes.map((cause) => {
-    //             return <div>{cause}</div>;
-    //           })}
-    //         </div>
-    //       </Carousel>
-    //     </div>
-    //   </div>
-    // );
   }
 }
