@@ -4,10 +4,8 @@ import DisplayHazardsComponent from "./DisplayHazardsComponent";
 import AddNodeModal from "./AddNodeModal";
 import AddSubnodeModal from "./AddSubnodeModal";
 import AddHazardModal from "./AddHazardWithOptionsModal";
-import { getKeyThenIncreaseKey } from "antd/lib/message";
-import { filterMoreThanOneInstanceHazard } from "../../util/JSONHandler";
 import LoadDataPromptPage from "../DisplayComponents/LoadDataPromptPage";
-const { SubMenu, Carousel, Button } = Menu;
+const { SubMenu } = Menu;
 
 export default class EditWorkshopBody extends Component {
   constructor(props) {

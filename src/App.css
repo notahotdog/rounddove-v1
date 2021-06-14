@@ -37,13 +37,6 @@
   }
 }
 
-.button-choice {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 5px;
-  background-color: white;
-}
-
 .mainpage-div {
   background-color: #61dafb;
   height: 100vh;
@@ -68,7 +61,45 @@
 }
 
 .workshop-creation-page {
+  /* background-color: blue; */
+}
+
+.wcp-header {
   background-color: white;
+  display: flex;
+  flex-direction: row;
+}
+
+.wcp-header-title {
+  order: 1;
+  display: flex;
+  /* background-color: red; */
+  align-self: stretch;
+  align-items: flex-end;
+  margin-left: 70px;
+}
+
+.wcp-header-title-font {
+  margin-bottom: 0.2em;
+  color: #000000d9;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.wcp-header-button-list {
+  order: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  align-self: stretch;
+  margin-bottom: 5px;
+  background-color: white;
+}
+
+.wcp-header-button-item {
+  background-color: purple;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .json-display {

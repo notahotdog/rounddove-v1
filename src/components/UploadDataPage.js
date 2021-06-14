@@ -4,10 +4,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import DisplayJSONData from "../util/DisplayJSONData";
 import axios from "axios";
 import { CompareObjects } from "../util/JSONHandler";
-import {
-  addVisibilityElement,
-  addVisibilityToWorkshop,
-} from "../util/Utilities";
+import { addVisibilityToWorkshop } from "../util/Utilities";
 const { Title } = Typography;
 
 export default class UploadDataPage extends Component {

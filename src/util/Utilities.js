@@ -1,6 +1,3 @@
-import { message } from "antd";
-import workshop from "../models/workshop.model";
-
 /**
  * Capitalizes the first letter of a String
  * @param {string} str string to capitalise
@@ -78,22 +75,22 @@ export function swapWithNext(array, index) {
  * @param {boolean} isHazardAllocated sets whether the default hazard should be true/false
  * @returns updated json with visibility element
  */
-export function addVisibilityToWorkshop(workshopObj, isHazardAllocated) {
+export function addVisibilityToWorkshop(workshopObjData, isHazardAllocated) {
   //Iterates through the nodes/subnodes,
-  var workshopObj = { ...workshopObj };
+  var workshopObj = { ...workshopObjData };
 
   var updatedNodeList = [];
 
-  workshopObj.nodes.map((node, nodeIndex) => {
+  workshopObj.nodes.forEach((node, nodeIndex) => {
     //as it iterates through the nodes
     var nodeName = node.nodeName;
     var updatedSubnodeList = [];
 
-    node.subnodes.map((subnode, subnodeIndex) => {
+    node.subnodes.forEach((subnode, subnodeIndex) => {
       var subnodeName = subnode.subnodeName;
       var updatedHazardList = []; //adds to the hazard List of a subnode
 
-      subnode.hazards.map((hazard, hazardIndex) => {
+      subnode.hazards.forEach((hazard, hazardIndex) => {
         updatedHazardList.push(addVisibilityElement(hazard, isHazardAllocated));
       });
 

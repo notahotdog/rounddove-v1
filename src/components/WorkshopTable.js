@@ -4,8 +4,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 // import { CloudFilled,PlusCircleTwoTone, MinusCircleTwoTone } from "@ant-design/icons";
 
-var de = false;
-
 export default class WorkshopTable extends Component {
   data = [
     {
@@ -24,33 +22,23 @@ export default class WorkshopTable extends Component {
     };
   }
 
-  //Todo - Place in a higher level component than drill to this component
   componentDidMount() {
-    de && console.log("Workshop Table Instance");
-
-    // Comment out when not needed
-    // axios.get("http://localhost:5000/workshop/").then((response) => {
-    //   de && console.log("fetch Data", response.data);
-    //   this.setState({ data: response.data });
-    // });
-
+    console.log("Workshop Table Instance");
     this.timer = setInterval(() => this.loadData(), 500);
   }
 
-  //TODO - Pass Data From Parents Instead
   /**
    * Fetch Data from Backend
    */
   loadData() {
     axios.get("http://localhost:5000/workshop/").then((response) => {
-      // console.log(response.data);
       this.setState({ data: response.data });
     });
   }
 
   /**
    * Deletes workshop from database
-   * @param {string} workshopID
+   * @param {string} workshopID of workshop to be deleted
    */
   deleteWorkshop(workshopID) {
     axios
@@ -61,7 +49,7 @@ export default class WorkshopTable extends Component {
   }
 
   /**
-   * Deleted object from Backend
+   * Confirmation message to delete object from Backend
    * @param {Object} workshop  object to be deleted
    */
   confirmWorkshopDeletion = (workshop) => {
@@ -132,7 +120,6 @@ export default class WorkshopTable extends Component {
       },
     ];
 
-    de && console.log("State Data", this.state.data);
     return (
       <div>
         <Table

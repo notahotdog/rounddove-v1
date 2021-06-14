@@ -8,7 +8,6 @@ import UploadDataPage from "./components/UploadDataPage";
 import EditWorkshop from "./components/EditWorkshop";
 import FacilitateWorkshopPage from "./components/FacilitateWorkshopPage";
 import DisplayWorkshop from "./components/DisplayWorkshop";
-// import EditHazardsPage from "./components/EditHazardsPage";
 import EditHazardsPage from "./components/EditHazardsPage";
 
 import { Layout } from "antd";

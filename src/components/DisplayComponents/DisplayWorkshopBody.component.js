@@ -107,7 +107,7 @@ export default class DisplayWorkshopBody extends Component {
             <h1> Hazard: {hazardLoaded.hazardName}</h1>
             <div>
               <h1>Causes</h1>
-              {hazardLoaded.causes.map((cause) => {
+              {hazardLoaded.causes.forEach((cause) => {
                 if (cause.visible) {
                   return <div>{cause.name}</div>;
                 }
@@ -115,7 +115,7 @@ export default class DisplayWorkshopBody extends Component {
             </div>
             <div>
               <h1>Consequences</h1>
-              {hazardLoaded.consequences.map((consequence) => {
+              {hazardLoaded.consequences.forEach((consequence) => {
                 if (consequence.visible) {
                   return <div>{consequence.name}</div>;
                 }
@@ -123,7 +123,7 @@ export default class DisplayWorkshopBody extends Component {
             </div>
             <div>
               <h1>Preventative Safeguards</h1>
-              {hazardLoaded.preventativeSafeguards.map((pSafeguard) => {
+              {hazardLoaded.preventativeSafeguards.forEach((pSafeguard) => {
                 if (pSafeguard.visible) {
                   return <div>{pSafeguard.name}</div>;
                 }
@@ -131,7 +131,7 @@ export default class DisplayWorkshopBody extends Component {
             </div>
             <div>
               <h1>Mitigating Safeguards</h1>
-              {hazardLoaded.mitigatingSafeguards.map((mSafeguard) => {
+              {hazardLoaded.mitigatingSafeguards.forEach((mSafeguard) => {
                 if (mSafeguard.visible) {
                   return <div>{mSafeguard.name}</div>;
                 }

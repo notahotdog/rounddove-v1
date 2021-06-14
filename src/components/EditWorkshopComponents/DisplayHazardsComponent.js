@@ -3,9 +3,7 @@ import axios from "axios";
 import { Button, Select, Checkbox } from "antd";
 import DisplayHazardsItem from "./DisplayHazardsItem";
 import { addVisibilityElement } from "../../util/Utilities";
-import { getKeyThenIncreaseKey } from "antd/lib/message";
 import LoadDataPromptPage from "../DisplayComponents/LoadDataPromptPage";
-import { update } from "../../models/workshop.model";
 
 const { Option } = Select;
 

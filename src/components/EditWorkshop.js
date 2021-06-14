@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "../FacilitatorPage.css";
 import EditWorkshopBody from "./EditWorkshopComponents/EditWorkshopBodyComponent";
 import axios from "axios";
-import { Button, Modal } from "antd";
+import { Button } from "antd";
 import { deleteItemFromIndex } from "../util/Utilities";
 import EditNodeNameModal from "./EditWorkshopComponents/EditNodeNameModal";
 import EditSubnodeNameModal from "./EditWorkshopComponents/EditSubnodeNameModal";
