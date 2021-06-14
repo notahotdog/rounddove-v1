@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Menu } from "antd";
+import { Menu, Divider } from "antd";
 import EditableHazardComponent from "./TableComponents/EditableHazardComponent";
 import AddHazardModal from "./ModalComponents/AddHazardModal";
 import LoadDataPromptPage from "./DisplayComponents/LoadDataPromptPage";
-// import { getHazardsFromDB } from "../util/BackendService";
 
+//Used to Add/Delete hazards from the Hazard Database
 export default class EditHazardsPage extends Component {
   _isMounted = false;
   constructor(props) {
@@ -23,7 +23,6 @@ export default class EditHazardsPage extends Component {
       },
       modalVisible: false,
       isHazardSelected: false,
-      //Saves choice within parent component
     };
 
     this.getHazardData = this.getHazardData.bind(this);
@@ -118,9 +117,6 @@ export default class EditHazardsPage extends Component {
     const { isHazardSelected } = this.state;
     return (
       <div className="ew-main-div">
-        <div className="ew-main-header">
-          <h1>Edit Hazards</h1>
-        </div>
         <AddHazardModal
           visible={this.state.modalVisible}
           closeModal={this.hideModal}
@@ -152,20 +148,17 @@ export default class EditHazardsPage extends Component {
               })}
             </Menu>
           </div>
-          {isHazardSelected ? (
-            <div className="ew-right-col">
+
+          <div className="ew-right-col">
+            <div className="ew-main-header"> Edit Hazard Database</div>
+            {isHazardSelected ? (
               <EditableHazardComponent
                 hazardSelected={this.state.hazardSelected}
               />
-            </div>
-          ) : (
-            <LoadDataPromptPage />
-          )}
-          {/* <div className="ew-right-col">
-            <EditableHazardComponent
-              hazardSelected={this.state.hazardSelected}
-            />
-          </div> */}
+            ) : (
+              <LoadDataPromptPage />
+            )}
+          </div>
         </div>
       </div>
     );

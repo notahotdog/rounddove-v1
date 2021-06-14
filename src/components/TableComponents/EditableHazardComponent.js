@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import EditableHazardItem from "./EditableHazardItem";
-import { Button, Input, message } from "antd";
+import { Button, Input, message, Popconfirm } from "antd";
 import axios from "axios";
+import { DeleteOutlined, SaveOutlined } from "@ant-design/icons";
 import { RiAddLine } from "react-icons/ri";
 // import { CloudFilled } from "@ant-design/icons";
 
@@ -66,6 +67,8 @@ export default class EditableHazardComponent extends Component {
       data: { id: this.state.hazardSelected.id },
     });
     console.log("Hazard Deleted");
+    message.success("Hazard Deleted");
+    //Show message
   }
 
   /**
@@ -216,19 +219,38 @@ export default class EditableHazardComponent extends Component {
     return (
       <div>
         <div className="ew-hazard-sel-title">
-          Hazard Selected : {this.props.hazardSelected.hazardName}
-          <Button
-            style={{ marginLeft: "20px" }}
-            onClick={this.saveHazardUpdatetoBackend}
-          >
-            Save to Backend
-          </Button>
-          <Button
-            style={{ marginLeft: "20px" }}
-            onClick={this.deleteHazardfromBackend}
-          >
-            Delete Hazard
-          </Button>
+          <div className="ew-title-font">Hazard Selected: </div>
+          <div className="ew-hazard-sel-font">
+            {this.props.hazardSelected.hazardName}
+          </div>
+          <div className="ew-hazard-button">
+            <Button
+              style={{
+                marginLeft: "20px",
+                backgroundColor: "#a0d911",
+                color: "white",
+              }}
+              onClick={this.saveHazardUpdatetoBackend}
+              icon={<SaveOutlined />}
+            >
+              Save to Backend
+            </Button>
+            <Popconfirm
+              title="Are you sure you want to delete this hazard?"
+              onConfirm={this.deleteHazardfromBackend}
+            >
+              <Button
+                style={{
+                  marginLeft: "20px",
+                  backgroundColor: "#ff4d4f",
+                  color: "white",
+                }}
+                icon={<DeleteOutlined />}
+              >
+                Delete Hazard
+              </Button>
+            </Popconfirm>
+          </div>
         </div>
         <div className="ew-hazard-content">
           <div className="ew-hazard-col">

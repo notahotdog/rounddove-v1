@@ -146,6 +146,21 @@
   flex-direction: column;
 }
 
+.ew-main-header {
+  /* background-color: red; */
+  height: 5%;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 10px;
+  margin-right: 10px;
+  /* margin-bottom: 10px */
+  color: #000000d9;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.35;
+  border-bottom: 1px solid black;
+}
+
 .ew-main-body {
   display: flex;
   flex-direction: row;
@@ -154,18 +169,45 @@
 
 .ew-left-col {
   background-color: lightsalmon;
-  width: 30%;
+  width: 20%;
   height: 97vh;
 }
 .ew-right-col {
-  background-color: lightseagreen;
-  width: 70%;
+  background-color: white;
+  width: 80%;
   height: 97vh;
 }
 
 .ew-hazard-sel-title {
-  background-color: lightcoral;
-  height: 5vh;
+  /* background-color: #e6fffb; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-bottom: 1px solid black;
+  margin-bottom: 2px;
+  /* margin-top: 8px; */
+  height: 7vh;
+}
+
+.ew-title-font {
+  font-weight: 600;
+  /* background-color: red; */
+  align-self: center;
+  font-size: 16px;
+}
+
+.ew-hazard-sel-font {
+  margin-left: 2px;
+  font-size: 16px;
+  align-self: center;
+}
+
+.ew-hazard-button {
+  display: flex;
+  flex-direction: row;
+  align-self: center;
 }
 
 .ew-hazard-content {
@@ -189,10 +231,11 @@
   border: 1px solid rgb(207, 205, 205);
   display: flex;
   align-items: center;
-  margin-top: 1px;
+  margin-top: 1.5px;
   margin-left: 3px;
-  margin-right: 2px;
+  margin-right: 3px;
   border-radius: 5px;
+  overflow: auto;
 }
 
 .ehi-box-default {
