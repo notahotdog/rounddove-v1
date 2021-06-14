@@ -216,12 +216,15 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  margin-top: 7px;
 }
 
 .ew-hazard-col {
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  border-left: 1px solid rgb(173, 168, 168);
+  border-right: 1px solid rgb(173, 168, 168);
   width: 50%;
 }
 

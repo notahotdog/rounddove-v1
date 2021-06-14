@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Input } from "antd";
+import { Input, Popconfirm } from "antd";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { FiSave } from "react-icons/fi";
+//Should have a popconfirm
 
 export default class EditableHazardItem extends Component {
   _isMounted = false;
@@ -80,7 +81,12 @@ export default class EditableHazardItem extends Component {
             <div style={{ marginLeft: "5px" }}>{this.state.dataAssessed}</div>
           </div>
           <AiOutlineEdit />
-          <AiOutlineDelete onClick={this.deleteCurrentField} />
+          <Popconfirm
+            title="Are you sure you want to delete the field"
+            onConfirm={this.deleteCurrentField}
+          >
+            <AiOutlineDelete />
+          </Popconfirm>
         </div>
       );
     } else {
@@ -95,7 +101,12 @@ export default class EditableHazardItem extends Component {
             onChange={this.updateFieldName}
           />
           <FiSave />
-          <AiOutlineDelete onClick={this.deleteCurrentField} />
+          <Popconfirm
+            title="Are you sure you want to delete the field"
+            onConfirm={this.deleteCurrentField}
+          >
+            <AiOutlineDelete />
+          </Popconfirm>
         </div>
       );
     }
