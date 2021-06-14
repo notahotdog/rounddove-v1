@@ -5,7 +5,7 @@ import {
   CloudUploadOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import WorkshopModal from "./modalComponents/CreateWorkshopModal";
+import WorkshopModal from "./ModalComponents/CreateWorkshopModal";
 import WorkshopTable from "./WorkshopTable";
 import { Link } from "react-router-dom";
 

@@ -14,6 +14,7 @@ import { getNodeTemplate } from "../../util/JSONHandler";
 import axios from "axios";
 import NodeField from "./NodeField";
 
+//Modal used To Create Workshop From the Workshop Creation Page
 export default class CreateWorkshopModal extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +22,7 @@ export default class CreateWorkshopModal extends Component {
     this.state = {
       confirmLoading: false,
       workshopName: "",
-      emptyWorkshopName: false, //Checks if the Workshop Name has been typed in
+      emptyWorkshopName: false,
       nodes: [],
       nodeName: "",
     };
@@ -51,8 +52,6 @@ export default class CreateWorkshopModal extends Component {
         formattedNodes.push(getNodeTemplate(node.nodeName, node.noSubnodes));
       });
 
-      // console.log("GENERATED NODES TEMPLATE:", formattedNodes);
-
       const payload = {
         workshopName: capitalizeFirstLetter(this.state.workshopName),
         tags: ["Empty"],
@@ -60,10 +59,9 @@ export default class CreateWorkshopModal extends Component {
       };
 
       console.log("Saving New Workshop to Database");
-      console.log("New Workshop Payload: ", payload);
 
+      // console.log("New Workshop Payload: ", payload);
       axios.post("http://localhost:5000/workshop/addWorkshop", payload); //Need to change to fit nodes
-      // axios.post("http://localhost:5000/workshop/add", payload); // No longer needed
 
       setTimeout(() => {
         this.setState({
@@ -88,15 +86,15 @@ export default class CreateWorkshopModal extends Component {
   };
 
   /**
-   * Handles onClick cancel button
+   * Closes Modal onClick cancel
    */
   handleCancel = () => {
     this.props.closeModal();
   };
 
   /**
-   * Changes Name of Workshop with event
-   * @param {String} e
+   * Sets name of Workshop
+   * @param {String} e value of event
    */
   updateWorkshopName = (e) => {
     this.setState({ workshopName: e.target.value });
@@ -110,7 +108,6 @@ export default class CreateWorkshopModal extends Component {
     this.state.nodeName === ""
       ? (nodeName = "Default Node")
       : (nodeName = this.state.nodeName);
-    console.log("nodeName: ", nodeName);
 
     const node = {
       nodeName: nodeName,
@@ -187,7 +184,7 @@ export default class CreateWorkshopModal extends Component {
   render() {
     const { confirmLoading, emptyWorkshopName } = this.state;
     return (
-      <div className="modal">
+      <div className="create-workshop-modal">
         <Modal
           title="Create New Workshop"
           visible={this.props.visible}
@@ -199,7 +196,7 @@ export default class CreateWorkshopModal extends Component {
             <Alert description="Please enter a name " type="error" closable />
           ) : null}
 
-          <h3 style={{ font: "bold" }}>Workshop Name</h3>
+          <h3 className="cwm-subheaders">Workshop Name</h3>
           <div className="workshop-name-box">
             <Input
               placeholder="Type in workshop name"
@@ -207,7 +204,7 @@ export default class CreateWorkshopModal extends Component {
             />
           </div>
 
-          <h4>Nodes</h4>
+          <h4 className="cwm-subheaders">Nodes</h4>
           <div style={{ display: "flex" }}>
             <Input
               placeholder="Node Name"
@@ -219,8 +216,8 @@ export default class CreateWorkshopModal extends Component {
               Add Node
             </Button>
           </div>
-          <h4>
-            Nodes Listed:{" "}
+          <h4 className="cwm-subheaders">Nodes Listed: </h4>
+          <div className="cwm-nf-list">
             {this.state.nodes.map((node, i) => {
               return (
                 <NodeField
@@ -234,7 +231,7 @@ export default class CreateWorkshopModal extends Component {
                 />
               );
             })}
-          </h4>
+          </div>
         </Modal>
       </div>
     );

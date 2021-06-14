@@ -1,8 +1,8 @@
-//Individual Node Field for Create Workshop Modal Component
 import React, { Component } from "react";
-import { InputNumber, Button, Popconfirm } from "antd";
+import { InputNumber, Button, Popconfirm, Divider } from "antd";
 import { DeleteOutlined, UpOutlined, DownOutlined } from "@ant-design/icons";
 
+//Represent Each Node Found within the create workshop modal
 export default class NodeField extends Component {
   constructor(props) {
     super(props);
@@ -32,67 +32,62 @@ export default class NodeField extends Component {
 
   render() {
     return (
-      <div>
-        <div className="node" style={{ fontWeight: "bold" }}>
-          {" "}
-          {this.props.node.nodeName}
-          {this.props.node.noSubnodes}
-        </div>
+      <div className="node-field-component">
+        <Divider />
+        <div className="nf-item">
+          <div className="nf-item-title">
+            Node Name: {this.props.node.nodeName}
+          </div>
 
-        <div
-          className="subnode-number"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-          }}
-        >
-          No of Subnodes:
-          <InputNumber
-            min={1}
-            max={10}
-            defaultValue={1}
-            onChange={this.onChangeNoSubnodes}
-            style={{ marginLeft: "20px" }}
-          />
-          <Button
-            type="dashed"
-            icon={<UpOutlined />}
-            size="medium"
-            onClick={() => this.props.swapNodeWithPrevious(this.props.index)}
-            style={{
-              justifyContent: "flex-end",
-              alignSelf: "flex-end",
-              marginLeft: "20px",
-            }}
-          />
-          <Button
-            type="dashed"
-            icon={<DownOutlined />}
-            size="medium"
-            onClick={() => this.props.swapNodeWithNext(this.props.index)}
-            style={{
-              justifyContent: "flex-end",
-              alignSelf: "flex-end",
-              marginLeft: "20px",
-            }}
-          />
-          <Popconfirm
-            title="Are you sure to delete this Node?"
-            onConfirm={() => this.confirmNodeDeletion(this.props.index)}
-            okText="Yes"
-            cancelText="No"
-          >
+          <div className="nf-content">
+            <div className="nf-item-subtitle">No of Subnodes:</div>
+            <InputNumber
+              min={1}
+              max={10}
+              defaultValue={1}
+              onChange={this.onChangeNoSubnodes}
+              style={{ marginLeft: "20px" }}
+            />
             <Button
               type="dashed"
-              icon={<DeleteOutlined />}
+              icon={<UpOutlined />}
               size="medium"
+              onClick={() => this.props.swapNodeWithPrevious(this.props.index)}
               style={{
                 justifyContent: "flex-end",
                 alignSelf: "flex-end",
                 marginLeft: "20px",
               }}
             />
-          </Popconfirm>
+            <Button
+              type="dashed"
+              icon={<DownOutlined />}
+              size="medium"
+              onClick={() => this.props.swapNodeWithNext(this.props.index)}
+              style={{
+                justifyContent: "flex-end",
+                alignSelf: "flex-end",
+                marginLeft: "20px",
+              }}
+            />
+            <Popconfirm
+              title="Are you sure to delete this Node?"
+              onConfirm={() => this.confirmNodeDeletion(this.props.index)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button
+                type="dashed"
+                icon={<DeleteOutlined />}
+                size="medium"
+                style={{
+                  justifyContent: "flex-end",
+                  alignSelf: "flex-end",
+                  marginLeft: "20px",
+                }}
+              />
+            </Popconfirm>
+          </div>
         </div>
       </div>
     );

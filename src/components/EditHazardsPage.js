@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Menu } from "antd";
 import EditableHazardComponent from "./TableComponents/EditableHazardComponent";
-import AddHazardModal from "./modalComponents/AddHazardModal";
+import AddHazardModal from "./ModalComponents/AddHazardModal";
 import LoadDataPromptPage from "./DisplayComponents/LoadDataPromptPage";
 // import { getHazardsFromDB } from "../util/BackendService";
 
