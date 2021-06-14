@@ -123,118 +123,135 @@
   flex-direction: row;
 }
 
-.json-display {
-  display: flex;
-  flex-direction: column;
-  /* align: flex-start; */
-  border: 2px solid black;
+.upload-data-page {
+  background-color: whitesmoke;
 }
 
-.json-display-header {
+.udp-header {
+  /* background-color: red; */
+  display: fl;
+}
+.udp-body {
+  background-color: white;
+}
+
+.udp-header-title {
+  /* background-color: red; */
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 15px;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.2em;
+  color: #000000d9;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.udp-header-content {
   display: flex;
   flex-direction: row;
 }
 
-.json-workshop-name {
+.udp-header-subtitle {
+  margin-left: 15px;
+}
+
+.udp-header-content-button {
+  margin-left: 20px;
+}
+
+.display-upload-data-component {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+}
+
+.dud-header {
+  display: flex;
+  flex-direction: row;
+}
+
+.dud-header-workshop-name {
   order: 1;
   display: flex;
   flex-direction: row;
   align-self: center;
   margin-left: 35%;
   justify-content: center;
-  /* border: 2px solid blue; */
 }
 
-.json-no-components {
+.dud-header-no-components {
   order: 0;
   justify-content: flex-start;
   display: flex;
   align-content: flex-start;
   /* border: 2px solid red; */
+  margin-left: 15px;
   margin-top: 0px;
 }
 
-.json-display-body {
+.dud-body {
   display: flex;
   flex-direction: column;
-  /* margin-left: 50px; */
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 50px;
   /* border: 2px solid blue; */
+  /* background-color: #61dafb; */
 }
 
-.json-display-component {
+.dud-node-component-item {
   margin-top: 5px;
-  /* border: 2px solid green; */
 }
 
-.json-component-name {
+.dud-component-name {
   align-items: flex-start;
   display: flex;
   font-size: 22px;
+  font-weight: normal;
+  margin-bottom: 5px;
 }
 
-.json-subcomponent-name {
+.dud-subcomponent-name {
   /* border: 2px solid green; */
-  font-size: larger;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 19px;
   font-weight: 500;
   display: flex;
   justify-content: flex-start;
 }
 
-.json-display-hazard {
-  display: flex;
-  flex-direction: row;
-  margin-top: 9px;
-  /* border: 2px solid purple; */
-  justify-content: space-evenly;
-}
-
-.json-display-hazards-col-heading {
-  display: flex;
-  flex-direction: row;
-}
-
-.json-hazard-col-heading {
-  font-size: medium;
-  font-weight: bold;
-  width: 20%;
-}
-
-.json-display-hazards-col {
-  /* border: 2px solid yellowgreen; */
+.dud-body-col {
   width: 20%;
   border-right: 1px solid lightblue;
 }
 
-.json-hazard-name {
-  /* border: 2px solid maroon; */
+.dud-col-overview {
   display: flex;
+  flex-direction: row;
 }
 
-.json-display-causes {
-  display: flex;
-  width: auto;
-  flex-direction: column;
-  /* margin-left: 30px; */
-  /* border: 2px solid cyan; */
-  /* justify-content: center;*/
-}
-
-.hazard-col-heading {
+.dud-col-heading {
   font-size: medium;
+  font-weight: bold;
+  width: 20%;
+}
+
+.dud-hazard-overview {
+  display: flex;
+  flex-direction: row;
+  margin-top: 9px;
+  justify-content: space-evenly;
+}
+
+.dud-hazard-name {
+  font-size: 16px;
   font-weight: bold;
 }
 
-.json-display-points {
+.dud-points {
   margin-left: 2px;
   margin-right: 2px;
-}
-
-.testItem {
-  font-size: 100px;
-  border: 1px solid black;
-  background-color: red;
-  width: 30%;
-  display: flex;
-  justify-content: center;
-  align-self: center;
 }

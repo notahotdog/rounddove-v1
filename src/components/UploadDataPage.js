@@ -1,18 +1,18 @@
 import React, { Component } from "react";
-import { Upload, message, Button, Typography } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import DisplayJSONData from "../util/DisplayJSONData";
-import axios from "axios";
+import { Upload, message, Button } from "antd";
+import { UploadOutlined, SaveOutlined, EyeOutlined } from "@ant-design/icons";
 import { CompareObjects } from "../util/JSONHandler";
 import { addVisibilityToWorkshop } from "../util/Utilities";
-const { Title } = Typography;
+import DisplayUploadData from "./DisplayComponents/DisplayUploadData";
+import axios from "axios";
 
+//Used to Upload Data from a metadata file
 export default class UploadDataPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      jsonData: { workshopName: "---", nodes: [] },
+      jsonData: { workshopName: " [Upload Data]", nodes: [] },
     };
 
     this.fileHandler = this.fileHandler.bind(this);
@@ -31,23 +31,16 @@ export default class UploadDataPage extends Component {
    * Saves uploaded data to backend
    */
   onClickSaveToBackend() {
-    //Parse this.state.json data through the viewFinder
+    // console.log("Data before being transformed", this.state.jsonData);
 
-    console.log("Data before being transformed", this.state.jsonData);
-
-    var workshopVisible = addVisibilityToWorkshop(this.state.jsonData, true);
-
-    console.log("Workshop with visibility element: ", workshopVisible);
+    var workshopVisible = addVisibilityToWorkshop(this.state.jsonData, true); //Adds visible element to each hazard in the workshop, sets true default
+    // console.log("Workshop with visibility element: ", workshopVisible);
 
     if (this.state.jsonData.nodes.length !== 0) {
-      axios.post(
-        "http://localhost:5000/workshop/addWorkshop",
-        workshopVisible
-        // this.state.jsonData
-      );
+      axios.post("http://localhost:5000/workshop/addWorkshop", workshopVisible);
 
       message.success({
-        content: "Successfully saved to backend",
+        content: "Successfully saved to database",
         className: "custom-class",
         style: {
           marginTop: "20vh",
@@ -64,6 +57,11 @@ export default class UploadDataPage extends Component {
     }
   }
 
+  /**
+   * Checks through the validity of the file prior to uploading the data to the database e.g format, fields
+   * @param {*} fileList
+   * @returns
+   */
   fileHandler(fileList) {
     let fileObj = fileList;
     if (!fileObj) {
@@ -83,8 +81,10 @@ export default class UploadDataPage extends Component {
     //Async function
     reader.onload = (e) => {
       var JSONdata = JSON.parse(e.target.result);
+
+      //Checks keys within the file
       if (CompareObjects(JSONdata)) {
-        this.setState({ jsonData: JSONdata }); // Saves Data within this Component - Needs to be uploded to backend onClick
+        this.setState({ jsonData: JSONdata });
       } else {
         alert("upload failed due to improper data structure");
 
@@ -117,49 +117,60 @@ export default class UploadDataPage extends Component {
       },
     };
 
-    console.log("JSON Data in Render: ", this.state.jsonData);
+    // console.log("JSON Data in Render: ", this.state.jsonData);
     return (
-      <div>
-        <Title level={1}>Upload Data To Database </Title>
-        <div
-          className="uploadData"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-          }}
-        >
-          <h3 style={{ marginLeft: "10px" }}>Upload Workshop Data [JSON]: </h3>
-          <Upload {...props} onRemove={this.onButtonRemove}>
-            <Button icon={<UploadOutlined />} style={{ marginLeft: "20px" }}>
-              Click to Upload
-            </Button>
-          </Upload>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              marginLeft: "20px",
-            }}
-          >
-            <Button
-              style={{
-                backgroundColor: "#a0d911",
-                color: "white",
-                fontWeight: "10px",
-              }}
-              onClick={this.onClickSaveToBackend}
-            >
-              Save To Database
-            </Button>
+      <div className="upload-data-page">
+        <div className="udp-header">
+          <div className="udp-header-title">Upload MetaData To Database </div>
+          <div className="udp-header-content">
+            <h3 className="udp-header-subtitle">
+              Upload Workshop Data [JSON]:{" "}
+            </h3>
+            <Upload {...props} onRemove={this.onButtonRemove}>
+              <Button
+                icon={<UploadOutlined />}
+                className="udp-header-content-button"
+              >
+                Click to Upload
+              </Button>
+            </Upload>
+            <div className="udp-header-content-button">
+              <Button
+                icon={<SaveOutlined />}
+                style={{
+                  backgroundColor: "#a0d911",
+                  color: "white",
+                  fontWeight: "10px",
+                }}
+                onClick={this.onClickSaveToBackend}
+              >
+                Save To Database
+              </Button>
+            </div>
+            <div className="udp-header-content-button">
+              <Button
+                icon={<EyeOutlined />}
+                style={{
+                  backgroundColor: "#91d5ff",
+                  color: "white",
+                  fontWeight: "10px",
+                }}
+                // onClick={this.showSomeDataFormat}
+              >
+                View Sample Format
+              </Button>
+            </div>
           </div>
+          <br />
         </div>
-        <br />
-        {this.state.jsonData.length !== 0 ? (
-          <DisplayJSONData data={this.state.jsonData} />
-        ) : (
-          <div>Please Upload Data</div>
-        )}
+
+        <div className="udp-body">
+          {this.state.jsonData.length !== 0 ? (
+            <DisplayUploadData data={this.state.jsonData} />
+          ) : (
+            <div>Please Upload Data</div>
+          )}
+        </div>
       </div>
     );
   }
