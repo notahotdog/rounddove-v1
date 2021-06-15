@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import "../FacilitatorPage.css";
 import EditWorkshopBody from "./EditWorkshopComponents/EditWorkshopBodyComponent";
 import axios from "axios";
-import { Button } from "antd";
-import { deleteItemFromIndex } from "../util/Utilities";
+import { Button, Popconfirm } from "antd";
+import { addVisibilityElement, deleteItemFromIndex } from "../util/Utilities";
 import EditNodeNameModal from "./EditWorkshopComponents/EditNodeNameModal";
 import EditSubnodeNameModal from "./EditWorkshopComponents/EditSubnodeNameModal";
 import EditHazardNameModal from "./EditWorkshopComponents/EditHazardNameModal";
 
+//Used to Edit the contents of a workshop from
 export default class EditWorkshop extends Component {
   constructor(props) {
     super(props);
@@ -119,7 +120,6 @@ export default class EditWorkshop extends Component {
     data.nodes[nodeSelIndex].subnodes[subnodeSelIndex].hazards[hazardSelndex] =
       updatedHazard;
     console.log("Workshop Data: ", data);
-    //Update this data to the backend
 
     this.saveDataToBackend(data);
   }
@@ -230,7 +230,9 @@ export default class EditWorkshop extends Component {
     var subNodeUpdate = {
       ...this.state.data.nodes[nodeIndex].subnodes[subNodeIndex],
     };
-    subNodeUpdate.hazards.push(hazardData);
+    //Hazard Data should be visible
+    var hazardDataWVisiblility = addVisibilityElement(hazardData);
+    subNodeUpdate.hazards.push(hazardDataWVisiblility);
     var data = { ...this.state.data };
     data.nodes[nodeIndex].subnodes[subNodeIndex] = subNodeUpdate;
     this.saveDataToBackend(data);
@@ -331,73 +333,121 @@ export default class EditWorkshop extends Component {
             <div className="ew-header-title">{this.state.workshopName}</div>
 
             <div className="ew-header-node-details">
-              <div className="ew-node-details-item">
+              <div className="ew-node-details-col1">
                 <div className="item-subtitle">
-                  Node Assessed: {this.state.nodeSelected}
-                  --- i:
-                  {this.state.nodeSelIndex}
+                  <div className="ew-node-title">Node Assessed:</div>
+                  <div className="item-content">{this.state.nodeSelected}</div>
                 </div>
-                <Button
-                  className="item-button"
-                  style={{ alignItem: "flex-end" }}
-                  onClick={this.openNodeNameModal}
-                >
-                  Edit Node Name
-                </Button>
-                <Button
-                  className="item-button"
-                  style={{ alignItem: "flex-end" }}
-                  onClick={this.deleteNodeFromNodeList}
-                >
-                  Delete Node
-                </Button>
+                <div className="item-subtitle">
+                  <div className="ew-node-title">Sub node Assessed:</div>
+                  <div className="item-content">
+                    {this.state.subnodeSelected}
+                  </div>
+                </div>
+                <div className="item-subtitle">
+                  <div className="ew-node-title">Hazard Assessed:</div>
+                  <div className="item-content">
+                    {this.state.hazardSelected}
+                  </div>
+                </div>
               </div>
-              <div className="ew-node-details-item">
-                Sub node Assessed: {this.state.subnodeSelected}
-                --- i: {this.state.subnodeSelIndex}
-                <Button
-                  className="item-button"
-                  style={{ alignItem: "flex-end" }}
-                  onClick={this.openSubnodeNameModal}
-                >
-                  Edit Subnode Name
-                </Button>
-                <Button
-                  className="item-button"
-                  style={{ alignItem: "flex-end" }}
-                  onClick={this.deleteSubNodeFromNode}
-                >
-                  Delete SubNode
-                </Button>
-              </div>
-              <div className="ew-node-details-item">
-                Hazard Assessed: {this.state.hazardSelected}
-                --- i: {this.state.hazardSelndex}
-                <Button
-                  className="item-button"
-                  style={{ alignItem: "flex-end" }}
-                  onClick={this.openHazardNameModal}
-                >
-                  Edit Hazard Name
-                </Button>
-                <Button
-                  className="item-button"
-                  style={{ alignItem: "flex-end" }}
-                  onClick={this.deleteHazardFromSubNode}
-                >
-                  Delete Hazard
-                </Button>
+              <div className="ew-node-details-col2">
+                <div className="ew-row-button">
+                  <div className="ew-edit-button">
+                    <Button
+                      className="item-button"
+                      type="link"
+                      style={{
+                        alignItem: "flex-end",
+                        fontSize: "17px",
+                        marginRight: "60px",
+                      }}
+                      onClick={this.openNodeNameModal}
+                    >
+                      Edit Node Name
+                    </Button>
+                  </div>
+
+                  <Popconfirm
+                    title="Are you sure you want to delete node?"
+                    onConfirm={this.deleteNodeFromNodeList}
+                  >
+                    <Button
+                      className="item-button"
+                      type="link"
+                      style={{ alignItem: "flex-end", fontSize: "17px" }}
+                    >
+                      Delete Node
+                    </Button>
+                  </Popconfirm>
+                </div>
+                <div className="ew-row-button">
+                  <div className="ew-edit-button">
+                    <Button
+                      className="item-button"
+                      type="link"
+                      style={{
+                        alignItem: "flex-end",
+                        fontSize: "17px",
+                      }}
+                      onClick={this.openSubnodeNameModal}
+                    >
+                      Edit Subnode Name
+                    </Button>
+                  </div>
+                  <Popconfirm
+                    title="Are you sure you want to delete subnode?"
+                    onConfirm={this.deleteSubNodeFromNode}
+                  >
+                    <Button
+                      className="item-button"
+                      type="link"
+                      style={{ alignItem: "flex-end", fontSize: "17px" }}
+                    >
+                      Delete SubNode
+                    </Button>
+                  </Popconfirm>
+                </div>
+                <div className="ew-row-button">
+                  <div className="ew-edit-button">
+                    <Button
+                      className="item-button"
+                      type="link"
+                      style={{
+                        alignItem: "flex-end",
+                        fontSize: "17px",
+                        marginRight: "30px",
+                      }}
+                      onClick={this.openHazardNameModal}
+                    >
+                      Edit Hazard Name
+                    </Button>
+                  </div>
+
+                  <Popconfirm
+                    title="Are you sure you want to delete hazard?"
+                    onConfirm={this.deleteHazardFromSubNode}
+                  >
+                    <Button
+                      className="item-button"
+                      type="link"
+                      style={{ alignItem: "flex-end", fontSize: "17px" }}
+                    >
+                      Delete Hazard
+                    </Button>
+                  </Popconfirm>
+                </div>
               </div>
             </div>
           </div>
 
           <div className="ew-header-right-col">
             <div className="ew-tags">
-              Tags{" "}
+              <div className="ew-tags-title">Tags </div>
               {this.state.tags.map((tag, index) => {
                 return (
                   <div className="ew-node-details-tags" key={index}>
-                    {tag}
+                    [ {tag} ]
                   </div>
                 );
               })}

@@ -168,7 +168,8 @@
 }
 
 .ew-left-col {
-  background-color: lightsalmon;
+  /* background-color: lightsalmon; */
+  /* background-color: #1890ff; */
   width: 20%;
   height: 97vh;
 }
@@ -268,7 +269,7 @@
   height: 20vh;
 }
 .ewd-body {
-  background-color: blueviolet;
+  /* background-color: blueviolet; */
   height: 80vh;
   display: flex;
   flex-direction: row;
@@ -287,7 +288,7 @@
 .ew-header {
   /* margin-bottom: 0.5em; */
   color: rgba(0, 0, 0, 0.85);
-  background-color: aqua;
+  /* background-color: aqua; */
   font-weight: 600;
   font-size: 28px;
   display: flex;
@@ -298,49 +299,127 @@
 
 .ew-header-left-col {
   /* background-color: blue; */
-  width: 60%;
+  width: 80%;
 }
 
 .ew-header-title {
   display: flex;
   /* margin-bottom: 0.5em; */
+  margin-left: 10px;
   color: rgba(0, 0, 0, 0.85);
-  /* background-color: red; */
+  /* background-color: purple; */
   font-weight: 600;
+  text-decoration: underline;
   font-size: 30px;
   height: 40%;
 }
 
 .ew-header-node-details {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
   height: 60%;
-  background-color: red;
+  /* background-color: red; */
+  margin-left: 10px;
 }
 
 .ew-node-details-item {
+  background-color: blue;
   font-size: 0.8em;
   display: flex;
   flex-direction: row;
   width: 100%;
 }
-.item-subtitle {
+
+.ew-node-details-col1 {
+  /* background-color: green; */
+  font-size: 0.8em;
   display: flex;
-  justify-content: flex-end;
-  align-self: flex-end;
-}
-.item-button {
-  align-self: center;
-  justify-content: center;
-  margin-left: auto;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 65%;
+  height: 100%;
 }
 
-.ew-header-right-col {
-  width: 40%;
-  background-color: blueviolet;
+.ew-node-details-col2 {
+  /* background-color: pink; */
+  font-size: 0.8em;
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  height: 100%;
 }
+
+.item-subtitle {
+  display: flex;
+  justify-content: flex-start;
+  align-self: flex-start;
+  height: 40px;
+  /* border: 1px solid red; */
+  width: 100%;
+}
+.ew-node-title {
+  width: 30%;
+  /* background-color: blue; */
+  display: flex;
+  flex-direction: row;
+  font-weight: lighter;
+}
+.item-content {
+  width: 70%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  background-color: whitesmoke;
+}
+.item-button {
+  display: flex;
+  align-self: flex-end;
+  justify-content: center;
+  margin-left: auto;
+  height: 40px;
+}
+
+.ew-edit-button {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  /* background-color: green; */
+  width: 100%;
+  margin-right: 2px;
+}
+
+.ew-row-button {
+  display: flex;
+  align-content: flex-end;
+  /* align-items: flex-end; */
+  justify-content: flex-end;
+}
+.ew-header-right-col {
+  width: 20%;
+  /* background-color: blueviolet; */
+  border-left: 1px dashed rgb(224, 219, 219);
+}
+
+.ew-tags {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-end;
+  justify-content: center;
+  height: 100%;
+  /* background-color: red; */
+}
+
+.ew-tags-title {
+  font-weight: lighter;
+  /* font-size: ; */
+}
+.ew-node-details-tags {
+  font-size: 15px;
+}
+
 .ew-body {
   height: 520px;
   /* background-color: darkslateblue; */
@@ -357,13 +436,15 @@
 .ew-body-right-col {
   /* background-color: darkgoldenrod; */
   width: 70%;
+  height: 68vh;
 }
 
 .dh-component {
   /* background-color: aqua; */
-  height: 100%;
+  height: 82vh;
   display: flex;
   flex-direction: column;
+  /* background-color: blueviolet; */
 }
 
 .dh-header {
@@ -378,6 +459,7 @@
 .dh-h1 {
   justify-content: center;
   align-self: center;
+  font-weight: bold;
 }
 .dh-h2 {
   margin-left: 10px;
@@ -389,15 +471,28 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  /* border: 2px solid blue; */
+  border-top: 1px solid rgb(3, 3, 3);
   justify-content: space-evenly;
 }
 
+.dh-checkbox {
+  margin-left: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  /* background-color: red; */
+}
+
 .dh-col {
+  /* margin-top: 6px; */
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  border-left: 1px solid black;
   width: 25%;
+  height: 100%;
+  /* height: 65vh; */
+  background-color: white;
 }
 
 .dhi-box {

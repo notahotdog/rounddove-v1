@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Button, Select, Checkbox } from "antd";
+import { Button, Select, Checkbox, message } from "antd";
 import DisplayHazardsItem from "./DisplayHazardsItem";
 import { addVisibilityElement } from "../../util/Utilities";
 import LoadDataPromptPage from "../DisplayComponents/LoadDataPromptPage";
@@ -58,6 +58,7 @@ export default class DisplayHazardsComponent extends Component {
 
   saveHazardChoice() {
     //Saves Choice within parent component
+    message.success("Data saved to backend");
     this.setState({ savedSelection: !this.state.savedSelection });
     var updatedState = this.state.hazardSelected;
     updatedState.hazardAllocated = true;
@@ -171,10 +172,6 @@ export default class DisplayHazardsComponent extends Component {
     return (
       <div className="dh-component">
         <div className="dh-header">
-          <div style={{ marginRight: "5px" }}>
-            parent Hazard {updateHazardData.hazardName} .{" "}
-          </div>
-          Hazard Selected {hazardSelected.hazardName} .
           <div className="dh-h1">Load Hazard Details: </div>
           <div className="dh-h2">
             <Select
@@ -213,14 +210,20 @@ export default class DisplayHazardsComponent extends Component {
             )}
           </div>
         </div>
-        <div className="dh-body">
+        <div
+          className="dh"
+          style={{ height: "70vh", backgroundColor: "white" }}
+        >
           {isHazardAllocated ? (
             <div className="dh-body">
               <div className="dh-col">
                 <h1 className="dh-col-header">Causes</h1>
-                <Checkbox onChange={(e) => this.toggleCheckAll(e, "cause")}>
-                  Select All
-                </Checkbox>
+                <div className="dh-checkbox">
+                  <Checkbox onChange={(e) => this.toggleCheckAll(e, "cause")}>
+                    Select All
+                  </Checkbox>
+                </div>
+
                 {updateHazardData.causes.map((cause, cIndex) => {
                   return (
                     <DisplayHazardsItem
@@ -235,11 +238,14 @@ export default class DisplayHazardsComponent extends Component {
               </div>
               <div className="dh-col">
                 <h1 className="dh-col-header">Consequences</h1>
-                <Checkbox
-                  onChange={(e) => this.toggleCheckAll(e, "consequence")}
-                >
-                  Select All
-                </Checkbox>
+                <div className="dh-checkbox">
+                  <Checkbox
+                    onChange={(e) => this.toggleCheckAll(e, "consequence")}
+                  >
+                    Select All
+                  </Checkbox>
+                </div>
+
                 {updateHazardData.consequences.map((consequence, cIndex) => {
                   return (
                     <DisplayHazardsItem
@@ -254,9 +260,12 @@ export default class DisplayHazardsComponent extends Component {
               </div>
               <div className="dh-col">
                 <h1 className="dh-col-header">Preventative Safeguards</h1>
-                <Checkbox onChange={(e) => this.toggleCheckAll(e, "pSg")}>
-                  Select All
-                </Checkbox>
+                <div className="dh-checkbox">
+                  <Checkbox onChange={(e) => this.toggleCheckAll(e, "pSg")}>
+                    Select All
+                  </Checkbox>
+                </div>
+
                 {updateHazardData.preventativeSafeguards.map(
                   (preventativeSafeguard, pIndex) => {
                     return (
@@ -273,9 +282,12 @@ export default class DisplayHazardsComponent extends Component {
               </div>
               <div className="dh-col">
                 <h1 className="dh-col-header">Mitigating Safeguards</h1>
-                <Checkbox onChange={(e) => this.toggleCheckAll(e, "mSg")}>
-                  Select All
-                </Checkbox>
+                <div className="dh-checkbox">
+                  <Checkbox onChange={(e) => this.toggleCheckAll(e, "mSg")}>
+                    Select All
+                  </Checkbox>
+                </div>
+
                 {updateHazardData.mitigatingSafeguards.map(
                   (mitigatingSafeguard, mIndex) => {
                     return (
@@ -300,9 +312,12 @@ export default class DisplayHazardsComponent extends Component {
             <div className="dh-body">
               <div className="dh-col">
                 <h1 className="dh-col-header">Causes</h1>
-                <Checkbox onChange={(e) => this.toggleCheckAll(e, "cause")}>
-                  Select All
-                </Checkbox>
+                <div className="dh-checkbox">
+                  <Checkbox onChange={(e) => this.toggleCheckAll(e, "cause")}>
+                    Select All
+                  </Checkbox>
+                </div>
+
                 {hazardSelected.causes.map((cause, cIndex) => {
                   return (
                     <DisplayHazardsItem
@@ -316,11 +331,14 @@ export default class DisplayHazardsComponent extends Component {
               </div>
               <div className="dh-col">
                 <h1 className="dh-col-header">Consequences</h1>
-                <Checkbox
-                  onChange={(e) => this.toggleCheckAll(e, "consequence")}
-                >
-                  Select All
-                </Checkbox>
+                <div className="dh-checkbox">
+                  <Checkbox
+                    onChange={(e) => this.toggleCheckAll(e, "consequence")}
+                  >
+                    Select All
+                  </Checkbox>
+                </div>
+
                 {hazardSelected.consequences.map((consequence, cIndex) => {
                   return (
                     <DisplayHazardsItem
@@ -334,9 +352,12 @@ export default class DisplayHazardsComponent extends Component {
               </div>
               <div className="dh-col">
                 <h1 className="dh-col-header">Preventative Safeguards</h1>
-                <Checkbox onChange={(e) => this.toggleCheckAll(e, "pSg")}>
-                  Select All
-                </Checkbox>
+                <div className="dh-checkbox">
+                  <Checkbox onChange={(e) => this.toggleCheckAll(e, "pSg")}>
+                    Select All
+                  </Checkbox>
+                </div>
+
                 {hazardSelected.preventativeSafeguards.map(
                   (preventativeSafeguard, pIndex) => {
                     return (
@@ -352,9 +373,12 @@ export default class DisplayHazardsComponent extends Component {
               </div>
               <div className="dh-col">
                 <h1 className="dh-col-header">Mitigating Safeguards</h1>
-                <Checkbox onChange={(e) => this.toggleCheckAll(e, "mSg")}>
-                  Select All
-                </Checkbox>
+                <div className="dh-checkbox">
+                  <Checkbox onChange={(e) => this.toggleCheckAll(e, "mSg")}>
+                    Select All
+                  </Checkbox>
+                </div>
+
                 {hazardSelected.mitigatingSafeguards.map(
                   (mitigatingSafeguard, mIndex) => {
                     return (

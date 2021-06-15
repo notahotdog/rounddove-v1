@@ -3,6 +3,7 @@ import { Modal, Input, message } from "antd";
 import { hazardTemplate } from "../../util/JSONHandler";
 import axios from "axios";
 
+//Used to AddHazards to Hazard Database
 export default class AddHazardModal extends Component {
   constructor(props) {
     super(props);
@@ -72,11 +73,12 @@ export default class AddHazardModal extends Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          Hazard Name: {this.state.hazardName}
+          Hazard Name:
           <Input
             placeholder="Insert Hazard"
             onChange={this.updateHazard}
             allowClear
+            style={{ marginTop: "5px" }}
           />
         </Modal>
       </div>
