@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "../../FacilitatorPage.css";
-import { Button } from "antd";
+import { Button, Checkbox } from "antd";
 import { Link } from "react-router-dom";
 // import DisplayWorkshop from "../DisplayWorkshop";
+import "../../FacilitatorPage.css";
 
 export default class FacilitatorCard extends Component {
   constructor(props) {
@@ -19,8 +20,61 @@ export default class FacilitatorCard extends Component {
 
   //Takes in Data from Parent and Displays
   render() {
+    const { data } = this.props;
+    console.log(data);
     return (
       <div className="card">
+        <div className="fc-card-col-left">
+          <div className="fc-card-checkbox-overview">
+            <div className="fc-checkbox-title">Display Workshop</div>
+            <div className="fc-checkbox-button">
+              <Checkbox stule={{ margintTop: "5px" }} />
+            </div>
+          </div>
+          <div className="fc-card-button-overview">
+            <Button>
+              <Link
+                to={{
+                  pathname: "/FacilitateWorkshopPage/DisplayWorkshop/",
+                  state: { data: this.props.data },
+                }}
+              >
+                Start Workshop
+              </Link>
+            </Button>
+          </div>
+        </div>
+        <div className="fc-card-col-right">
+          <div className="fc-card-right-header">
+            <div className="fc-header-card">
+              <div className="fc-workshop-name">{data.workshopName}</div>
+              <div className="fc-workshop-id">ID: {data._id}</div>
+            </div>
+          </div>
+          <div className="fc-card-right-footer">
+            <div className="fc-footer-card">
+              <div className="fc-footer-col-1">
+                <div className="fc-footer-header">Status</div>
+                <div className="fc-col-content">Completed</div>
+              </div>
+              <div className="fc-footer-col-2">
+                <div className="fc-footer-header">Nodes</div>
+                <div className="fc-col-content">
+                  {data.nodes.map((node, nodeIndex) => {
+                    if (nodeIndex <= 2) {
+                      return <div key={nodeIndex}>- {node.nodeName}</div>;
+                    }
+                  })}
+                </div>
+              </div>
+              <div className="fc-footer-col-3">
+                <div className="fc-footer-header">Date Hosted</div>
+                <div className="fc-col-content">12/22/2021</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* 
         <div className="card-col-left">
           <div className="workshop-name-outline">Workshop:</div>
           <div className="workshop-name">{this.props.data.workshopName}</div>
@@ -42,7 +96,7 @@ export default class FacilitatorCard extends Component {
             </Link>
           </Button>
           <div className="workshop-facilitator">Facilitator: Josie</div>
-        </div>
+        </div> */}
       </div>
     );
   }

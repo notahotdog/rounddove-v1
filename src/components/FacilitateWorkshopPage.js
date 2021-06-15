@@ -34,8 +34,10 @@ export default class FacilitateWorkshopPage extends Component {
 
   render() {
     return (
-      <div className="body">
-        <h1>Facilitate Workshop Page</h1>
+      <div className="facilitator-workshop-page">
+        <div className="fwp-title">
+          <h1>List of Workshops </h1>
+        </div>
 
         <div className="card-list">
           {this.state.data.map((workshop) => {
