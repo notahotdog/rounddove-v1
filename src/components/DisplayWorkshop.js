@@ -22,7 +22,7 @@ export default class DisplayWorkshop extends Component {
     );
   }
 
-  //Obtain From Children - Node to be assesed
+  //Need  nodeIndex, subnodeIndex
   setNodeSelected(nameNode, nameSubnode, nameHazard) {
     this.setState({
       nodeSelected: nameNode,
@@ -36,12 +36,28 @@ export default class DisplayWorkshop extends Component {
     return (
       <div>
         <div className="dw-header">
-          <div className="dw-header-title">{workshop.workshopName}</div>
-          <div className="dw-header-details">
-            <div>Node Assessed: {this.state.nodeSelected}</div>
-            <div>Sub node Assessed: {this.state.subnodeSelected}</div>
-            <div>Hazard Assessed: {this.state.hazardSelected}</div>
+          <div className="dw-header-left-col">
+            <div className="dw-header-title">{workshop.workshopName}</div>
+            <div className="dw-node-details">
+              <div className="item-subtitle">
+                <div className="dw-node-title">Node Assessed:</div>
+                <div className="dw-item-content">{this.state.nodeSelected}</div>
+              </div>
+              <div className="item-subtitle">
+                <div className="dw-node-title">Sub node Assessed:</div>
+                <div className="dw-item-content">
+                  {this.state.subnodeSelected}
+                </div>
+              </div>
+              <div className="item-subtitle">
+                <div className="dw-node-title">Hazard Assessed:</div>
+                <div className="dw-item-content">
+                  {this.state.hazardSelected}
+                </div>
+              </div>
+            </div>
           </div>
+          <div className="dw-header-right-col">Some other data</div>
         </div>
         <DisplayWorkshopBody
           data={workshop}
@@ -50,4 +66,13 @@ export default class DisplayWorkshop extends Component {
       </div>
     );
   }
+}
+
+{
+  /* 
+<div className="dw-header-details">
+  <div>Node Assessed: {this.state.nodeSelected}</div>
+  <div>Sub node Assessed: {this.state.subnodeSelected}</div>
+  <div>Hazard Assessed: {this.state.hazardSelected}</div>
+</div> */
 }

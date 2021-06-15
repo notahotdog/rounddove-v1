@@ -8,12 +8,12 @@
   display: flex;
   flex-direction: column;
   /* justify-content: space-evenly; */
-  background-color: pink;
+  /* background-color: pink; */
 }
 
 .card {
   /* border: 5px solid blue; */
-  height: 30vh;
+  height: 35vh;
   display: flex;
   flex-direction: row;
   background-color: lightblue;
@@ -33,7 +33,7 @@
   display: flex;
   flex-direction: column;
   width: 70%;
-  background-color: lightcoral;
+  background-color: white;
 }
 
 .fc-card-checkbox-overview {
@@ -59,10 +59,10 @@
   align-items: center;
   /* align-self: center; */
 }
-.ant-checkbox-inner,
+/* .ant-checkbox-inner,
 .ant-checkbox-input {
   transform: scale(2);
-}
+} */
 
 .fc-card-button-overview {
   /* background-color: red; */
@@ -220,21 +220,43 @@
 }
 
 .dw-header {
-  height: 20vh;
-  /* background-color: blue; */
+  color: rgba(0, 0, 0, 0.85);
+  /* background-color: aqua; */
+  font-weight: 600;
+  font-size: 28px;
   display: flex;
-  flex-direction: column;
-  border: 4px solid black;
+  flex-direction: row;
+  height: 200px;
+  /* border: 3px solid black; */
 }
 
 .dw-header-title {
   display: flex;
-  margin-bottom: 0.5em;
+  /* margin-bottom: 0.5em; */
+  margin-left: 10px;
   color: rgba(0, 0, 0, 0.85);
-  /* background-color: red; */
+  /* background-color: purple; */
   font-weight: 600;
-  font-size: 38px;
+  text-decoration: underline;
+  font-size: 30px;
   height: 40%;
+}
+
+.dw-header-left-col {
+  background-color: white;
+  width: 80%;
+}
+
+.dw-header-right-col {
+  width: 20%;
+}
+
+.dw-node-details {
+  height: 60%;
+  background-color: white;
+  width: 98%;
+  font-weight: lighter;
+  margin-left: 10px;
 }
 
 .dw-header-details {
@@ -250,10 +272,23 @@
   font-size: 28px;
 }
 
+.dw-node-title {
+  width: 27%;
+  display: flex;
+  flex-direction: row;
+  font-weight: lighter;
+  /* background-color: blue; */
+}
+
+.dw-item-content {
+  font-size: 0.8em;
+}
+
 .dw-body {
   height: 80vh;
   display: flex;
   flex-direction: row;
+  margin-top: 2px;
   /* background-color: green; */
 }
 
@@ -264,14 +299,36 @@
   height: 80vh;
 }
 
+.item-ii {
+  border: 1px solid black;
+  margin-top: 1px;
+  /* width: 50%; */
+}
+
 .dw-body-right-col {
   width: 80%;
-  background-color: brown;
+  background-color: whitesmoke;
 }
 
 .dw-carousel-div {
-  background-color: aquamarine;
+  background-color: white;
   height: 80vh;
+}
+
+.dw-subcol {
+  display: flex;
+  flex-direction: row;
+  height: 75vh;
+}
+
+.dw-left-subcol {
+  width: 50%;
+  background-color: lightsalmon;
+}
+
+.dw-right-subcol {
+  width: 50%;
+  background-color: lightblue;
 }
 
 .ew-main-div {

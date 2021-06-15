@@ -46,11 +46,15 @@ export default class HomePage extends Component {
     return (
       <div
         className="mainpage-div"
-        style={{ display: "flex", flexDirection: "column" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          backgroundColor: "white",
+        }}
       >
         {" "}
         HomePage
-        <Button onClick={this.addVisibilityElement}> tBJKJ</Button>
+        {/* <Button onClick={this.addVisibilityElement}> tBJKJ</Button> */}
       </div>
     );
   }

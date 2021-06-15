@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "../../FacilitatorPage.css";
-import { Menu, Carousel, Button } from "antd";
+import { Menu, Carousel, Button, Typography } from "antd";
 
 const { SubMenu } = Menu;
+const { Title } = Typography;
 
 export default class DisplayWorkshopBody extends Component {
   constructor(props) {
@@ -43,10 +44,20 @@ export default class DisplayWorkshopBody extends Component {
     this.setState({ hazardLoaded: hazard });
   }
 
+  //Update Bacekd
+  updateBackend(node) {
+    console.log("Update Backend");
+  }
+
+  //Add Node
+  //Add SubNode
+  //Add Hazard
+
   render() {
     const { data } = this.props;
     const { hazardLoaded } = this.state;
     console.log("nodeData", this.props.data.nodes[0].subnodes[0].hazards[0]);
+    console.log("Hazard Loaded", hazardLoaded.consequences[0].name);
 
     return (
       <div className="dw-body">
@@ -107,35 +118,63 @@ export default class DisplayWorkshopBody extends Component {
             <h1> Hazard: {hazardLoaded.hazardName}</h1>
             <div>
               <h1>Causes</h1>
-              {hazardLoaded.causes.forEach((cause) => {
-                if (cause.visible) {
-                  return <div>{cause.name}</div>;
-                }
-              })}
+              <div className="dw-subcol">
+                <div className="dw-left-subcol">
+                  <Title level={3}>Suggestions</Title>
+                  {hazardLoaded.causes.map((cause) => {
+                    if (cause.visible) {
+                      return <div>{cause.name}</div>;
+                    }
+                  })}
+                </div>
+                <div className="dw-right-subcol">User Feedback</div>
+              </div>
             </div>
             <div>
               <h1>Consequences</h1>
-              {hazardLoaded.consequences.forEach((consequence) => {
-                if (consequence.visible) {
-                  return <div>{consequence.name}</div>;
-                }
-              })}
+              <div className="dw-subcol">
+                <div className="dw-left-subcol">
+                  <Title level={3}> Suggestions</Title>
+                  {hazardLoaded.consequences.map(
+                    (consequence, consequenceIndex) => {
+                      if (consequence.visible) {
+                        return (
+                          <div className="item-ii">{consequence.name}</div>
+                        );
+                      }
+                    }
+                  )}
+                </div>
+                <div className="dw-right-subcol">User Feedback</div>
+              </div>
             </div>
             <div>
               <h1>Preventative Safeguards</h1>
-              {hazardLoaded.preventativeSafeguards.forEach((pSafeguard) => {
-                if (pSafeguard.visible) {
-                  return <div>{pSafeguard.name}</div>;
-                }
-              })}
+              <div className="dw-subcol">
+                <div className="dw-left-subcol">
+                  <Title level={3}> Suggestions</Title>
+                  {hazardLoaded.preventativeSafeguards.map((pSafeguard) => {
+                    if (pSafeguard.visible) {
+                      return <div>{pSafeguard.name}</div>;
+                    }
+                  })}
+                </div>
+                <div className="dw-right-subcol">User Feedback</div>
+              </div>
             </div>
             <div>
               <h1>Mitigating Safeguards</h1>
-              {hazardLoaded.mitigatingSafeguards.forEach((mSafeguard) => {
-                if (mSafeguard.visible) {
-                  return <div>{mSafeguard.name}</div>;
-                }
-              })}
+              <div className="dw-subcol">
+                <div className="dw-left-subcol">
+                  <Title level={3}> Suggestions</Title>
+                  {hazardLoaded.mitigatingSafeguards.map((mSafeguard) => {
+                    if (mSafeguard.visible) {
+                      return <div>{mSafeguard.name}</div>;
+                    }
+                  })}
+                </div>
+                <div className="dw-right-subcol">User Feedback</div>
+              </div>
             </div>
           </Carousel>
         </div>
