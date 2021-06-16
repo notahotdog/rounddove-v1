@@ -331,6 +331,20 @@
   background-color: lightblue;
 }
 
+.dw-item-header {
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+}
+.dw-options {
+  display: flex;
+  flex-direction: row;
+  background-color: aqua;
+  justify-content: flex-end;
+  align-self: flex-end;
+  width: 30%;
+}
+
 .ew-main-div {
   height: 100vh;
   background-color: lightcyan;

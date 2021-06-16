@@ -23,6 +23,7 @@ export default class EditWorkshop extends Component {
       isOpenNodeNameModal: false,
       isOpenSubnodeNameModal: false,
       isOpenHazardNameModal: false,
+      isHazardSelected: false,
       tags: [""],
       data: {
         workshop: "",
@@ -172,6 +173,7 @@ export default class EditWorkshop extends Component {
       nodeSelIndex: nodeIndex,
       subnodeSelIndex: subnodeIndex,
       hazardSelndex: hazardIndex,
+      isHazardSelected: true,
     });
   }
 
@@ -189,12 +191,23 @@ export default class EditWorkshop extends Component {
   }
 
   deleteNodeFromNodeList() {
-    var data = { ...this.state.data };
-    var nodes = [...this.state.data.nodes];
-    var updateNodeList = deleteItemFromIndex(nodes, this.state.nodeSelIndex); //Remove data from array
-    // console.log("Deleted Update:", updateNodeList);
-    data.nodes = updateNodeList;
-    this.saveDataToBackend(data);
+    const { nodeSelIndex, isHazardSelected } = this.state;
+    if (isHazardSelected) {
+      var data = { ...this.state.data };
+      var nodes = [...this.state.data.nodes];
+      var updateNodeList = deleteItemFromIndex(nodes, nodeSelIndex); //Remove data from array
+      // console.log("Deleted Update:", updateNodeList);
+      data.nodes = updateNodeList;
+      this.saveDataToBackend(data);
+      this.setState({
+        isHazardSelected: false,
+        nodeSelected: "",
+        subnodeSelected: "",
+        hazardSelected: "",
+      });
+    } else {
+      alert("Please select a node to be deleted");
+    }
   }
 
   /**
@@ -211,13 +224,26 @@ export default class EditWorkshop extends Component {
   }
 
   deleteSubNodeFromNode() {
-    const { nodeSelIndex, subnodeSelIndex } = this.state;
-    var data = { ...this.state.data };
-    var subNodeList = [...this.state.data.nodes[nodeSelIndex].subnodes];
-    var updatedSubNodeList = deleteItemFromIndex(subNodeList, subnodeSelIndex);
-    data.nodes[nodeSelIndex].subnodes = updatedSubNodeList;
-    // console.log("Deleted Subnode Update:", data);
-    this.saveDataToBackend(data);
+    const { nodeSelIndex, subnodeSelIndex, isHazardSelected } = this.state;
+    if (isHazardSelected) {
+      var data = { ...this.state.data };
+      var subNodeList = [...this.state.data.nodes[nodeSelIndex].subnodes];
+      var updatedSubNodeList = deleteItemFromIndex(
+        subNodeList,
+        subnodeSelIndex
+      );
+      data.nodes[nodeSelIndex].subnodes = updatedSubNodeList;
+      // console.log("Deleted Subnode Update:", data);
+      this.saveDataToBackend(data);
+      this.setState({
+        isHazardSelected: false,
+        nodeSelected: "",
+        subnodeSelected: "",
+        hazardSelected: "",
+      });
+    } else {
+      alert("Please select a subnode to be deleted");
+    }
   }
 
   /**
@@ -239,17 +265,29 @@ export default class EditWorkshop extends Component {
   }
 
   deleteHazardFromSubNode() {
-    const { nodeSelIndex, subnodeSelIndex, hazardSelndex } = this.state;
-    var data = { ...this.state.data };
-    //Need tocheck if the hazard even exists
-    var hazardList = [
-      ...this.state.data.nodes[nodeSelIndex].subnodes[subnodeSelIndex].hazards,
-    ];
+    const { nodeSelIndex, subnodeSelIndex, hazardSelndex, isHazardSelected } =
+      this.state;
+    if (isHazardSelected) {
+      var data = { ...this.state.data };
+      //Need tocheck if the hazard even exists
+      var hazardList = [
+        ...this.state.data.nodes[nodeSelIndex].subnodes[subnodeSelIndex]
+          .hazards,
+      ];
 
-    var updatedHazardList = deleteItemFromIndex(hazardList, hazardSelndex);
-    data.nodes[nodeSelIndex].subnodes[subnodeSelIndex].hazards =
-      updatedHazardList;
-    this.saveDataToBackend(data);
+      var updatedHazardList = deleteItemFromIndex(hazardList, hazardSelndex);
+      data.nodes[nodeSelIndex].subnodes[subnodeSelIndex].hazards =
+        updatedHazardList;
+      this.saveDataToBackend(data);
+      this.setState({
+        isHazardSelected: false,
+        nodeSelected: "",
+        subnodeSelected: "",
+        hazardSelected: "",
+      });
+    } else {
+      alert("Please select a subnode to be deleted");
+    }
   }
 
   openNodeNameModal() {
