@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import DisplayWorkshopBody from "./DisplayComponents/DisplayWorkshopBody.component";
 import axios from "axios";
 import { addVisibilityElement, deleteItemFromIndex } from "../util/Utilities";
-import { Button, Popconfirm } from "antd";
+import { Button, Popconfirm, message } from "antd";
 import EditNodeNameModal from "./EditWorkshopComponents/EditNodeNameModal";
 import EditSubnodeNameModal from "./EditWorkshopComponents/EditSubnodeNameModal";
 import EditHazardNameModal from "./EditWorkshopComponents/EditHazardNameModal";
@@ -74,6 +74,7 @@ export default class DisplayWorkshop extends Component {
     this.closeHazardNameModal = this.closeHazardNameModal.bind(this);
 
     this.updateName = this.updateName.bind(this);
+    this.saveSuggestionsToDatabase = this.saveSuggestionsToDatabase.bind(this);
   }
 
   componentDidMount() {
@@ -328,6 +329,53 @@ export default class DisplayWorkshop extends Component {
     this.saveDataToBackend(data);
   }
 
+  saveSuggestionsToDatabase(type, suggestionList) {
+    console.log("Suggestion List", suggestionList);
+    const { nodeSelIndex, subnodeSelIndex, hazardSelndex } = this.state;
+    var data = { ...this.state.data };
+    if (type == "cause") {
+      var causeList =
+        data.nodes[nodeSelIndex].subnodes[subnodeSelIndex].hazards[
+          hazardSelndex
+        ].causes;
+      suggestionList.causes.forEach((suggestion) => {
+        causeList.push(suggestion);
+      });
+    }
+    if (type == "consequence") {
+      var consequenceList =
+        data.nodes[nodeSelIndex].subnodes[subnodeSelIndex].hazards[
+          hazardSelndex
+        ].consequences;
+      suggestionList.consequences.forEach((suggestion) => {
+        consequenceList.push(suggestion);
+      });
+    }
+    if (type == "pSafeguard") {
+      var pSafeList =
+        data.nodes[nodeSelIndex].subnodes[subnodeSelIndex].hazards[
+          hazardSelndex
+        ].preventativeSafeguards;
+      suggestionList.preventativeSafeguards.forEach((suggestion) => {
+        pSafeList.push(suggestion);
+      });
+    }
+    if (type == "mSafeguard") {
+      var mSafeList =
+        data.nodes[nodeSelIndex].subnodes[subnodeSelIndex].hazards[
+          hazardSelndex
+        ].mitigatingSafeguards;
+      suggestionList.mitigatingSafeguards.forEach((suggestion) => {
+        mSafeList.push(suggestion);
+      });
+    }
+
+    console.log("Saving suggestions to db:", data);
+    message.success("Saved suggestion to Database");
+
+    this.saveDataToBackend(data);
+  }
+
   updateName() {
     var nodeName = this.state.nodeSelected;
     var nodeIndex = this.state.nodeSelIndex;
@@ -350,7 +398,7 @@ export default class DisplayWorkshop extends Component {
 
   render() {
     const workshop = this.props.location.state.data; // should just pass the id
-    console.log("Workshop dataLoaded", this.state.data);
+    // console.log("Workshop dataLoaded", this.state.data);
     const {
       isOpenNodeNameModal,
       isOpenSubnodeNameModal,
@@ -494,6 +542,7 @@ export default class DisplayWorkshop extends Component {
           addNode={this.addNodeToNodeList}
           addSubNode={this.addSubNodeToNode}
           addHazard={this.addHazardToSubNode}
+          saveSuggestionsToDatabase={this.saveSuggestionsToDatabase}
         />
       </div>
     );

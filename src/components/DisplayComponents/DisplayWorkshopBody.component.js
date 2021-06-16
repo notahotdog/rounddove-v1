@@ -4,6 +4,13 @@ import { Menu, Carousel, Button, Typography } from "antd";
 import AddNodeModal from "../EditWorkshopComponents/AddNodeModal";
 import AddSubnodeModal from "../EditWorkshopComponents/AddSubnodeModal";
 import AddHazardModal from "../EditWorkshopComponents/AddHazardWithOptionsModal";
+import AddSuggestionField from "./AddSuggestionField";
+import DisplaySuggestionField from "./DisplaySuggestionField";
+import {
+  addVisibilityElement,
+  deleteItemFromIndex,
+  addVisibilityToField,
+} from "../../util/Utilities";
 
 const { SubMenu } = Menu;
 const { Title } = Typography;
@@ -21,6 +28,12 @@ export default class DisplayWorkshopBody extends Component {
         preventativeSafeguards: [""],
         mitigatingSafeguards: [""],
         isHazardAllocated: false,
+      },
+      suggestions: {
+        causes: [],
+        consequences: [],
+        preventativeSafeguards: [],
+        mitigatingSafeguards: [],
       },
       isNodeModalVisible: false,
       isSubnodeModalVisible: false,
@@ -46,6 +59,9 @@ export default class DisplayWorkshopBody extends Component {
     this.showHazardModal = this.showHazardModal.bind(this);
     this.hideHazardModal = this.hideHazardModal.bind(this);
     this.closeHazardModal = this.closeHazardModal.bind(this);
+
+    this.addSuggestionToHazard = this.addSuggestionToHazard.bind(this);
+    this.deleteSuggestion = this.deleteSuggestion.bind(this);
   }
 
   next() {
@@ -125,10 +141,82 @@ export default class DisplayWorkshopBody extends Component {
     this.setState({ isHazardModalVisible: false });
   }
 
+  //Adds Suggestion to
+  addSuggestionToHazard(suggestion, suggestionType) {
+    var suggestionsListObj = this.state.suggestions;
+
+    const suggestionObj = addVisibilityToField(suggestion, true); //add Visibility Aspect to suggestions
+    console.log("SUGGESTION TO BE ADDED", suggestionObj);
+    if (suggestionType == "cause") {
+      suggestionsListObj.causes.push(suggestionObj);
+    }
+    if (suggestionType == "consequence") {
+      suggestionsListObj.consequences.push(suggestionObj);
+    }
+    if (suggestionType == "pSafeguard") {
+      suggestionsListObj.preventativeSafeguards.push(suggestionObj);
+    }
+    if (suggestionType == "mSafeguard") {
+      suggestionsListObj.mitigatingSafeguards.push(suggestionObj);
+    }
+  }
+
+  /**
+   * Removes suggestion from suggestion list according to the type of suggestion
+   * @param {String} suggestionType type of suggestion to be removed
+   * @param {Num} index index of item to be removed
+   */
+  deleteSuggestion(suggestionType, index) {
+    var suggestionsListObj = { ...this.state.suggestions };
+    if (suggestionType == "cause") {
+      var tempList = deleteItemFromIndex(suggestionsListObj.causes, index);
+      suggestionsListObj.causes = tempList;
+    }
+    if (suggestionType == "consequence") {
+      var tempList = deleteItemFromIndex(
+        suggestionsListObj.consequences,
+        index
+      );
+      suggestionsListObj.consequences = tempList;
+    }
+    if (suggestionType == "pSafeguard") {
+      var tempList = deleteItemFromIndex(
+        suggestionsListObj.preventativeSafeguards,
+        index
+      );
+      suggestionsListObj.preventativeSafeguards = tempList;
+    }
+    if (suggestionType == "mSafeguard") {
+      var tempList = deleteItemFromIndex(
+        suggestionsListObj.mitigatingSafeguards,
+        index
+      );
+      suggestionsListObj.mitigatingSafeguards = tempList;
+    }
+
+    this.setState({ suggestions: suggestionsListObj });
+  }
+
+  //Save Suggestion
+  saveSuggestion(suggestionType) {
+    this.props.saveSuggestionsToDatabase(
+      suggestionType,
+      this.state.suggestions
+    );
+    // if (suggestionType == "cause") {
+    //   console.log("test");
+    //   this.props.saveSuggestionsToDatabase(
+    //     suggestionType,
+    //     this.state.suggestions.causes
+    //   );
+    // }
+    // this.props.saveSuggestionToDatabase(type,list) //will decide which field to append
+  }
+
   render() {
     const { data } = this.props;
-    const { hazardLoaded } = this.state;
-    console.log("Hazard Loaded", hazardLoaded.consequences[0].name);
+    const { hazardLoaded, suggestions } = this.state;
+    // console.log("Hazard Loaded", hazardLoaded.consequences[0].name);
 
     return (
       <div className="dw-body">
@@ -234,9 +322,30 @@ export default class DisplayWorkshopBody extends Component {
                   })}
                 </div>
                 <div className="dw-right-subcol">
-                  User Feedback
-                  <Button> Add Hazard Suggestion</Button>
-                  <div>Render Suggestion List</div>
+                  <Title level={3}>User Feedback</Title>
+                  <div className="los-ov">
+                    <div className="los-header">List of Suggestions</div>
+                    <Button
+                      onClick={() => this.saveSuggestion("cause")}
+                      style={{ marginLeft: "auto" }}
+                    >
+                      Save to Database
+                    </Button>
+                  </div>
+                  <AddSuggestionField
+                    type="cause"
+                    addSuggestion={this.addSuggestionToHazard}
+                  />
+                  {suggestions.causes.map((causeSuggestion, causeIndex) => {
+                    return (
+                      <DisplaySuggestionField
+                        suggestion={causeSuggestion}
+                        index={causeIndex}
+                        type="cause"
+                        deleteSuggestion={this.deleteSuggestion}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -255,7 +364,34 @@ export default class DisplayWorkshopBody extends Component {
                     }
                   )}
                 </div>
-                <div className="dw-right-subcol">User Feedback</div>
+                <div className="dw-right-subcol">
+                  <Title level={3}>User Feedback</Title>
+                  <div className="los-ov">
+                    <div className="los-header">List of Suggestions</div>
+                    <Button
+                      onClick={() => this.saveSuggestion("consequence")}
+                      style={{ marginLeft: "auto" }}
+                    >
+                      Save to Database
+                    </Button>
+                  </div>
+                  <AddSuggestionField
+                    type="consequence"
+                    addSuggestion={this.addSuggestionToHazard}
+                  />
+                  {suggestions.consequences.map(
+                    (consqSuggestion, consqIndex) => {
+                      return (
+                        <DisplaySuggestionField
+                          suggestion={consqSuggestion}
+                          index={consqIndex}
+                          type="consequence"
+                          deleteSuggestion={this.deleteSuggestion}
+                        />
+                      );
+                    }
+                  )}
+                </div>
               </div>
             </div>
             <div>
@@ -269,7 +405,34 @@ export default class DisplayWorkshopBody extends Component {
                     }
                   })}
                 </div>
-                <div className="dw-right-subcol">User Feedback</div>
+                <div className="dw-right-subcol">
+                  <Title level={3}>User Feedback</Title>
+                  <div className="los-ov">
+                    <div className="los-header">List of Suggestions</div>
+                    <Button
+                      onClick={() => this.saveSuggestion("pSafeguard")}
+                      style={{ marginLeft: "auto" }}
+                    >
+                      Save to Database
+                    </Button>
+                  </div>
+                  <AddSuggestionField
+                    type="pSafeguard"
+                    addSuggestion={this.addSuggestionToHazard}
+                  />
+                  {suggestions.preventativeSafeguards.map(
+                    (pSafeSuggestion, pSafeIndex) => {
+                      return (
+                        <DisplaySuggestionField
+                          suggestion={pSafeSuggestion}
+                          index={pSafeIndex}
+                          type="pSafeguard"
+                          deleteSuggestion={this.deleteSuggestion}
+                        />
+                      );
+                    }
+                  )}
+                </div>
               </div>
             </div>
             <div>
@@ -283,7 +446,34 @@ export default class DisplayWorkshopBody extends Component {
                     }
                   })}
                 </div>
-                <div className="dw-right-subcol">User Feedback</div>
+                <div className="dw-right-subcol">
+                  <Title level={3}>User Feedback</Title>
+                  <div className="los-ov">
+                    <div className="los-header">List of Suggestions</div>
+                    <Button
+                      onClick={() => this.saveSuggestion("mSafeguard")}
+                      style={{ marginLeft: "auto" }}
+                    >
+                      Save to Database
+                    </Button>
+                  </div>
+                  <AddSuggestionField
+                    type="mSafeguard"
+                    addSuggestion={this.addSuggestionToHazard}
+                  />
+                  {suggestions.mitigatingSafeguards.map(
+                    (mSafeSuggestion, mSafeIndex) => {
+                      return (
+                        <DisplaySuggestionField
+                          suggestion={mSafeSuggestion}
+                          index={mSafeIndex}
+                          type="mSafeguard"
+                          deleteSuggestion={this.deleteSuggestion}
+                        />
+                      );
+                    }
+                  )}
+                </div>
               </div>
             </div>
           </Carousel>

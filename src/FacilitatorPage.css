@@ -722,3 +722,35 @@
   height: 6vh;
   background-color: white;
 }
+
+.suggestion-field {
+  display: flex;
+  flex-direction: row;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.display-suggestion-field {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  /* background-color: red; */
+}
+.cancel-suggestion {
+  margin-left: auto;
+}
+
+.los-ov {
+  display: flex;
+  flex-direction: row;
+  margin-left: 2px;
+  margin-right: 2px;
+  justify-content: flex-start;
+  background-color: white;
+  margin-bottom: 3px;
+}
+
+.los-header {
+  font-size: 18px;
+  margin-bottom: 2px;
+}

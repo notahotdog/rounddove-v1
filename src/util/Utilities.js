@@ -9,7 +9,7 @@ export function capitalizeFirstLetter(str) {
 
 /**
  * Checks if the string is empty
- * @param {string} str to check if empty
+ * @param {string} str String to check if empty
  * @returns  bool
  */
 export function isEmptyString(str) {
@@ -118,7 +118,7 @@ export function addVisibilityToWorkshop(workshopObjData, isHazardAllocated) {
 /**
  * Adds visiblity to an object
  * @param {json} hazard Obj
- * @returns
+ * @returns hazard obj with all elements with visibility parameter
  */
 export function addVisibilityElement(obj, isHazardAllocated) {
   var jsonData = { ...obj };
@@ -158,6 +158,17 @@ export function addVisibilityElement(obj, isHazardAllocated) {
   jsonData.mitigatingSafeguards = updatedMSList;
   console.log("json data ammended: ", jsonData);
   return jsonData;
+}
+
+/**
+ *  Takes in a name and returns an object with visible element
+ * @param {String} name name of field
+ * @param {boolean} defaultVisibility default state of object visibility
+ * @returns obj with visible parameter expressed
+ */
+export function addVisibilityToField(name, defaultVisibility) {
+  var obj = { name: name, visible: defaultVisibility };
+  return obj;
 }
 
 //Not used for now
