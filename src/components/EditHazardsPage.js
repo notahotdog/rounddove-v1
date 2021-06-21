@@ -3,6 +3,7 @@ import axios from "axios";
 import { Menu, Divider } from "antd";
 import EditableHazardComponent from "./TableComponents/EditableHazardComponent";
 import AddHazardModal from "./ModalComponents/AddHazardModal";
+// import AddHazardModal from "./ModalComponents/AddHazardModal";
 import LoadDataPromptPage from "./DisplayComponents/LoadDataPromptPage";
 
 //Used to Add/Delete hazards from the Hazard Database

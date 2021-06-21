@@ -5,11 +5,22 @@ let Workshop = require("../models/workshop.model");
 // let WorkshopComplete = require("../models/workshopComplete.model");
 let Hazard = require("../models/hazard.model");
 
+var xl = require("excel4node");
+var exportFile = require("../util/export2Excel.js");
+
 //To Handle GET Requests
 router.route("/").get((req, res) => {
   Workshop.find()
     .then((users) => res.json(users))
     .catch((err) => res.status(400).json("Error: " + err));
+});
+
+//Export2Excel
+
+router.route("/exportToExcel").post((req, res) => {
+  //Handle request
+  const test = req.body;
+  exportFile.saveToExcel(test);
 });
 
 /**

@@ -4,18 +4,27 @@ import { Button, Checkbox } from "antd";
 import { Link } from "react-router-dom";
 // import DisplayWorkshop from "../DisplayWorkshop";
 import "../../FacilitatorPage.css";
+import axios from "axios";
 
 export default class FacilitatorCard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {};
+    this.exportToExcel = this.exportToExcel.bind(this);
   }
 
   //onClick should Bring Me to A page where it will trigger a workshop
   onStartWorkshop() {
     //use Workshop props Data
     console.log("Start Workshop");
+  }
+
+  exportToExcel() {
+    //export using axios
+    // axios.post("")
+    console.log("Export to excel", this.props.data);
+    axios.post("http://localhost:5000/workshop/exportToExcel", this.props.data); //Send Payload to Backend
   }
 
   //Takes in Data from Parent and Displays
@@ -42,6 +51,7 @@ export default class FacilitatorCard extends Component {
                 Start Workshop
               </Link>
             </Button>
+            <Button onClick={this.exportToExcel}>Export to excel</Button>
           </div>
         </div>
         <div className="fc-card-col-right">
