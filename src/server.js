@@ -5,7 +5,8 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-app.use(cors());
+// app.use(cors());
+app.use(cors({ exposedHeaders: "*" })); //and this
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

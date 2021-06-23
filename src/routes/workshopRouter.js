@@ -23,6 +23,35 @@ router.route("/exportToExcel").post((req, res) => {
   exportFile.saveToExcel(test);
 });
 
+router.route("/testExport").post((req, res) => {
+  //test is just the name of the file
+  // const test = req.body;
+  // const test_Name = req.body.workshopName;
+  // var data_ret = exportFile.saveToExcel(test); // will return the object
+  // console.log(typeof data_ret);
+  // data_ret.write("TestExcel.xlsx", res);
+  console.log("Test headers");
+  var wb = new xl.Workbook();
+
+  // Add Worksheets to the workbook
+  var ws = wb.addWorksheet("Sheet 1");
+
+  // Create a reusable style
+  var style = wb.createStyle({
+    font: {
+      color: "#FF0800",
+      size: 12,
+    },
+    numberFormat: "$#,##0.00; ($#,##0.00); -",
+  });
+
+  // Set value of cell A1 to 100 as a number type styled with
+  ws.cell(1, 1).number(100).style(style);
+  ws.cell(1, 2).number(200).style(style);
+
+  wb.write("Excel.xlsx", res);
+});
+
 /**
  * Retrieve Hazard Data from endpoint
  */
