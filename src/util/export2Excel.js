@@ -79,77 +79,76 @@ module.exports = {
     ws.cell(2, 8).string("S").style(headerStyle);
     ws.cell(2, 9).string("Risk").style(headerStyle);
 
-    return wb;
+    var currentRow = 3; //Start from the third row
 
-    // var currentRow = 3; //Start from the third row
+    console.log("data to be saved to excel", jsonData);
+    jsonData.nodes.forEach((node, nodeIndex) => {
+      var id = nodeIndex + 1;
+      var nodeID = id.toString();
+      var nodeIDstr = nodeID + ".0.0";
 
-    // console.log("data to be saved to excel", jsonData);
-    // jsonData.nodes.forEach((node, nodeIndex) => {
-    //   var id = nodeIndex + 1;
-    //   var nodeID = id.toString();
-    //   var nodeIDstr = nodeID + ".0.0";
+      console.log("id", nodeIDstr);
 
-    //   console.log("id", nodeIDstr);
+      ws.cell(currentRow, 1).string(nodeIDstr).style(nodeNameStyle); //ID
+      ws.cell(currentRow, 2).string(node.nodeName).style(nodeNameStyle); //Name
+      ws.cell(currentRow, 3, currentRow, 14).string("").style(nodeNameStyle); //ws.Cell(row1, col1, row2, col2, merge)
 
-    //   ws.cell(currentRow, 1).string(nodeIDstr).style(nodeNameStyle); //ID
-    //   ws.cell(currentRow, 2).string(node.nodeName).style(nodeNameStyle); //Name
-    //   ws.cell(currentRow, 3, currentRow, 14).string("").style(nodeNameStyle); //ws.Cell(row1, col1, row2, col2, merge)
+      node.subnodes.forEach((subnode, subnodeIndex) => {
+        currentRow += 1;
 
-    //   node.subnodes.forEach((subnode, subnodeIndex) => {
-    //     currentRow += 1;
+        var sID = subnodeIndex + 1;
+        var subnodeID = sID.toString();
+        var subnodeIDstr = nodeID + "." + subnodeID + ".0";
+        ws.cell(currentRow, 1).string(subnodeIDstr).style(subnodeNameStyle);
+        ws.cell(currentRow, 2)
+          .string(subnode.subnodeName)
+          .style(subnodeNameStyle);
 
-    //     var sID = subnodeIndex + 1;
-    //     var subnodeID = sID.toString();
-    //     var subnodeIDstr = nodeID + "." + subnodeID + ".0";
-    //     ws.cell(currentRow, 1).string(subnodeIDstr).style(subnodeNameStyle);
-    //     ws.cell(currentRow, 2)
-    //       .string(subnode.subnodeName)
-    //       .style(subnodeNameStyle);
+        //Highlights the whole column for the rest of the cell
+        ws.cell(currentRow, 3, currentRow, 14)
+          .string("")
+          .style(subnodeNameStyle); //ws.Cell(row1, col1, row2, col2, merge)
 
-    //     //Highlights the whole column for the rest of the cell
-    //     ws.cell(currentRow, 3, currentRow, 14)
-    //       .string("")
-    //       .style(subnodeNameStyle); //ws.Cell(row1, col1, row2, col2, merge)
+        subnode.hazards.forEach((hazard, hazardIndex) => {
+          currentRow += 1;
 
-    //     subnode.hazards.forEach((hazard, hazardIndex) => {
-    //       currentRow += 1;
+          var hID = hazardIndex + 1;
+          var hazardID = hID.toString();
+          var hazardIDstr = nodeID + "." + subnodeID + "." + hazardID;
 
-    //       var hID = hazardIndex + 1;
-    //       var hazardID = hID.toString();
-    //       var hazardIDstr = nodeID + "." + subnodeID + "." + hazardID;
+          ws.cell(currentRow, 1).string(hazardIDstr).style(hazardNameStyle);
+          ws.cell(currentRow, 2)
+            .string(hazard.hazardName)
+            .style(hazardNameStyle);
 
-    //       ws.cell(currentRow, 1).string(hazardIDstr).style(hazardNameStyle);
-    //       ws.cell(currentRow, 2)
-    //         .string(hazard.hazardName)
-    //         .style(hazardNameStyle);
+          //Causes/ Consequences/ Preventative / Mitigating Safeguards
+          ws.cell(currentRow, 3)
+            .string(convertToProperFormat(hazard.causes))
+            .style(hazardNameStyle);
 
-    //       //Causes/ Consequences/ Preventative / Mitigating Safeguards
-    //       ws.cell(currentRow, 3)
-    //         .string(convertToProperFormat(hazard.causes))
-    //         .style(hazardNameStyle);
+          ws.cell(currentRow, 4)
+            .string(convertToProperFormat(hazard.consequences))
+            .style(hazardNameStyle);
 
-    //       ws.cell(currentRow, 4)
-    //         .string(convertToProperFormat(hazard.consequences))
-    //         .style(hazardNameStyle);
+          ws.cell(currentRow, 5)
+            .string(convertToProperFormat(hazard.preventativeSafeguards))
+            .style(hazardNameStyle);
+          ws.cell(currentRow, 6)
+            .string(convertToProperFormat(hazard.mitigatingSafeguards))
+            .style(hazardNameStyle);
+        });
+      });
 
-    //       ws.cell(currentRow, 5)
-    //         .string(convertToProperFormat(hazard.preventativeSafeguards))
-    //         .style(hazardNameStyle);
-    //       ws.cell(currentRow, 6)
-    //         .string(convertToProperFormat(hazard.mitigatingSafeguards))
-    //         .style(hazardNameStyle);
-    //     });
-    //   });
+      currentRow += 1;
+    });
 
-    //   currentRow += 1;
-    // });
-
-    // ws.cell(1, 1).string("Test Data");
+    ws.cell(1, 1).string("Test Data");
 
     // var workshopName = jsonData.workshopName + ".xlsx";
     // wb.write(workshopName); //takes
 
-    // //return the wb
+    return wb;
+    //return the wb
 
     // return true;
   },

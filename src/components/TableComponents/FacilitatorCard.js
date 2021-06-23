@@ -24,7 +24,35 @@ export default class FacilitatorCard extends Component {
     //export using axios
     // axios.post("")
     console.log("Export to excel", this.props.data);
-    axios.post("http://localhost:5000/workshop/exportToExcel", this.props.data); //Send Payload to Backend
+    // axios.post("http://localhost:5000/workshop/exportToExcel", this.props.data); //Send Payload to Backend
+    axios
+      .post("http://localhost:5000/workshop/exportToExcel", this.props.data, {
+        responseType: "blob",
+      })
+      .then((response) => {
+        let headerLine = response.headers["content-disposition"];
+        let startFileNameIndex = headerLine.indexOf('"') + 1;
+        let endFileNameIndex = headerLine.lastIndexOf('"');
+        let filename = headerLine.substring(
+          startFileNameIndex,
+          endFileNameIndex
+        );
+        const url = window.URL.createObjectURL(
+          new Blob([response.data], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          })
+        );
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.setAttribute("download", filename);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   //Takes in Data from Parent and Displays
