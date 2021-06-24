@@ -15,46 +15,10 @@ router.route("/").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-//Export2Excel
-
-// router.route("/exportToExcel").post((req, res) => {
-//   //Handle request
-//   const test = req.body;
-//   exportFile.saveToExcel(test);
-// });
-
 router.route("/exportToExcel").post((req, res) => {
-  //Handle request
   const jsonData = req.body;
   var excelData = exportFile.saveToExcel(jsonData);
   excelData.write("WorkshopExcel.xlsx", res);
-});
-
-router.route("/testExport").post((req, res) => {
-  //test is just the name of the file
-  const test = req.body;
-  var data_ret = exportFile.saveToExcel(test); // will return the object
-  data_ret.write("TestExcel.xlsx", res);
-  // console.log("Test headers");
-  // var wb = new xl.Workbook();
-
-  // // Add Worksheets to the workbook
-  // var ws = wb.addWorksheet("Sheet 1");
-
-  // // Create a reusable style
-  // var style = wb.createStyle({
-  //   font: {
-  //     color: "#FF0800",
-  //     size: 12,
-  //   },
-  //   numberFormat: "$#,##0.00; ($#,##0.00); -",
-  // });
-
-  // // Set value of cell A1 to 100 as a number type styled with
-  // ws.cell(1, 1).number(100).style(style);
-  // ws.cell(1, 2).number(200).style(style);
-
-  // wb.write("Excel.xlsx", res);
 });
 
 /**
@@ -118,7 +82,6 @@ router.route("/updateHazard").post((req, res) => {
     mitigatingSafeguards,
   };
 
-  // Hazard.updateOne({"_id" : id})
   Hazard.findByIdAndUpdate(req.body.id, updatedHazard)
     .then(() => res.json("Hazard Updated"))
     .catch((err) => res.status(404).json("Error: " + err));
@@ -137,8 +100,6 @@ router.route("/addWorkshop").post((req, res) => {
   });
 
   console.log("Router Saving Workshop");
-  // console.log("THE FUCKING NEW WORKSHOP", newWorkshop);
-  // console.log("node fucking object", JSON.stringify(nodes));
 
   newWorkshop
     .save()
@@ -179,46 +140,3 @@ router.route("/:id").delete((req, res) => {
 });
 
 module.exports = router;
-
-// //Handle POST Requests
-// router.route("/add").post((req, res) => {
-//   const workshopName = req.body.workshopName;
-//   const tags = req.body.tags; //If Something is completed
-//   const components = req.body.components;
-
-//   const newWorkshop = new WorkshopTest({
-//     workshopName,
-//     tags,
-//     components,
-//   });
-
-//   //ROUTER REQUEST
-//   console.log("REQUESTING ROUTER");
-
-//   newWorkshop
-//     .save()
-//     .then(() => res.json("Message added"))
-//     .catch((err) => res.status(400).json("Error" + err));
-// });
-
-// //Post Request for upload components
-// router.route("/addCompleteWorkshop").post((req, res) => {
-//   const workshopName = req.body.workshopName;
-//   const tags = req.body.tags; //If Something is completed
-//   const components = req.body.components;
-
-//   //change Model
-//   const newWorkshopComplete = new WorkshopComplete({
-//     workshopName,
-//     tags,
-//     components,
-//   });
-
-//   //ROUTER REQUEST
-//   console.log("REQUESTING ROUTER");
-
-//   newWorkshopComplete
-//     .save()
-//     .then(() => res.json("Message added"))
-//     .catch((err) => res.status(400).json("Error" + err));
-// });

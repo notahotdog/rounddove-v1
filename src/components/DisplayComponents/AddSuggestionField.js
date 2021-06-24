@@ -39,10 +39,10 @@ export default class AddSuggestionField extends Component {
 
   render() {
     var type = this.props.type;
-    if (type == "pSafeguard") {
+    if (type === "pSafeguard") {
       type = "Preventative Safeguard";
     }
-    if (type == "mSafeguard") {
+    if (type === "mSafeguard") {
       type = "Mitigating Safeguard";
     }
 

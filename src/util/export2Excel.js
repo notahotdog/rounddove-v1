@@ -9,7 +9,8 @@ module.exports = {
 
     var headerStyle = wb.createStyle({
       font: {
-        color: "#000000",
+        // color: "#000000",
+        color: "#00FF00",
         size: 11,
         bold: true,
       },
@@ -142,15 +143,7 @@ module.exports = {
       currentRow += 1;
     });
 
-    ws.cell(1, 1).string("Test Data");
-
-    // var workshopName = jsonData.workshopName + ".xlsx";
-    // wb.write(workshopName); //takes
-
     return wb;
-    //return the wb
-
-    // return true;
   },
 };
 

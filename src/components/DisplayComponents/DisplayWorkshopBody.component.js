@@ -7,7 +7,6 @@ import AddHazardModal from "../EditWorkshopComponents/AddHazardWithOptionsModal"
 import AddSuggestionField from "./AddSuggestionField";
 import DisplaySuggestionField from "./DisplaySuggestionField";
 import {
-  addVisibilityElement,
   deleteItemFromIndex,
   addVisibilityToField,
 } from "../../util/Utilities";
@@ -147,16 +146,16 @@ export default class DisplayWorkshopBody extends Component {
 
     const suggestionObj = addVisibilityToField(suggestion, true); //add Visibility Aspect to suggestions
     console.log("SUGGESTION TO BE ADDED", suggestionObj);
-    if (suggestionType == "cause") {
+    if (suggestionType === "cause") {
       suggestionsListObj.causes.push(suggestionObj);
     }
-    if (suggestionType == "consequence") {
+    if (suggestionType === "consequence") {
       suggestionsListObj.consequences.push(suggestionObj);
     }
-    if (suggestionType == "pSafeguard") {
+    if (suggestionType === "pSafeguard") {
       suggestionsListObj.preventativeSafeguards.push(suggestionObj);
     }
-    if (suggestionType == "mSafeguard") {
+    if (suggestionType === "mSafeguard") {
       suggestionsListObj.mitigatingSafeguards.push(suggestionObj);
     }
   }
@@ -168,30 +167,30 @@ export default class DisplayWorkshopBody extends Component {
    */
   deleteSuggestion(suggestionType, index) {
     var suggestionsListObj = { ...this.state.suggestions };
-    if (suggestionType == "cause") {
-      var tempList = deleteItemFromIndex(suggestionsListObj.causes, index);
-      suggestionsListObj.causes = tempList;
+    if (suggestionType === "cause") {
+      var cauList = deleteItemFromIndex(suggestionsListObj.causes, index);
+      suggestionsListObj.causes = cauList;
     }
-    if (suggestionType == "consequence") {
-      var tempList = deleteItemFromIndex(
+    if (suggestionType === "consequence") {
+      var consList = deleteItemFromIndex(
         suggestionsListObj.consequences,
         index
       );
-      suggestionsListObj.consequences = tempList;
+      suggestionsListObj.consequences = consList;
     }
-    if (suggestionType == "pSafeguard") {
-      var tempList = deleteItemFromIndex(
+    if (suggestionType === "pSafeguard") {
+      var psList = deleteItemFromIndex(
         suggestionsListObj.preventativeSafeguards,
         index
       );
-      suggestionsListObj.preventativeSafeguards = tempList;
+      suggestionsListObj.preventativeSafeguards = psList;
     }
-    if (suggestionType == "mSafeguard") {
-      var tempList = deleteItemFromIndex(
+    if (suggestionType === "mSafeguard") {
+      var msList = deleteItemFromIndex(
         suggestionsListObj.mitigatingSafeguards,
         index
       );
-      suggestionsListObj.mitigatingSafeguards = tempList;
+      suggestionsListObj.mitigatingSafeguards = msList;
     }
 
     this.setState({ suggestions: suggestionsListObj });
@@ -203,14 +202,6 @@ export default class DisplayWorkshopBody extends Component {
       suggestionType,
       this.state.suggestions
     );
-    // if (suggestionType == "cause") {
-    //   console.log("test");
-    //   this.props.saveSuggestionsToDatabase(
-    //     suggestionType,
-    //     this.state.suggestions.causes
-    //   );
-    // }
-    // this.props.saveSuggestionToDatabase(type,list) //will decide which field to append
   }
 
   render() {

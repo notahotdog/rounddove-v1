@@ -3,7 +3,6 @@ import axios from "axios";
 import { Menu, Divider } from "antd";
 import EditableHazardComponent from "./TableComponents/EditableHazardComponent";
 import AddHazardModal from "./ModalComponents/AddHazardModal";
-// import AddHazardModal from "./ModalComponents/AddHazardModal";
 import LoadDataPromptPage from "./DisplayComponents/LoadDataPromptPage";
 
 //Used to Add/Delete hazards from the Hazard Database
@@ -54,20 +53,6 @@ export default class EditHazardsPage extends Component {
   componentDidMount() {
     console.log("Edit Hazards Page Instance");
     this._isMounted = true;
-
-    // axios.get("http://localhost:5000/workshop/").then((response) => {
-    //   console.log("Fetch Data", response.data);
-
-    //   const extractedData = this.getHazardData(response.data);
-    //   // this.setState({ data: response.data });
-    // });
-
-    //should periodically fetch data
-
-    // axios.get("http://localhost:5000/workshop/hazard").then((response) => {
-    //   console.log("Fetch Data", response.data);
-    //   this.setState({ hazardList: response.data });
-    // });
 
     this.timer = setInterval(() => this.loadData(), 500);
 

@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { Button } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
 export default class DisplaySuggestionField extends Component {
-  //Pass in suggestion Field
   constructor(props) {
     super(props);
 

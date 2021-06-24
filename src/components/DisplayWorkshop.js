@@ -333,7 +333,7 @@ export default class DisplayWorkshop extends Component {
     console.log("Suggestion List", suggestionList);
     const { nodeSelIndex, subnodeSelIndex, hazardSelndex } = this.state;
     var data = { ...this.state.data };
-    if (type == "cause") {
+    if (type === "cause") {
       var causeList =
         data.nodes[nodeSelIndex].subnodes[subnodeSelIndex].hazards[
           hazardSelndex
@@ -342,7 +342,7 @@ export default class DisplayWorkshop extends Component {
         causeList.push(suggestion);
       });
     }
-    if (type == "consequence") {
+    if (type === "consequence") {
       var consequenceList =
         data.nodes[nodeSelIndex].subnodes[subnodeSelIndex].hazards[
           hazardSelndex
@@ -351,7 +351,7 @@ export default class DisplayWorkshop extends Component {
         consequenceList.push(suggestion);
       });
     }
-    if (type == "pSafeguard") {
+    if (type === "pSafeguard") {
       var pSafeList =
         data.nodes[nodeSelIndex].subnodes[subnodeSelIndex].hazards[
           hazardSelndex
@@ -360,7 +360,7 @@ export default class DisplayWorkshop extends Component {
         pSafeList.push(suggestion);
       });
     }
-    if (type == "mSafeguard") {
+    if (type === "mSafeguard") {
       var mSafeList =
         data.nodes[nodeSelIndex].subnodes[subnodeSelIndex].hazards[
           hazardSelndex
@@ -397,8 +397,6 @@ export default class DisplayWorkshop extends Component {
   }
 
   render() {
-    const workshop = this.props.location.state.data; // should just pass the id
-    // console.log("Workshop dataLoaded", this.state.data);
     const {
       isOpenNodeNameModal,
       isOpenSubnodeNameModal,
@@ -548,67 +546,3 @@ export default class DisplayWorkshop extends Component {
     );
   }
 }
-
-{
-  /* 
-<div className="dw-header-details">
-  <div>Node Assessed: {this.state.nodeSelected}</div>
-  <div>Sub node Assessed: {this.state.subnodeSelected}</div>
-  <div>Hazard Assessed: {this.state.hazardSelected}</div>
-</div> */
-}
-
-// <div className="dw-header-left-col">
-// <div className="dw-header-title">{workshop.workshopName}</div>
-// <div className="dw-node-details">
-//   <div className="item-subtitle">
-//     <div className="dw-item-header">
-//       <div className="dw-node-title">Node Assessed:</div>
-//       <div className="dw-item-content">
-//         {this.state.nodeSelected}
-//       </div>
-//     </div>
-//     <div className="dw-options">
-//       <div className="ew-edit-button">
-//         <Button
-//           className="item-button"
-//           type="link"
-//           style={{
-//             alignItem: "flex-end",
-//             fontSize: "17px",
-//             marginRight: "60px",
-//           }}
-//           onClick={this.openNodeNameModal}
-//         >
-//           Edit Node Name
-//         </Button>
-//       </div>
-
-//       <Popconfirm
-//         title="Are you sure you want to delete node?"
-//         onConfirm={this.deleteNodeFromNodeList}
-//       >
-//         <Button
-//           className="item-button"
-//           type="link"
-//           style={{ alignItem: "flex-end", fontSize: "17px" }}
-//         >
-//           Delete Node
-//         </Button>
-//       </Popconfirm>
-//     </div>
-//   </div>
-//   <div className="item-subtitle">
-//     <div className="dw-node-title">Sub node Assessed:</div>
-//     <div className="dw-item-content">
-//       {this.state.subnodeSelected}
-//     </div>
-//   </div>
-//   <div className="item-subtitle">
-//     <div className="dw-node-title">Hazard Assessed:</div>
-//     <div className="dw-item-content">
-//       {this.state.hazardSelected}
-//     </div>
-//   </div>
-// </div>
-// </div>

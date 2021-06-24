@@ -72,23 +72,3 @@ export default class AddHazardWithOptionsModal extends Component {
     );
   }
 }
-
-// <Select
-//             showSearch
-//             style={{ width: 200 }}
-//             placeholder="Select a person"
-//             optionFilterProp="children"
-//             onChange={this.onChange}
-//             onFocus={this.onFocus}
-//             onBlur={this.onBlur}
-//             onSearch={this.onSearch}
-//             filterOption={(input, option) =>
-//               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-//             }
-//           >
-//             {this.state.hazardList.map((hazard, hazardIndex) => {
-//               return (
-//                 <Option value={hazard.hazardName}>{hazard.hazardName}</Option>
-//               );
-//             })}
-//           </Select>
